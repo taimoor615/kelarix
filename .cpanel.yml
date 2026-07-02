@@ -1,12 +1,28 @@
 ---
 # =============================================================
-#  cPanel Git Version Control — Deployment config
-#  Each list item under tasks: MUST be a single-line shell command.
-#  Absolute paths are used to avoid variable-expansion issues.
+#  cPanel Git Version Control — DEBUG deployment
+#  All output → /home/kelarixc/deploy-log.txt
+#  Open that file in cPanel File Manager after deploy.
 # =============================================================
 deployment:
   tasks:
+    - /bin/echo "=== DEPLOY START $(date) ===" > /home/kelarixc/deploy-log.txt
+    - /bin/echo "PWD:" >> /home/kelarixc/deploy-log.txt
+    - /bin/pwd >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/echo "" >> /home/kelarixc/deploy-log.txt
+    - /bin/echo "--- Source dir listing ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/ls -la /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/echo "" >> /home/kelarixc/deploy-log.txt
+    - /bin/echo "--- Destination BEFORE rsync ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/ls -la /home/kelarixc/public_html/wp-content/themes/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/echo "" >> /home/kelarixc/deploy-log.txt
     - /bin/mkdir -p /home/kelarixc/public_html/wp-content/themes/kelarix
-    - /usr/bin/rsync -av --delete --exclude=".git*" --exclude="node_modules" --exclude=".DS_Store" --exclude="Thumbs.db" /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/ /home/kelarixc/public_html/wp-content/themes/kelarix/
-    - /bin/chmod -R 755 /home/kelarixc/public_html/wp-content/themes/kelarix
-    - /usr/bin/find /home/kelarixc/public_html/wp-content/themes/kelarix -type f -exec /bin/chmod 644 {} \;
+    - /bin/echo "--- rsync output ---" >> /home/kelarixc/deploy-log.txt
+    - /usr/bin/rsync -av --exclude=".git" --exclude=".gitignore" /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/ /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/echo "" >> /home/kelarixc/deploy-log.txt
+    - /bin/echo "--- rsync exit code was: $? ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/echo "" >> /home/kelarixc/deploy-log.txt
+    - /bin/echo "--- Destination AFTER rsync ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/ls -la /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/echo "" >> /home/kelarixc/deploy-log.txt
+    - /bin/echo "=== DEPLOY END $(date) ===" >> /home/kelarixc/deploy-log.txt
