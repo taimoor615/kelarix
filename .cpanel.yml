@@ -5,13 +5,13 @@
 #  in cPanel, these tasks run automatically.
 #
 #  IMPORTANT:
-#  - Replace CPANEL_USER with your actual cPanel username
+#  - Replace kelarixc with your actual cPanel username
 #  - Replace public_html if your WordPress lives in a subfolder
 # =============================================================
 
 deployment:
   tasks:
-    - export DEPLOY_PATH=/home/CPANEL_USER/public_html
+    - export DEPLOY_PATH=/home/kelarixc/public_html
     - export THEME_SRC=$PWD/wp-content/themes/kelarix
     - export THEME_DEST=$DEPLOY_PATH/wp-content/themes/kelarix
 
