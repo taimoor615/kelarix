@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220" fill="none">
+  <!-- staircase of squares, lavender accent -->
+  <g fill="#c8caff">
+    <rect x="150" y="0"   width="34" height="34" rx="3"/>
+    <rect x="186" y="36"  width="34" height="34" rx="3" fill="#e2e3ff"/>
+    <rect x="114" y="36"  width="34" height="34" rx="3" fill="#e2e3ff"/>
+    <rect x="150" y="72"  width="34" height="34" rx="3"/>
+    <rect x="114" y="108" width="34" height="34" rx="3" fill="#e2e3ff"/>
+    <rect x="78"  y="108" width="34" height="34" rx="3" fill="#dfe0ff"/>
+    <rect x="150" y="108" width="34" height="34" rx="3" fill="#e2e3ff"/>
+    <rect x="114" y="144" width="34" height="34" rx="3"/>
+    <rect x="78"  y="180" width="34" height="34" rx="3"/>
+    <rect x="42"  y="180" width="34" height="34" rx="3" fill="#e2e3ff"/>
+  </g>
+</svg>

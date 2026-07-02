@@ -1,0 +1,16 @@
+/*
+Theme Name: Kelarix
+Theme URI: https://kelarix.local
+Author: Roas Solutions
+Author URI: https://kelarix.local
+Description: Custom theme for Kelarix — a B2B enterprise systems consulting site. Built fully from scratch with dynamic, dashboard-controlled content (ACF Free + Custom Post Types).
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 7.0
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: kelarix
+*/
+
+/* All real styles live in /assets/css/. This file only carries the theme header. */

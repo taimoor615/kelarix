@@ -1,0 +1,43 @@
+# =============================================================
+#  Kelarix — .gitignore
+#  Repo root = WordPress root, but we only track the custom theme
+#  (+ deploy config). WordPress core, DB, uploads, secrets = OUT.
+# =============================================================
+
+# ---- Ignore literally everything by default ----
+/*
+/**/
+
+# ---- Then whitelist only what we want ----
+!.gitignore
+!.cpanel.yml
+!DEPLOYMENT.md
+!README.md
+
+# Whitelist helper scripts (but never the DB dumps they produce)
+!scripts/
+!scripts/**
+/db-dumps/
+
+# Whitelist the custom theme folder + its contents
+!wp-content/
+wp-content/*
+!wp-content/themes/
+wp-content/themes/*
+!wp-content/themes/kelarix/
+!wp-content/themes/kelarix/**
+
+# (If later you add a custom plugin you own, whitelist it here)
+# !wp-content/plugins/
+# wp-content/plugins/*
+# !wp-content/plugins/your-custom-plugin/
+# !wp-content/plugins/your-custom-plugin/**
+
+# ---- Safety net: even inside the theme, never track these ----
+wp-content/themes/kelarix/**/node_modules/
+wp-content/themes/kelarix/**/vendor/
+wp-content/themes/kelarix/**/.DS_Store
+wp-content/themes/kelarix/**/Thumbs.db
+wp-content/themes/kelarix/**/*.log
+wp-content/themes/kelarix/**/.env
+wp-content/themes/kelarix/**/.env.*

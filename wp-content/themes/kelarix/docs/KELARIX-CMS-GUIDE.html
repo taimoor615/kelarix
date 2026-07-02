@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kelarix CMS Setup Guide — Homepage</title>
+<style>
+  :root{
+    --ink:#0e1220;
+    --ink-2:#3b4463;
+    --muted:#6b7290;
+    --line:#e6e9f5;
+    --line-2:#eef1f8;
+    --bg:#ffffff;
+    --bg-soft:#f6f8ff;
+    --accent:#1a48ff;
+    --accent-2:#0032e6;
+    --accent-100:#e7eaff;
+    --accent-50:#f0f2ff;
+    --code:#0e1e5a;
+    --shadow:0 10px 30px rgba(20,35,90,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    font-size:15px;
+  }
+  .page{max-width:960px;margin:0 auto;padding:56px 40px 80px}
+  /* Cover */
+  .cover{
+    background:linear-gradient(135deg,#1f3ec6 0%,#1a48ff 55%,#4e67ff 100%);
+    color:#fff;border-radius:28px;padding:56px 48px;box-shadow:var(--shadow);
+    position:relative;overflow:hidden;margin-bottom:48px;
+  }
+  .cover::after{content:"";position:absolute;right:-60px;bottom:-60px;width:280px;height:280px;
+    background:radial-gradient(circle,rgba(255,255,255,.14),transparent 60%);border-radius:50%;}
+  .cover .kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .cover h1{font-size:42px;line-height:1.1;margin:18px 0 12px;letter-spacing:-.02em}
+  .cover p{margin:0;max-width:640px;color:rgba(255,255,255,.85);font-size:16px}
+  .cover .meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+  .cover .meta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600}
+
+  /* TOC */
+  .toc{background:var(--bg-soft);border:1px solid var(--line);border-radius:20px;padding:24px 28px;margin-bottom:48px}
+  .toc h4{margin:0 0 12px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-2)}
+  .toc ol{margin:0;padding-left:20px;color:var(--ink-2)}
+  .toc li{margin:6px 0;font-weight:600}
+  .toc a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--line)}
+
+  /* Sections */
+  h2{font-size:26px;letter-spacing:-.01em;margin:48px 0 8px;color:var(--ink)}
+  h2 .num{color:var(--accent);margin-right:10px;font-variant-numeric:tabular-nums}
+  h3{font-size:19px;margin:36px 0 12px;color:var(--ink)}
+  h4{font-size:15px;margin:22px 0 8px;color:var(--ink)}
+  p{margin:0 0 12px;color:var(--ink-2)}
+  a{color:var(--accent-2)}
+
+  .lead{color:var(--muted);font-size:16px}
+
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+    background:var(--accent-100);color:var(--accent-2);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    border:1px solid rgba(26,72,255,.18)}
+  .badge--ghost{background:#fff;color:var(--ink-2);border-color:var(--line)}
+  .badge--gold{background:#fff6dd;color:#8a6b00;border-color:#f2e2a3}
+
+  /* Callout */
+  .callout{background:var(--bg-soft);border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:12px;padding:14px 18px;margin:16px 0;color:var(--ink-2);font-size:14px}
+  .callout--info{border-left-color:#1a48ff}
+  .callout--warn{border-left-color:#c98800;background:#fffbeb;border-color:#f4e5b1}
+  .callout strong{color:var(--ink)}
+
+  /* Tables */
+  table{width:100%;border-collapse:separate;border-spacing:0;margin:14px 0 22px;font-size:13.5px;
+    background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(20,35,90,.02)}
+  th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
+  th{background:var(--bg-soft);font-weight:700;color:var(--ink);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:0}
+  td code, th code{background:var(--accent-50);color:var(--code);padding:2px 6px;border-radius:6px;font-size:12.5px;font-weight:600}
+
+  code, kbd{font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;background:var(--accent-50);color:var(--code);
+    padding:2px 6px;border-radius:6px;font-size:12.5px}
+
+  /* Section wrapper */
+  section.doc{border-top:1px dashed var(--line);padding-top:28px;margin-top:36px}
+  section.doc:first-of-type{border-top:0;margin-top:0;padding-top:0}
+
+  /* Field type pill */
+  .type{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef1f8;color:#31406b;font-size:11.5px;font-weight:700}
+  .type--tab{background:#ffe9d8;color:#a45210}
+  .type--text{background:#e7eaff;color:#0032e6}
+  .type--textarea{background:#e0f2e9;color:#1a6b3d}
+  .type--image{background:#fde2ef;color:#8c1f57}
+  .type--link{background:#e6f4fb;color:#0f5c81}
+  .type--group{background:#eee5ff;color:#4a2a94}
+  .type--bool{background:#fff0e0;color:#8a5100}
+
+  /* Grid */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0 8px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+  .stat .v{font-size:22px;color:var(--ink);font-weight:800;margin-top:4px}
+  .stat .d{font-size:12.5px;color:var(--muted);margin-top:4px}
+
+  /* Footer */
+  .footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  @media print{
+    .page{padding:24px}
+    .cover{border-radius:14px;padding:36px 32px}
+    section.doc{page-break-inside:avoid}
+    table{page-break-inside:avoid}
+    a{color:inherit}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <span class="kicker">Kelarix · CMS Setup Guide</span>
+  <h1>Homepage Content — WordPress Setup</h1>
+  <p>Exact ACF field groups, custom post types, and Customizer settings needed to make every piece of homepage content editable from the dashboard.</p>
+  <div class="meta">
+    <span>ACF Free</span><span>10 Sections</span><span>5 Field Groups</span><span>4 CPTs</span>
+  </div>
+</div>
+
+<div class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#s1">Customizer (Header &amp; Footer)</a></li>
+    <li><a href="#s2">Homepage Content — ACF Field Group</a></li>
+    <li><a href="#s3">Custom Post Types &amp; their field groups</a></li>
+    <li><a href="#s4">Quick Summary</a></li>
+  </ol>
+</div>
+
+<div class="grid">
+  <div class="stat"><div class="k">Field Groups</div><div class="v">5</div><div class="d">Homepage + 4 CPT groups</div></div>
+  <div class="stat"><div class="k">Customizer settings</div><div class="v">14</div><div class="d">Header CTA + full footer</div></div>
+  <div class="stat"><div class="k">Homepage fields</div><div class="v">70+</div><div class="d">Split into 10 tabs</div></div>
+  <div class="stat"><div class="k">CPT posts to create</div><div class="v">22</div><div class="d">Systems · Industries · Proof · Process</div></div>
+</div>
+
+<section class="doc" id="s1">
+<h2><span class="num">1</span>Customizer <span class="badge">Already built</span></h2>
+<p class="lead">Go to <strong>Appearance → Customize → Kelarix Options</strong>. These are ready — no ACF required.</p>
+
+<h3>Header</h3>
+<table>
+  <thead><tr><th>Setting</th><th>Key</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>CTA button label</td><td><code>header_cta_text</code></td><td>Request a Diagnostic Conversation</td></tr>
+    <tr><td>CTA button URL</td><td><code>header_cta_url</code></td><td><code>#contact</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Footer</h3>
+<table>
+  <thead><tr><th>Setting</th><th>Key</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr><td>About text</td><td><code>footer_about</code></td><td>AI agents that automate work…</td></tr>
+    <tr><td>LinkedIn URL</td><td><code>footer_linkedin</code></td><td><code>#</code></td></tr>
+    <tr><td>Instagram URL</td><td><code>footer_instagram</code></td><td><code>#</code></td></tr>
+    <tr><td>Column 1 title</td><td><code>footer_col1_title</code></td><td>Quick links</td></tr>
+    <tr><td>Column 2 title</td><td><code>footer_col2_title</code></td><td>Industry's</td></tr>
+    <tr><td>Build-team title</td><td><code>footer_build_title</code></td><td>Build your team:</td></tr>
+    <tr><td>Build-team text</td><td><code>footer_build_text</code></td><td>Get tips, product updates…</td></tr>
+    <tr><td>Build-team button label</td><td><code>footer_build_cta_text</code></td><td>Request a Diagnostic Conversation</td></tr>
+    <tr><td>Build-team button URL</td><td><code>footer_build_cta_url</code></td><td><code>#contact</code></td></tr>
+    <tr><td>Copyright text</td><td><code>footer_copyright</code></td><td>© {year} Kelarix. All rights reserved.</td></tr>
+    <tr><td>Bottom-right line</td><td><code>footer_email_line</code></td><td>Build your team: info@kelarix.com</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section class="doc" id="s2">
+<h2><span class="num">2</span>ACF Field Group — “Homepage Content”</h2>
+<div class="callout callout--info">
+  Create one field group in <strong>ACF → Field Groups → Add New</strong>.
+  <br><strong>Title:</strong> Homepage Content &nbsp;·&nbsp;
+  <strong>Location:</strong> Post Type <em>is equal to</em> Page <em>AND</em> Page Type <em>is equal to</em> Front Page.
+  Add a <strong>Tab</strong> field at the start of each section to keep the editor tidy.
+</div>
+
+<!-- HERO -->
+<h3>Tab · Hero</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Hero Tab</td><td><code>hero_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Eyebrow Text</td><td><code>hero_eyebrow</code></td><td><span class="type type--text">Text</span></td><td>Default: "Strategy led. Engineering backed…"</td></tr>
+<tr><td>Hero Heading</td><td><code>hero_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Allows basic HTML.</td></tr>
+<tr><td>Hero Subtext</td><td><code>hero_subtext</code></td><td><span class="type type--textarea">Textarea</span></td><td>—</td></tr>
+<tr><td>Hero Image</td><td><code>hero_image</code></td><td><span class="type type--image">Image</span></td><td>Return Format: Image URL.</td></tr>
+<tr><td>Primary CTA</td><td><code>hero_cta_primary</code></td><td><span class="type type--link">Link</span></td><td>Default URL: <code>#contact</code></td></tr>
+<tr><td>Secondary CTA</td><td><code>hero_cta_secondary</code></td><td><span class="type type--link">Link</span></td><td>Default URL: <code>#systems</code></td></tr>
+<tr><td>Shield Note</td><td><code>hero_note</code></td><td><span class="type type--text">Text</span></td><td>Small line below buttons.</td></tr>
+</tbody></table>
+
+<!-- BLIND SPOTS -->
+<h3>Tab · Blind Spots (Key Problems)</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Blind Spots Tab</td><td><code>blind_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Badge Text</td><td><code>blind_badge</code></td><td><span class="type type--text">Text</span></td><td>Default: "Key Problems"</td></tr>
+<tr><td>Section Heading</td><td><code>blind_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>—</td></tr>
+<tr><td>Section Text</td><td><code>blind_text</code></td><td><span class="type type--textarea">Textarea</span></td><td>—</td></tr>
+<tr><td>Blind CTA</td><td><code>blind_cta</code></td><td><span class="type type--link">Link</span></td><td>White CTA card link.</td></tr>
+<tr><td>Problem Card 1–5</td><td><code>blind_card_1</code> … <code>blind_card_5</code></td><td><span class="type type--group">Group</span></td><td>Sub-fields: <code>title</code> (Text), <code>text</code> (Textarea), <code>icon</code> (Text)</td></tr>
+</tbody></table>
+
+<p><strong>Icon values:</strong> <code>scatter</code>, <code>clipboard</code>, <code>clock</code>, <code>workflow</code>, <code>ai</code>.</p>
+<table>
+<thead><tr><th>#</th><th>Default Title</th><th>Icon</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Scattered visibility</td><td><code>scatter</code></td></tr>
+<tr><td>2</td><td>Manual execution</td><td><code>clipboard</code></td></tr>
+<tr><td>3</td><td>Slow decision making</td><td><code>clock</code></td></tr>
+<tr><td>4</td><td>Weak workflow control</td><td><code>workflow</code></td></tr>
+<tr><td>5</td><td>AI readiness gap</td><td><code>ai</code></td></tr>
+</tbody></table>
+
+<!-- LAYERS -->
+<h3>Tab · Layers (What Kelarix Does)</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Layers Tab</td><td><code>layers_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge Text</td><td><code>layers_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Section Heading</td><td><code>layers_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>layers_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Layer Card 1–5</td><td><code>layer_card_1</code> … <code>layer_card_5</code></td><td><span class="type type--group">Group</span> · <code>title</code> (Text), <code>text</code> (Textarea)</td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>#</th><th>Default Title</th><th>Layout</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Business operations</td><td>Wide (span 3)</td></tr>
+<tr><td>2</td><td>Data foundations</td><td>Wide (span 3)</td></tr>
+<tr><td>3</td><td>Intelligence layer</td><td>Narrow (span 2)</td></tr>
+<tr><td>4</td><td>Workflow layer</td><td>Narrow (span 2)</td></tr>
+<tr><td>5</td><td>Software layer</td><td>Narrow (span 2)</td></tr>
+</tbody></table>
+
+<!-- SYSTEMS -->
+<h3>Tab · Systems We Build</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Systems Tab</td><td><code>systems_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Badge Text</td><td><code>systems_heading_badge</code></td><td><span class="type type--text">Text</span></td><td>Default: "Systems We Build"</td></tr>
+<tr><td>Section Heading</td><td><code>systems_heading</code></td><td><span class="type type--text">Text</span></td><td>—</td></tr>
+<tr><td>Section Text</td><td><code>systems_text</code></td><td><span class="type type--textarea">Textarea</span></td><td>—</td></tr>
+</tbody></table>
+<div class="callout">Content cards for this section come from the <strong>kx_system</strong> CPT — see §3.</div>
+
+<!-- INDUSTRIES -->
+<h3>Tab · Industries</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Industries Tab</td><td><code>industries_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge Text</td><td><code>industries_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Section Heading</td><td><code>industries_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>industries_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Also Heading</td><td><code>also_heading</code></td><td><span class="type type--text">Text</span></td></tr>
+</tbody></table>
+<div class="callout">Content cards come from the <strong>kx_industry</strong> CPT — see §3.</div>
+
+<!-- CONFIDENTIAL -->
+<h3>Tab · Confidential</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Confidential Tab</td><td><code>conf_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge Text</td><td><code>conf_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Section Heading</td><td><code>conf_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text 1</td><td><code>conf_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text 2</td><td><code>conf_text2</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Confidential Card 1–5</td><td><code>conf_card_1</code> … <code>conf_card_5</code></td><td><span class="type type--group">Group</span> · <code>title</code>, <code>text</code></td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>#</th><th>Default Title</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Scenario Studies</td></tr>
+<tr><td>2</td><td>System Concepts</td></tr>
+<tr><td>3</td><td>Diagnostic Frameworks</td></tr>
+<tr><td>4</td><td>Demo Based Proof</td></tr>
+<tr><td>5</td><td>Executive Briefs</td></tr>
+</tbody></table>
+
+<!-- PROOF -->
+<h3>Tab · Proof (Featured Proof)</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Proof Tab</td><td><code>proof_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge Text</td><td><code>proof_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Section Heading</td><td><code>proof_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>proof_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+</tbody></table>
+<div class="callout">Content comes from the <strong>kx_proof</strong> CPT — see §3.</div>
+
+<!-- PROCESS -->
+<h3>Tab · Process</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Process Tab</td><td><code>process_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge Text</td><td><code>process_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Section Heading</td><td><code>process_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>process_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+</tbody></table>
+<div class="callout">Content comes from the <strong>kx_process</strong> CPT — see §3.</div>
+
+<!-- DISCIPLINE -->
+<h3>Tab · Discipline (Our Value)</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Discipline Tab</td><td><code>discipline_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge Text</td><td><code>discipline_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Section Heading</td><td><code>discipline_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>discipline_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Discipline Item 1–7</td><td><code>discipline_item_1</code> … <code>discipline_item_7</code></td><td><span class="type type--group">Group</span> · <code>title</code>, <code>text</code></td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>#</th><th>Default Title</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Confidentiality first</td></tr>
+<tr><td>2</td><td>Business first discovery</td></tr>
+<tr><td>3</td><td>Documentation discipline</td></tr>
+<tr><td>4</td><td>Role based thinking</td></tr>
+<tr><td>5</td><td>Data governance awareness</td></tr>
+<tr><td>6</td><td>Human review where needed</td></tr>
+<tr><td>7</td><td>Scalable foundations</td></tr>
+</tbody></table>
+
+<!-- FINAL CTA -->
+<h3>Tab · Final CTA</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Final CTA Tab</td><td><code>final_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Heading</td><td><code>final_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Subtext</td><td><code>final_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Primary CTA</td><td><code>final_cta_primary</code></td><td><span class="type type--link">Link</span></td></tr>
+<tr><td>Secondary CTA</td><td><code>final_cta_secondary</code></td><td><span class="type type--link">Link</span></td></tr>
+</tbody></table>
+</section>
+
+<section class="doc" id="s3">
+<h2><span class="num">3</span>Custom Post Types <span class="badge badge--ghost">Repeatable content</span></h2>
+<p class="lead">These CPTs are already registered by the theme. Add posts + create an ACF field group per CPT for the extra fields.</p>
+
+<h3>CPT · Systems We Build <code>kx_system</code></h3>
+<p>Dashboard sidebar → <strong>Systems We Build</strong>. Use <em>Page Attributes → Order</em> to control display sequence.</p>
+<p><strong>Field Group:</strong> System Details &nbsp;·&nbsp; Location: <code>kx_system</code></p>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Description</td><td><code>description</code></td><td><span class="type type--textarea">Textarea</span></td><td>Card body text.</td></tr>
+<tr><td>Icon Key</td><td><code>icon</code></td><td><span class="type type--text">Text</span></td><td>One of: <code>scatter</code>, <code>database</code>, <code>workflow</code>, <code>ai</code>, <code>window</code></td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>#</th><th>Title</th><th>Icon</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Operational Intelligence Systems</td><td><code>scatter</code></td></tr>
+<tr><td>2</td><td>Data Engineering Foundations</td><td><code>database</code></td></tr>
+<tr><td>3</td><td>Workflow Automation Systems</td><td><code>workflow</code></td></tr>
+<tr><td>4</td><td>AI Assisted Decision Systems</td><td><code>ai</code></td></tr>
+<tr><td>5</td><td>Custom Business Platforms</td><td><code>window</code></td></tr>
+</tbody></table>
+
+<h3>CPT · Industries <code>kx_industry</code></h3>
+<p><strong>Field Group:</strong> Industry Details &nbsp;·&nbsp; Location: <code>kx_industry</code></p>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Description</td><td><code>description</code></td><td><span class="type type--textarea">Textarea</span></td><td>Card description.</td></tr>
+<tr><td>Features</td><td><code>features</code></td><td><span class="type type--textarea">Textarea</span></td><td>One feature per line (checklist items).</td></tr>
+<tr><td>Image</td><td><code>image</code></td><td><span class="type type--image">Image</span></td><td>Return: URL. Optional.</td></tr>
+<tr><td>Link</td><td><code>link</code></td><td><span class="type type--link">Link</span></td><td>"Explore Now" button. Optional.</td></tr>
+<tr><td>Is Secondary</td><td><code>is_secondary</code></td><td><span class="type type--bool">True/False</span></td><td>ON = appears in "Also relevant" grid.</td></tr>
+</tbody></table>
+<h4>Main carousel posts <span class="badge badge--ghost">is_secondary = OFF</span></h4>
+<table>
+<thead><tr><th>Order</th><th>Title</th><th>Features (one per line)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Retail</td><td>Inventory visibility · Store performance · Returns workflows · Sales reporting</td></tr>
+<tr><td>2</td><td>FMCG and Food and Beverage</td><td>Stockout alerts · Distributor dashboards · Product movement · Quality tracking</td></tr>
+<tr><td>3</td><td>Financial Services</td><td>Customer onboarding · Compliance tasks · Risk dashboards · Document approvals</td></tr>
+</tbody></table>
+<h4>Also-relevant posts <span class="badge badge--ghost">is_secondary = ON</span></h4>
+<table>
+<thead><tr><th>Order</th><th>Title</th></tr></thead>
+<tbody>
+<tr><td>4</td><td>Operational Intelligence Systems</td></tr>
+<tr><td>5</td><td>Real Estate and Construction</td></tr>
+<tr><td>6</td><td>Manufacturing</td></tr>
+<tr><td>7</td><td>Energy and Utilities</td></tr>
+</tbody></table>
+
+<h3>CPT · Proof Cases <code>kx_proof</code></h3>
+<p><strong>Field Group:</strong> Proof Case Details &nbsp;·&nbsp; Location: <code>kx_proof</code></p>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Industry Tag</td><td><code>tag</code></td><td><span class="type type--text">Text</span></td><td>e.g. "Retail", "FMCG &amp; F&amp;B"</td></tr>
+<tr><td>Description</td><td><code>description</code></td><td><span class="type type--textarea">Textarea</span></td><td>Expanded body text.</td></tr>
+<tr><td>Tags / Chips</td><td><code>tags</code></td><td><span class="type type--textarea">Textarea</span></td><td>One chip per line.</td></tr>
+<tr><td>Stat Label</td><td><code>stat_label</code></td><td><span class="type type--text">Text</span></td><td>e.g. "Analytics Data"</td></tr>
+<tr><td>Stat Value</td><td><code>stat_value</code></td><td><span class="type type--text">Text</span></td><td>e.g. "94.7%"</td></tr>
+<tr><td>Is Featured</td><td><code>is_featured</code></td><td><span class="type type--bool">True/False</span></td><td>ON starts expanded with analytics visible.</td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>Order</th><th>Title</th><th>Tag</th><th>Stat</th><th>Featured?</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Inventory Visibility and Store Performance System</td><td>Retail</td><td>94.7%</td><td><span class="badge badge--gold">YES</span></td></tr>
+<tr><td>2</td><td>Demand, Stockout, and Distributor Visibility System</td><td>FMCG &amp; F&amp;B</td><td>91.2%</td><td>No</td></tr>
+<tr><td>3</td><td>Compliance and Customer Operations Workflow System</td><td>Financial</td><td>88.5%</td><td>No</td></tr>
+<tr><td>4</td><td>Healthcare Inventory and Operational Control System</td><td>Healthcare</td><td>96.1%</td><td>No</td></tr>
+</tbody></table>
+
+<h3>CPT · Process Steps <code>kx_process</code></h3>
+<p><strong>Field Group:</strong> Process Step Details &nbsp;·&nbsp; Location: <code>kx_process</code></p>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Description</td><td><code>description</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>Order</th><th>Title</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Diagnose</td><td>Understand the business problem, visibility gaps, workflow pain, and decision needs.</td></tr>
+<tr><td>2</td><td>Map</td><td>Map processes, data sources, roles, systems, bottlenecks, and reporting gaps.</td></tr>
+<tr><td>3</td><td>Design</td><td>Define the right system, workflows, dashboards, user journeys, architecture, and success criteria.</td></tr>
+<tr><td>4</td><td>Build</td><td>Develop the data layer, dashboards, automation, AI assisted features, and custom software.</td></tr>
+<tr><td>5</td><td>Integrate</td><td>Connect the system with existing tools, data sources, workflows, and teams.</td></tr>
+<tr><td>6</td><td>Improve</td><td>Refine the system based on usage, feedback, performance, and changing business needs.</td></tr>
+</tbody></table>
+</section>
+
+<section class="doc" id="s4">
+<h2><span class="num">4</span>Quick Summary</h2>
+<table>
+<thead><tr><th>Content Type</th><th>Method</th><th>How Many</th></tr></thead>
+<tbody>
+<tr><td>Header CTA</td><td>Customizer</td><td>2 settings</td></tr>
+<tr><td>Footer</td><td>Customizer</td><td>12 settings</td></tr>
+<tr><td>Hero section</td><td>ACF (Homepage Content)</td><td>7 fields</td></tr>
+<tr><td>Blind Spots section</td><td>ACF (Homepage Content)</td><td>3 fields + 5 groups + 1 link</td></tr>
+<tr><td>Layers section</td><td>ACF (Homepage Content)</td><td>3 fields + 5 groups</td></tr>
+<tr><td>Systems heading/text</td><td>ACF (Homepage Content)</td><td>3 fields</td></tr>
+<tr><td>Systems cards</td><td>CPT <code>kx_system</code></td><td>5 posts (2 ACF fields each)</td></tr>
+<tr><td>Industries heading/text</td><td>ACF (Homepage Content)</td><td>4 fields</td></tr>
+<tr><td>Industries cards</td><td>CPT <code>kx_industry</code></td><td>7 posts (5 ACF fields each)</td></tr>
+<tr><td>Confidential section</td><td>ACF (Homepage Content)</td><td>4 fields + 5 groups</td></tr>
+<tr><td>Proof heading/text</td><td>ACF (Homepage Content)</td><td>3 fields</td></tr>
+<tr><td>Proof items</td><td>CPT <code>kx_proof</code></td><td>4 posts (6 ACF fields each)</td></tr>
+<tr><td>Process heading/text</td><td>ACF (Homepage Content)</td><td>3 fields</td></tr>
+<tr><td>Process steps</td><td>CPT <code>kx_process</code></td><td>6 posts (1 ACF field each)</td></tr>
+<tr><td>Discipline section</td><td>ACF (Homepage Content)</td><td>3 fields + 7 groups</td></tr>
+<tr><td>Final CTA section</td><td>ACF (Homepage Content)</td><td>4 fields</td></tr>
+</tbody></table>
+
+<div class="callout callout--info">
+  <strong>Total ACF field groups to create: 5</strong><br>
+  1. Homepage Content · 2. System Details · 3. Industry Details · 4. Proof Case Details · 5. Process Step Details
+</div>
+</section>
+
+<div class="footer">
+  <span>© Kelarix — Homepage CMS Guide</span>
+  <span>Roas Solutions</span>
+</div>
+
+</div>
+</body>
+</html>

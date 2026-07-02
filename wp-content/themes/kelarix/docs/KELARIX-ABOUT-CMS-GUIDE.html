@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kelarix CMS Setup Guide — About Us</title>
+<style>
+  :root{
+    --ink:#0e1220;--ink-2:#3b4463;--muted:#6b7290;--line:#e6e9f5;--line-2:#eef1f8;
+    --bg:#ffffff;--bg-soft:#f6f8ff;--accent:#1a48ff;--accent-2:#0032e6;
+    --accent-100:#e7eaff;--accent-50:#f0f2ff;--code:#0e1e5a;--shadow:0 10px 30px rgba(20,35,90,.08);
+  }
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{font-family:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:15px}
+  .page{max-width:960px;margin:0 auto;padding:56px 40px 80px}
+  .cover{background:linear-gradient(135deg,#0032e6 0%,#1a48ff 55%,#4e67ff 100%);color:#fff;border-radius:28px;padding:56px 48px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:48px}
+  .cover::after{content:"";position:absolute;right:-60px;bottom:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 60%);border-radius:50%}
+  .cover .kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .cover h1{font-size:42px;line-height:1.1;margin:18px 0 12px;letter-spacing:-.02em}
+  .cover p{margin:0;max-width:640px;color:rgba(255,255,255,.85);font-size:16px}
+  .cover .meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+  .cover .meta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600}
+  .toc{background:var(--bg-soft);border:1px solid var(--line);border-radius:20px;padding:24px 28px;margin-bottom:48px}
+  .toc h4{margin:0 0 12px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-2)}
+  .toc ol{margin:0;padding-left:20px;color:var(--ink-2)}
+  .toc li{margin:6px 0;font-weight:600}
+  .toc a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--line)}
+  h2{font-size:26px;letter-spacing:-.01em;margin:48px 0 8px;color:var(--ink)}
+  h2 .num{color:var(--accent);margin-right:10px;font-variant-numeric:tabular-nums}
+  h3{font-size:19px;margin:36px 0 12px;color:var(--ink)}
+  h4{font-size:15px;margin:22px 0 8px;color:var(--ink)}
+  p{margin:0 0 12px;color:var(--ink-2)}
+  a{color:var(--accent-2)}
+  .lead{color:var(--muted);font-size:16px}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--accent-100);color:var(--accent-2);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid rgba(26,72,255,.18)}
+  .badge--ghost{background:#fff;color:var(--ink-2);border-color:var(--line)}
+  .callout{background:var(--bg-soft);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:14px 18px;margin:16px 0;color:var(--ink-2);font-size:14px}
+  .callout--warn{border-left-color:#c98800;background:#fffbeb;border-color:#f4e5b1}
+  .callout strong{color:var(--ink)}
+  table{width:100%;border-collapse:separate;border-spacing:0;margin:14px 0 22px;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(20,35,90,.02)}
+  th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
+  th{background:var(--bg-soft);font-weight:700;color:var(--ink);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:0}
+  td code, th code{background:var(--accent-50);color:var(--code);padding:2px 6px;border-radius:6px;font-size:12.5px;font-weight:600}
+  code, kbd{font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;background:var(--accent-50);color:var(--code);padding:2px 6px;border-radius:6px;font-size:12.5px}
+  section.doc{border-top:1px dashed var(--line);padding-top:28px;margin-top:36px}
+  section.doc:first-of-type{border-top:0;margin-top:0;padding-top:0}
+  .type{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef1f8;color:#31406b;font-size:11.5px;font-weight:700}
+  .type--tab{background:#ffe9d8;color:#a45210}
+  .type--text{background:#e7eaff;color:#0032e6}
+  .type--textarea{background:#e0f2e9;color:#1a6b3d}
+  .type--image{background:#fde2ef;color:#8c1f57}
+  .type--link{background:#e6f4fb;color:#0f5c81}
+  .type--group{background:#eee5ff;color:#4a2a94}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0 8px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+  .stat .v{font-size:22px;color:var(--ink);font-weight:800;margin-top:4px}
+  .stat .d{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .steps{counter-reset:step;margin:16px 0}
+  .step{display:flex;gap:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:10px}
+  .step::before{counter-increment:step;content:counter(step);flex:none;width:32px;height:32px;border-radius:10px;background:var(--accent-100);color:var(--accent-2);display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+  @media print{.page{padding:24px}.cover{border-radius:14px;padding:36px 32px}section.doc{page-break-inside:avoid}table{page-break-inside:avoid}a{color:inherit}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <span class="kicker">Kelarix · CMS Setup Guide</span>
+  <h1>About Us Page — WordPress Setup</h1>
+  <p>Every ACF field required to make the About Us page fully editable from the WordPress dashboard. Mirrors the same pattern as the homepage guide.</p>
+  <div class="meta">
+    <span>ACF Free</span><span>6 Sections</span><span>1 Field Group</span><span>Reuses <code style="background:rgba(0,0,0,.14);color:#fff">kx_process</code></span>
+  </div>
+</div>
+
+<div class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#p1">Page Setup — how to publish the About page</a></li>
+    <li><a href="#p2">ACF Field Group — "About Page Content"</a></li>
+    <li><a href="#p3">Reusable CPT — Process Steps</a></li>
+    <li><a href="#p4">Quick Summary</a></li>
+  </ol>
+</div>
+
+<div class="grid">
+  <div class="stat"><div class="k">Field Groups</div><div class="v">1</div><div class="d">About Page Content</div></div>
+  <div class="stat"><div class="k">Sections</div><div class="v">6</div><div class="d">Hero · Why · POV · Strategy · Path · Discipline</div></div>
+  <div class="stat"><div class="k">Total fields</div><div class="v">50+</div><div class="d">Split into 6 tabs</div></div>
+  <div class="stat"><div class="k">CPTs reused</div><div class="v">1</div><div class="d"><code>kx_process</code> (6 steps)</div></div>
+</div>
+
+<section class="doc" id="p1">
+<h2><span class="num">1</span>Page Setup</h2>
+<p class="lead">Publish a WordPress Page that uses the <strong>About Us</strong> template.</p>
+
+<div class="steps">
+  <div class="step"><div><strong>Create the page.</strong><br>Dashboard → <em>Pages → Add New</em>. Title it <strong>About Us</strong>. Slug: <code>about</code>.</div></div>
+  <div class="step"><div><strong>Assign the template.</strong><br>In the right sidebar → <em>Page Attributes → Template</em> → choose <strong>About Us</strong>.</div></div>
+  <div class="step"><div><strong>Publish.</strong><br>Click Publish. Preview at <code>/about</code>.</div></div>
+  <div class="step"><div><strong>Add to menu (optional).</strong><br><em>Appearance → Menus → Primary Menu</em>, add the About page.</div></div>
+</div>
+
+<div class="callout">
+  The theme file backing this is <code>page-about.php</code>. It automatically pulls in the 6 sections under <code>template-parts/about/</code>. Every field below shows design defaults until you fill it in — the page is never blank.
+</div>
+</section>
+
+<section class="doc" id="p2">
+<h2><span class="num">2</span>ACF Field Group — “About Page Content”</h2>
+<div class="callout">
+  Create one field group in <strong>ACF → Field Groups → Add New</strong>.<br>
+  <strong>Title:</strong> About Page Content &nbsp;·&nbsp;
+  <strong>Location:</strong> Page <em>is equal to</em> About Us (or the About page you created above).
+  <br>Add a <strong>Tab</strong> field at the start of each section to keep the editor organised.
+</div>
+
+<!-- HERO -->
+<h3>Tab · Hero</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Hero Tab</td><td><code>about_hero_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Hero Heading</td><td><code>about_hero_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Allows basic HTML. Default: "Built to bring clarity, control, and intelligence to business operations."</td></tr>
+<tr><td>Hero Subtext</td><td><code>about_hero_subtext</code></td><td><span class="type type--textarea">Textarea</span></td><td>Default: "Kelarix builds data driven systems…"</td></tr>
+<tr><td>Hero Image</td><td><code>about_hero_image</code></td><td><span class="type type--image">Image</span></td><td>Return Format: Image URL. Background photo behind hero.</td></tr>
+<tr><td>Primary CTA</td><td><code>about_hero_cta_primary</code></td><td><span class="type type--link">Link</span></td><td>Default: "Request a Diagnostic Conversation" → <code>#contact</code></td></tr>
+<tr><td>Secondary CTA</td><td><code>about_hero_cta_secondary</code></td><td><span class="type type--link">Link</span></td><td>Default: "Explore What We Build" → <code>#systems</code></td></tr>
+<tr><td>Shield Note</td><td><code>about_hero_note</code></td><td><span class="type type--text">Text</span></td><td>Default: "For businesses managing complex operations and scattered data."</td></tr>
+</tbody></table>
+
+<!-- WHY -->
+<h3>Tab · Why Kelarix Exists</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Why Tab</td><td><code>why_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Badge Text</td><td><code>why_badge</code></td><td><span class="type type--text">Text</span></td><td>Default: "Why Kelarix Exists"</td></tr>
+<tr><td>Section Heading</td><td><code>why_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Allows <code>&lt;br&gt;</code>. Default: "Businesses are growing faster than their systems can support."</td></tr>
+<tr><td>Paragraph 1</td><td><code>why_text_1</code></td><td><span class="type type--textarea">Textarea</span></td><td>Opening paragraph.</td></tr>
+<tr><td>Paragraph 2</td><td><code>why_text_2</code></td><td><span class="type type--textarea">Textarea</span></td><td>Middle paragraph.</td></tr>
+<tr><td>Paragraph 3</td><td><code>why_text_3</code></td><td><span class="type type--textarea">Textarea</span></td><td>Closing paragraph.</td></tr>
+<tr><td>Quote Card</td><td><code>why_quote</code></td><td><span class="type type--textarea">Textarea</span></td><td>Dark quote card text. Default: "The goal is not more technology. The goal is better business control."</td></tr>
+</tbody></table>
+
+<!-- POV -->
+<h3>Tab · Our Point of View</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>POV Tab</td><td><code>pov_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Badge Text</td><td><code>pov_badge</code></td><td><span class="type type--text">Text</span></td><td>Default: "Our Point of View"</td></tr>
+<tr><td>Section Heading</td><td><code>pov_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Default: "Technology only creates value when it improves how the business runs."</td></tr>
+<tr><td>Section Text</td><td><code>pov_text</code></td><td><span class="type type--textarea">Textarea</span></td><td>Intro paragraph below heading.</td></tr>
+<tr><td>POV Card 1–5</td><td><code>pov_card_1</code> … <code>pov_card_5</code></td><td><span class="type type--group">Group</span></td><td>Sub-fields: <code>title</code> (Text), <code>text</code> (Textarea), <code>icon</code> (Text)</td></tr>
+</tbody></table>
+<p><strong>Icon values:</strong> <code>scatter</code>, <code>clipboard</code>, <code>clock</code>, <code>workflow</code>, <code>ai</code> (match filenames in <code>assets/images/icons/</code>).</p>
+<table>
+<thead><tr><th>#</th><th>Default Title</th><th>Icon</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Business problems come before technology</td><td><code>clipboard</code></td></tr>
+<tr><td>2</td><td>Data must be reliable before intelligence can work</td><td><code>scatter</code></td></tr>
+<tr><td>3</td><td>Workflows must reflect real operations</td><td><code>workflow</code></td></tr>
+<tr><td>4</td><td>Dashboards should support decisions</td><td><code>clock</code></td></tr>
+<tr><td>5</td><td>Automation should improve control</td><td><code>ai</code></td></tr>
+</tbody></table>
+
+<!-- STRATEGY -->
+<h3>Tab · Strategy &amp; Execution</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Strategy Tab</td><td><code>strat_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Badge Text</td><td><code>strat_badge</code></td><td><span class="type type--text">Text</span></td><td>Default: "Strategy &amp; Execution"</td></tr>
+<tr><td>Section Heading</td><td><code>strat_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Default: "We sit between business strategy and technical execution."</td></tr>
+<tr><td>Section Text</td><td><code>strat_text</code></td><td><span class="type type--textarea">Textarea</span></td><td>Paragraph beside the heading.</td></tr>
+<tr><td>Strategy Card 1–3</td><td><code>strat_card_1</code> … <code>strat_card_3</code></td><td><span class="type type--group">Group</span></td><td>Sub-fields: <code>title</code> (Text), <code>text</code> (Textarea)</td></tr>
+<tr><td>Strategy CTA</td><td><code>strat_cta</code></td><td><span class="type type--link">Link</span></td><td>4th card = CTA button. Default: "Request a Diagnostic Conversation" → <code>#contact</code></td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>#</th><th>Default Title</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>We understand the business first</td></tr>
+<tr><td>2</td><td>Built around real operating needs</td></tr>
+<tr><td>3</td><td>We build with practical implementation in mind</td></tr>
+</tbody></table>
+
+<!-- PATH -->
+<h3>Tab · Structured Path</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Path Tab</td><td><code>path_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Badge Text</td><td><code>path_badge</code></td><td><span class="type type--text">Text</span></td><td>Default: "How We Work"</td></tr>
+<tr><td>Section Heading</td><td><code>path_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Default: "A structured path from business problem to working system."</td></tr>
+<tr><td>Section Text</td><td><code>path_text</code></td><td><span class="type type--textarea">Textarea</span></td><td>Paragraph beside the accordion.</td></tr>
+<tr><td>Primary CTA</td><td><code>path_cta_primary</code></td><td><span class="type type--link">Link</span></td><td>Default: "Request a Diagnostic Conversation" → <code>#contact</code></td></tr>
+<tr><td>Secondary CTA</td><td><code>path_cta_secondary</code></td><td><span class="type type--link">Link</span></td><td>Default: "Explore What We Build" → <code>#systems</code></td></tr>
+</tbody></table>
+<div class="callout">
+  The 6-step accordion on the right pulls from the <strong>Process Steps</strong> CPT (<code>kx_process</code>) — the same posts used on the homepage. See §3.
+</div>
+
+<!-- DISCIPLINE -->
+<h3>Tab · Our Discipline</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Discipline Tab</td><td><code>about_disc_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Badge Text</td><td><code>about_disc_badge</code></td><td><span class="type type--text">Text</span></td><td>Default: "Our Discipline"</td></tr>
+<tr><td>Section Heading</td><td><code>about_disc_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Default: "Built with the discipline serious business systems require."</td></tr>
+<tr><td>Section Text</td><td><code>about_disc_text</code></td><td><span class="type type--textarea">Textarea</span></td><td>Intro paragraph below heading.</td></tr>
+<tr><td>Discipline Item 1–8</td><td><code>about_disc_item_1</code> … <code>about_disc_item_8</code></td><td><span class="type type--group">Group</span></td><td>Sub-fields: <code>title</code> (Text), <code>text</code> (Textarea)</td></tr>
+<tr><td>Primary CTA</td><td><code>about_disc_cta_primary</code></td><td><span class="type type--link">Link</span></td><td>Default: "Request a Diagnostic Conversation" → <code>#contact</code></td></tr>
+<tr><td>Secondary CTA</td><td><code>about_disc_cta_secondary</code></td><td><span class="type type--link">Link</span></td><td>Default: "Explore What We Build" → <code>#systems</code></td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>#</th><th>Default Title</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Business first discovery</td></tr>
+<tr><td>2</td><td>Confidentiality first</td></tr>
+<tr><td>3</td><td>Data discipline</td></tr>
+<tr><td>4</td><td>Workflow realism</td></tr>
+<tr><td>5</td><td>Role based thinking</td></tr>
+<tr><td>6</td><td>Responsible AI</td></tr>
+<tr><td>7</td><td>Documentation discipline</td></tr>
+<tr><td>8</td><td>Scalable foundations</td></tr>
+</tbody></table>
+</section>
+
+<section class="doc" id="p3">
+<h2><span class="num">3</span>Reusable CPT — Process Steps</h2>
+<p class="lead">The About page's "structured path" accordion reuses the same <code>kx_process</code> posts as the homepage. No duplicate content required.</p>
+
+<div class="callout">
+  If you already created the 6 Process Step posts for the homepage, the About accordion will populate automatically.<br>
+  If not, follow the same setup as the homepage guide (§3, "Process Steps").
+</div>
+
+<table>
+<thead><tr><th>Order</th><th>Title</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Diagnose</td><td>Understand the business problem, visibility gaps, workflow pain, and decision needs.</td></tr>
+<tr><td>2</td><td>Map</td><td>Map processes, data sources, roles, systems, bottlenecks, and reporting gaps.</td></tr>
+<tr><td>3</td><td>Design</td><td>Define the right system, workflows, dashboards, user journeys, architecture, and success criteria.</td></tr>
+<tr><td>4</td><td>Build</td><td>Develop the data layer, dashboards, automation, AI assisted features, and custom software.</td></tr>
+<tr><td>5</td><td>Integrate</td><td>Connect the system with existing tools, data sources, workflows, and teams.</td></tr>
+<tr><td>6</td><td>Improve</td><td>Refine the system based on usage, feedback, performance, and changing business needs.</td></tr>
+</tbody></table>
+</section>
+
+<section class="doc" id="p4">
+<h2><span class="num">4</span>Quick Summary</h2>
+<table>
+<thead><tr><th>Section</th><th>Method</th><th>Fields</th></tr></thead>
+<tbody>
+<tr><td>Hero</td><td>ACF (About Page Content)</td><td>6 fields</td></tr>
+<tr><td>Why Kelarix Exists</td><td>ACF (About Page Content)</td><td>6 fields</td></tr>
+<tr><td>Our Point of View</td><td>ACF (About Page Content)</td><td>3 fields + 5 groups</td></tr>
+<tr><td>Strategy &amp; Execution</td><td>ACF (About Page Content)</td><td>3 fields + 3 groups + 1 link</td></tr>
+<tr><td>Structured Path</td><td>ACF + reuses <code>kx_process</code> CPT</td><td>4 fields + 2 links</td></tr>
+<tr><td>Our Discipline</td><td>ACF (About Page Content)</td><td>3 fields + 8 groups + 2 links</td></tr>
+</tbody></table>
+
+<div class="callout">
+  <strong>Total ACF field groups to create for the About page: 1</strong><br>
+  1. About Page Content (on the About Us page)
+  <br><br>
+  <strong>No new CPTs needed.</strong> The Structured Path section reuses the existing <code>kx_process</code> posts from the homepage.
+</div>
+</section>
+
+<div class="footer">
+  <span>© Kelarix — About Us CMS Guide</span>
+  <span>Roas Solutions</span>
+</div>
+
+</div>
+</body>
+</html>
