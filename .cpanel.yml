@@ -1,19 +1,19 @@
 ---
 # =============================================================
 #  cPanel Git Version Control — Deployment config
-#  Uses cp -R because /usr/bin/rsync is not installed on this host.
-#  Deploy log → /home/kelarixc/deploy-log.txt (safe to delete anytime).
+#  Target: staging.kelarix.com subdomain
+#  Log: /home/kelarixc/deploy-log.txt (safe to delete anytime)
 # =============================================================
 deployment:
   tasks:
     - /bin/echo "=== DEPLOY START $(date) ===" > /home/kelarixc/deploy-log.txt
-    - /bin/mkdir -p /home/kelarixc/public_html/wp-content/themes/kelarix
-    - /bin/rm -rf /home/kelarixc/public_html/wp-content/themes/kelarix/*
-    - /bin/cp -Rf /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/. /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/mkdir -p /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix
+    - /bin/rm -rf /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix/*
+    - /bin/cp -Rf /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/. /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
     - /bin/echo "cp exit code: $?" >> /home/kelarixc/deploy-log.txt
-    - /bin/chmod -R 755 /home/kelarixc/public_html/wp-content/themes/kelarix
-    - /usr/bin/find /home/kelarixc/public_html/wp-content/themes/kelarix -type f -exec /bin/chmod 644 {} \;
+    - /bin/chmod -R 755 /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix
+    - /usr/bin/find /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix -type f -exec /bin/chmod 644 {} \;
     - /bin/echo "" >> /home/kelarixc/deploy-log.txt
     - /bin/echo "--- Destination AFTER cp ---" >> /home/kelarixc/deploy-log.txt
-    - /bin/ls -la /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/ls -la /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
     - /bin/echo "=== DEPLOY END $(date) ===" >> /home/kelarixc/deploy-log.txt
