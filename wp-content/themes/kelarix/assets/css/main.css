@@ -2706,6 +2706,7 @@ svg {
   }
   .site-header__toggle {
     display: flex;
+    margin-left: auto;
   }
   .site-header__bar {
     padding: 9px 16px;
