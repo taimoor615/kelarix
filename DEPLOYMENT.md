@@ -154,3 +154,90 @@ Regular basis pe iski zarurat nahi — sirf jab local pe latest images ke sath t
 - `wp-content/themes/kelarix/` — actual theme code
 
 Baaki sab (`wp-admin`, `wp-includes`, `wp-config.php`, `uploads`, DB) — sab local ya server par hain, Git mein nahi.
+
+---
+
+## Project Status Log — kya kya complete ho chuka hai
+
+### Pages built (with fully editable ACF content)
+
+| Page | Template File | ACF Group | Tabs |
+|---|---|---|---|
+| Homepage | `front-page.php` | Homepage Content | 10 (Hero → Final CTA) |
+| About Us | `page-about.php` | About Page Content | 8 |
+| Industries | `page-industries.php` | Industries Page Content | 10 |
+
+Har page mein overlapping backdrop wrappers (`hero-block`, `layers-block`, `industries-block`, `ind-top-block`, `ind-focus-block`, `ind-footer-block` etc.) — background images seamlessly section boundaries pe span karte hain.
+
+### Custom Post Types
+
+- `kx_system` (Systems We Build cards)
+- `kx_industry` (Industry cards + Also-relevant)
+- `kx_proof` (Featured Proof accordion)
+- `kx_process` (Process Steps used on Homepage + About "How We Work")
+
+Har CPT ke apne ACF field group registered (System Details, Industry Details, Proof Case Details, Process Step Details).
+
+### Deploy config final state (`.cpanel.yml`)
+
+Multiple iterations ke baad settled config:
+- Single-line `cp -R` copy (rsync host pe available nahi)
+- Absolute paths (variable expansion issues avoid)
+- Deploy log `/home/CPANEL_USER/deploy-log.txt` mein — debug ke liye
+- **Deploy target ab `staging.kelarix.com/wp-content/themes/kelarix/`** (production ke liye `.cpanel.yml` mein path change karna hoga)
+
+### ACF automation (`inc/acf-fields.php`)
+
+Programmatic field registration — 65+ homepage, 55+ about, 55+ industries + 4 CPT groups. Sab helper functions (`kacf_tab`, `kacf_text`, `kacf_card`, etc.) ke through compact declared hain.
+
+- Field keys per-group prefixed (`hp_`, `ab_`, `in_`) — duplicate key clashes avoid
+- Tabs `placement: 'left'` — cleaner editor UI
+- Auto-sync `admin_init` pe run — local groups DB mein copy ho jate hain (version-locked)
+- To re-sync: `KELARIX_VERSION` bump karo, admin visit karo — sirf naye groups add hote hain
+
+### Documentation
+
+`wp-content/themes/kelarix/docs/`:
+- `KELARIX-CMS-GUIDE.html` + `.pdf` — Homepage ACF fields reference
+- `KELARIX-ABOUT-CMS-GUIDE.html` + `.pdf` — About Us page reference
+- `KELARIX-INDUSTRIES-CMS-GUIDE.html` + `.pdf` — Industries page reference
+
+Sab HTML brand-styled (gradient covers, table typography, field-type pills) aur print-optimized.
+
+### Assets structure
+
+`wp-content/themes/kelarix/assets/`:
+- `css/tokens.css` + `main.css` — design system + component styles
+- `js/main.js` — carousels, accordions, mobile nav
+- `images/` — homepage backdrops + connectors
+- `images/about-us/` — About page backgrounds
+- `images/industry/` — Industries page backgrounds
+- `images/icons/` — reusable inline SVG icons
+
+### Global site changes
+
+- Header nav items **white color** (dark hero pe visible)
+- Footer shared across all pages (`footer.php`)
+- WordPress version bumped: `1.0.0 → 1.7.2` (CSS/JS cache-bust granular)
+
+### Staging setup
+
+- Subdomain `staging.kelarix.com` cPanel se create ho chuka
+- WordPress fresh install via Softaculous
+- PHP 8.0 via CloudLinux PHP Selector (initial 502 issue fix hua)
+- `.htaccess` default WordPress rules restore
+
+### Repo access
+
+- **Currently public** on GitHub (private ke liye SSH deploy key setup complete karna baaki hai)
+- Local: `d:\xampp\htdocs\kelarix`
+- Live theme path: `/home/CPANEL_USER/staging.kelarix.com/wp-content/themes/kelarix/`
+
+---
+
+## Known follow-ups
+
+- SSH deploy key wapas setup karke repo private karna
+- Production domain point karne pe `.cpanel.yml` mein deploy path `staging.kelarix.com/` → `public_html/` update
+- Media library images live pe upload karna (`wp-content/uploads/`)
+- Client se content finalize hone pe ACF defaults update (currently defaults hardcoded PHP mein)

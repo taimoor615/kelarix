@@ -300,7 +300,7 @@ svg {
 .site-nav__list a {
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);
-  color: var(--gray-800);
+  color: #fff;
   transition: color 0.15s;
 }
 .site-nav__list a:hover {
@@ -334,33 +334,34 @@ svg {
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(
+  /* background: linear-gradient(
     177deg,
     #8a99bf 0%,
     #6c7dac 20%,
     #475a90 42%,
     #2c47b6 74%,
     #1f3ec6 100%
-  );
+  ); */
+  z-index: 9 !important;
 }
 .hero__bg {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 60%;
+  width: 100%;
   background-size: cover;
   background-position: center right;
   background-repeat: no-repeat;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    #000 22%,
-    #000 100%
-  );
-  mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 100%);
+  /* -webkit-mask-image: linear-gradient( */
+  /* 90deg, */
+  /* transparent 0%, */
+  /* #000 22%, */
+  /* #000 100% */
+  /* ); */
+  /* mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 100%); */
 }
-.hero__overlay {
+/* .hero__overlay {
   position: absolute;
   inset: 0;
   background:
@@ -378,7 +379,7 @@ svg {
       rgba(31, 62, 198, 0) 58%,
       rgba(31, 62, 198, 0.92) 100%
     );
-}
+} */
 .hero__inner {
   position: relative;
   max-width: 680px;
@@ -445,18 +446,23 @@ svg {
 /* ==========================================================================
    Blind spots
    ========================================================================== */
-.blind {
+/* .blind {
   position: relative;
   background: linear-gradient(180deg, #1f3ec6 0%, #2143cc 55%, #2548d4 100%);
   padding-block: var(--space-64);
-}
-.blind::before {
+} */
+/* .blind::before {
   content: "";
   position: absolute;
   inset: 0;
   background: url("../images/arch-blue.svg") center / cover no-repeat;
   pointer-events: none;
+} */
+
+.blind.sec-key-problems-wrapper {
+  z-index: 99999;
 }
+
 .blind > .container {
   position: relative;
   z-index: 1;
@@ -619,7 +625,7 @@ svg {
   padding-top: var(--space-64);
   padding-bottom: var(--space-128);
 }
-.layers::before {
+/* .layers::before {
   content: "";
   position: absolute;
   top: 0;
@@ -628,8 +634,8 @@ svg {
   height: 50%;
   background: url("../images/arch-blue.svg") center top / cover no-repeat;
   pointer-events: none;
-}
-.layers__bg {
+} */
+/* .layers__bg {
   position: absolute;
   left: 0;
   right: 0;
@@ -638,7 +644,7 @@ svg {
   background: url("../images/arch-light.svg") center bottom / cover no-repeat;
   opacity: 0.7;
   pointer-events: none;
-}
+} */
 .layers__inner {
   position: relative;
   z-index: 2;
@@ -822,13 +828,13 @@ svg {
   overflow: hidden;
   background: var(--gray);
 }
-.industries__bg {
+/* .industries__bg {
   position: absolute;
   inset: 0;
   background: url("../images/arch-light.svg") center bottom / cover no-repeat;
   opacity: 0.5;
   pointer-events: none;
-}
+} */
 .industries__inner {
   position: relative;
   z-index: 1;
@@ -1109,13 +1115,13 @@ svg {
 .proof {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    #4060d8 0%,
-    #2b49bf 20%,
-    #1e39ad 58%,
-    #15309f 100%
-  );
+  /* background: linear-gradient( */
+  /* 180deg, */
+  /* #4060d8 0%, */
+  /* #2b49bf 20%, */
+  /* #1e39ad 58%, */
+  /* #15309f 100% */
+  /* ); */
 }
 .proof__bg {
   position: absolute;
@@ -1123,7 +1129,8 @@ svg {
   left: 0;
   right: 0;
   height: 460px;
-  background: url("../images/arch-blue.svg") center top / cover no-repeat;
+  /* background: url("../images/blue-light-bg-img.png") center top / cover */
+  /* no-repeat; */
   pointer-events: none;
 }
 .proof__inner {
@@ -1626,15 +1633,266 @@ svg {
 }
 
 /* ==========================================================================
+   Section backgrounds (home)
+   ========================================================================== */
+.hero {
+  background-image:
+    /* linear-gradient( */
+      /* 177deg, */
+      /* rgba(138, 153, 191, 0.35) 0%, */
+      /* rgba(44, 71, 182, 0.55) 55%, */
+      /* rgba(31, 62, 198, 0.75) 100% */
+    /* ), */ url("../images/home-hero-section-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.layers {
+  background-image: url("../images/home-what-kelarix-does-bg.jpg");
+  background-size: 100% 85%;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: -240px;
+  padding-top: 240px;
+  z-index: 99;
+}
+.industries {
+  background-image:
+    /* linear-gradient( */
+      /* 180deg, */
+      /* rgba(255, 255, 255, 0.55) 0%, */
+      /* rgba(240, 242, 248, 0.55) 100% */
+    /* ), */ url("../images/home-industry-focus-bg.jpg");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.proof {
+  background-color: transparent;
+  background-image:
+    url("../images/featured-proof_process-connector-img-bg.jpg"),
+    url("../images/home-featured-proof-bg.jpg");
+  background-size:
+    100% 111%,
+    cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: overlay, normal;
+}
+
+/* ==========================================================================
+   Hero block — wrapper backdrop spanning hero + blind-spots.
+   Ends where the "What Kelarix Does" (layers) section begins.
+   ========================================================================== */
+.hero-block {
+  position: relative;
+}
+.hero-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/connector-hero_problems-does-img-bg.jpg");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  z-index: 9;
+  pointer-events: none;
+}
+.hero-block > * {
+  position: relative;
+  z-index: 1;
+}
+/* Let the wrapper backdrop show through hero + blind-spots gradients slightly */
+.hero-block .hero,
+.hero-block .blind {
+  background-color: transparent;
+}
+
+/* Layers head (badge + heading + description) — sits on hero-block backdrop */
+.layers-head {
+  background: transparent;
+  padding-block: var(--space-64) var(--space-40);
+  position: relative;
+  z-index: 999;
+}
+.layers-head .section__head {
+  max-width: 820px;
+  margin-inline: auto;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+/* Layers cards half — starts right after backdrop closes */
+.layers--split {
+  padding-top: var(--space-40);
+}
+.layers--split::before {
+  display: none;
+}
+
+/* ==========================================================================
+   Proof-block — structural wrapper only.
+   The background image + overlay blend now live on .proof itself via
+   background-blend-mode (see .proof rule near the top of section backgrounds).
+   ========================================================================== */
+.proof-block {
+  position: relative;
+}
+
+/* ==========================================================================
+   Section connectors (transitional strips between adjacent sections)
+   ========================================================================== */
+.section-connector {
+  width: 100%;
+  display: block;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  line-height: 0;
+}
+.section-connector--proof-process {
+  height: 180px;
+  background-image: url("../images/featured-proof_process-connector-img-bg.jpg");
+}
+.section-connector--process-footer {
+  height: 160px;
+  background-image: url("../images/footer-process-connector-bg.jpg");
+}
+
+@media (max-width: 1024px) {
+  .section-connector--proof-process,
+  .section-connector--process-footer {
+    height: 120px;
+  }
+}
+@media (max-width: 760px) {
+  .section-connector--proof-process,
+  .section-connector--process-footer {
+    height: 80px;
+  }
+}
+
+/* ==========================================================================
    About page
    ========================================================================== */
-.about-page {
+/* .about-page {
   background: #1f3ec6;
+} */
+
+/* ==========================================================================
+   About page — overlay backdrops (hero → POV mid → strategy)
+   ========================================================================== */
+
+/* Layer 1 (top overlay): about-overlay-img-2sections.png
+   Spans hero + why + POV head. Ends at POV cards (mid of POV section). */
+.about-hero-block {
+  position: relative;
+  isolation: isolate;
+}
+.about-hero-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/about-us/about-overlay-img-2sections.png");
+  background-size: 100% 100%;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+.about-hero-block > * {
+  position: relative;
+  z-index: 1;
+}
+/* Kill inner section colors so the wrapper backdrop shows */
+.about-hero-block .about-why,
+.about-hero-block .about-pov--head-only {
+  background: transparent;
+}
+.about-pov--head-only {
+  padding-block: 0 var(--space-40);
+}
+
+/* Layer 2 (below overlay): business-problem__strategy-lead.png
+   Starts where overlay ends. Negative margin pulls it up under the overlay
+   so bottom of overlay-img overlays on top of business-problem image. */
+.about-strategy-block {
+  position: relative;
+  margin-top: -120px;
+  padding-top: 0;
+  background-image: url("../images/about-us/business-problem__strategy-lead.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+.about-strategy-block .about-pov--cards-only,
+.about-strategy-block .about-strategy {
+  background: transparent;
+}
+.about-strategy-block .about-strategy::before {
+  display: none; /* remove any layered arch decor since bg does the work */
+}
+.about-pov--cards-only {
+  padding-block: var(--space-40) var(--space-64);
+}
+
+/* Layer 3: marquee bg wraps the Our Discipline section */
+.about-marquee-block {
+  position: relative;
+  background-image: url("../images/about-us/marquee-bg-img.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.about-marquee-block .about-discipline {
+  background: transparent;
+}
+.about-marquee-block .about-discipline::before {
+  display: none;
+}
+
+/* Layer 4: footer backdrop — wraps 'What Makes Kelarix Different' + Final CTA,
+   closes right before the site <footer>. */
+.about-footer-block {
+  position: relative;
+  background-image: url("../images/about-us/footer-before-bg.png");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+.about-footer-block .about-different {
+  background: transparent;
+}
+.about-footer-block .about-different::before {
+  display: none;
+}
+.about-footer-block .about-final-cta {
+  background: transparent;
+}
+
+@media (max-width: 760px) {
+  .about-strategy-block {
+    margin-top: -60px;
+    padding-top: 0;
+  }
 }
 
 /* Hero override: give more space and center on smaller */
 .about-hero {
   padding-bottom: var(--space-96);
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
+  background-image: url("../images/about-us/about-hero-image.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Hide the separate hero__bg div for About hero — bg is now on the section */
+.about-hero .hero__bg,
+.about-hero .hero__overlay {
+  display: none;
 }
 .about-hero__inner {
   max-width: 780px;
@@ -1704,14 +1962,14 @@ svg {
   position: relative;
   overflow: hidden;
 }
-.about-pov::before {
+/* .about-pov::before {
   content: "";
   position: absolute;
   inset: 0;
   background: url("../images/arch-blue.svg") center / cover no-repeat;
   opacity: 0.28;
   pointer-events: none;
-}
+} */
 .about-pov > .container {
   position: relative;
   z-index: 1;
@@ -1750,7 +2008,9 @@ svg {
   scrollbar-width: none;
   will-change: scroll-position;
 }
-.about-pov__track::-webkit-scrollbar { height: 0; }
+.about-pov__track::-webkit-scrollbar {
+  height: 0;
+}
 .pov-card {
   scroll-snap-align: start;
   scroll-snap-stop: normal;
@@ -1776,15 +2036,18 @@ svg {
 /* Higher-specificity overrides — prevent global .carousel-btn:hover from
    turning the icon white on the white play button */
 .about-pov__nav .carousel-btn {
-  border-color: rgba(255,255,255,.45);
+  border-color: rgba(255, 255, 255, 0.45);
   color: #fff;
   background: transparent;
-  transition: color .15s ease, border-color .15s ease, background .15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 .about-pov__nav .carousel-btn:hover {
   border-color: #fff;
   color: #fff;
-  background: rgba(255,255,255,.12);
+  background: rgba(255, 255, 255, 0.12);
 }
 .about-pov__nav .carousel-btn--play,
 .about-pov__nav .carousel-btn--play:hover {
@@ -1794,12 +2057,12 @@ svg {
 }
 .about-pov__nav .carousel-btn--play:hover {
   color: var(--accent-700);
-  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 .about-pov__progress {
   flex: 1;
   height: 3px;
-  background: rgba(255,255,255,.24);
+  background: rgba(255, 255, 255, 0.24);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -1809,7 +2072,9 @@ svg {
   width: 33%;
   background: #fff;
   border-radius: 2px;
-  transition: width .25s ease, margin-left .25s ease;
+  transition:
+    width 0.25s ease,
+    margin-left 0.25s ease;
 }
 .pov-card__icon {
   display: inline-flex;
@@ -1914,7 +2179,7 @@ svg {
 }
 .strat-card--cta {
   background: var(--accent-500);
-  border-color: rgba(255,255,255,.2);
+  border-color: rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1934,7 +2199,7 @@ svg {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255,255,255,.18);
+  background: rgba(255, 255, 255, 0.18);
   color: #fff;
   flex: none;
 }
@@ -1985,7 +2250,9 @@ svg {
   border: 1px solid #c8caff;
   border-radius: var(--radius-lg);
   padding: var(--space-28) var(--space-32);
-  transition: box-shadow 0.18s ease, transform 0.18s ease;
+  transition:
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
 }
 .path-step:hover {
   box-shadow: var(--shadow-soft);
@@ -2091,8 +2358,20 @@ svg {
 }
 .marquee {
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
 }
 .marquee__track {
   display: flex;
@@ -2107,8 +2386,12 @@ svg {
   animation-play-state: paused;
 }
 @keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-33.3333%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.3333%);
+  }
 }
 .marquee .ad-card {
   flex: none;
@@ -2191,7 +2474,7 @@ svg {
 }
 .about-different__text {
   margin-top: var(--space-20);
-  color: rgba(255,255,255,.82);
+  color: rgba(255, 255, 255, 0.82);
   font-size: var(--fs-body);
   line-height: 1.7;
   max-width: 400px;
@@ -2208,9 +2491,11 @@ svg {
   color: var(--color-text);
   border: 1px solid #c8caff;
   border-radius: var(--radius-lg);
-  transition: box-shadow 0.2s, transform 0.18s ease;
+  transition:
+    box-shadow 0.2s,
+    transform 0.18s ease;
 }
-.diff-item::after {
+/* .diff-item::after {
   content: "";
   position: absolute;
   width: 120px;
@@ -2221,8 +2506,8 @@ svg {
   border-right: 2px solid #c8caff;
   border-top-right-radius: var(--radius-lg);
   pointer-events: none;
-  opacity: .55;
-}
+  opacity: 0.55;
+} */
 .diff-item.is-open {
   box-shadow: var(--shadow-soft);
   transform: translateY(-1px);
@@ -2254,7 +2539,10 @@ svg {
   flex: none;
   box-shadow: 0 1px 3px rgba(20, 35, 90, 0.06);
 }
-.diff-item__dot svg { width: 14px; height: 14px; }
+.diff-item__dot svg {
+  width: 14px;
+  height: 14px;
+}
 .diff-item__title {
   flex: 1;
   font-size: var(--fs-body);
@@ -2293,7 +2581,9 @@ svg {
 .diff-item__body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.35s ease;
+  transition:
+    max-height 0.35s ease,
+    padding 0.35s ease;
   color: var(--color-text-muted);
   padding: 0 var(--space-24) 0 68px;
   font-size: var(--fs-body);
@@ -2557,4 +2847,398 @@ svg {
     position: static;
     margin-top: var(--space-16);
   }
+}
+
+/* ==========================================================================
+   Industries page
+   ========================================================================== */
+.industries-page { background: transparent; }
+.industries-hero__inner { max-width: 780px; }
+.industries-hero__title { font-size: clamp(34px, 5vw, 56px); }
+
+/* Radial diagram */
+.industries-radial {
+  background: transparent;
+  color: #fff;
+  padding-block: var(--space-96);
+  position: relative;
+  overflow: hidden;
+}
+.industries-radial::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("../images/arch-blue.svg") center/cover no-repeat;
+  opacity: .3; pointer-events: none;
+}
+.industries-radial > .container { position: relative; z-index: 1; }
+.radial {
+  position: relative;
+  width: min(720px, 90vw);
+  aspect-ratio: 1/1;
+  margin: 0 auto;
+}
+.radial__ring {
+  position: absolute; inset: 0;
+  border: 1px dashed rgba(255,255,255,.35);
+  border-radius: 50%;
+}
+.radial__ring--inner { inset: 22%; }
+.radial__center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 110px; height: 110px;
+  border-radius: 22px; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,.2);
+}
+.radial__k { font-size: 52px; font-weight: 800; color: #1a48ff; line-height: 1; }
+.radial__label {
+  position: absolute; color: #fff;
+  font-size: var(--fs-body); font-weight: var(--fw-medium);
+  white-space: nowrap;
+}
+.radial__label--top    { top: -4%;  left: 50%; transform: translateX(-50%); }
+.radial__label--right  { top: 50%;  right: -8%; transform: translateY(-50%); }
+.radial__label--bottom { bottom: -6%; left: 50%; transform: translateX(-50%); text-align: center; }
+.radial__label--left   { top: 50%;  left: -8%;  transform: translateY(-50%); text-align: center; }
+.radial__node {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-align: center;
+}
+.radial__node-icon {
+  width: 72px; height: 72px; border-radius: 18px;
+  background: #fff; color: var(--accent-600);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+}
+.radial__node-icon svg { width: 32px; height: 32px; }
+.radial__node-label { font-size: var(--fs-body); font-weight: var(--fw-medium); max-width: 130px; }
+.radial__node--1 { top: 8%;  left: 18%; }
+.radial__node--2 { top: 8%;  right: 18%; }
+.radial__node--3 { bottom: 8%; left: 18%; }
+.radial__node--4 { bottom: 8%; right: 18%; }
+
+/* Better systems intro */
+.industries-better {
+  background: transparent;
+  color: #fff;
+  padding-block: var(--space-96);
+  position: relative;
+  overflow: hidden;
+}
+.industries-better::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("../images/arch-blue.svg") center/cover no-repeat;
+  opacity: .28; pointer-events: none;
+}
+.industries-better__inner {
+  position: relative; z-index: 1;
+  max-width: 820px; margin: 0 auto; text-align: center;
+}
+.industries-better__title { margin-top: var(--space-20); font-size: clamp(28px, 3.4vw, 40px); line-height: 1.2; }
+.industries-better__body {
+  margin-top: var(--space-24);
+  display: flex; flex-direction: column; gap: var(--space-20);
+  color: rgba(255,255,255,.82);
+  font-size: var(--fs-body); line-height: 1.75;
+  max-width: 720px; margin-inline: auto;
+}
+.industries-better__quote {
+  margin-top: var(--space-40);
+  background: rgba(10,25,90,.55);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24) var(--space-32);
+  color: #fff;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-title);
+  max-width: 520px; margin-inline: auto;
+}
+
+/* Industry focus accordion */
+.industries-focus {
+  background: transparent;
+  padding-block: var(--space-96);
+}
+.industries-focus__title { color: var(--color-text); margin-top: var(--space-16); }
+.industries-focus__list {
+  max-width: 1040px; margin: var(--space-48) auto 0;
+  display: flex; flex-direction: column; gap: var(--space-16);
+}
+.focus-item {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: box-shadow .2s;
+}
+.focus-item.is-open { box-shadow: var(--shadow-soft); }
+.focus-item__head {
+  width: 100%; display: flex; align-items: center; gap: var(--space-20);
+  padding: var(--space-20) var(--space-24);
+  background: none; border: 0; cursor: pointer; text-align: left;
+  color: var(--color-text);
+}
+.focus-item__tag {
+  font-size: var(--fs-description); font-weight: var(--fw-semibold);
+  padding: 6px 12px; border-radius: 8px;
+  border: 1px solid var(--color-border);
+  color: var(--accent-600); flex: none;
+}
+.focus-item__title { flex: 1; font-size: var(--fs-title); font-weight: var(--fw-semibold); }
+.focus-item__toggle {
+  margin-left: auto; position: relative; width: 32px; height: 32px;
+  border-radius: 50%; border: 1px solid var(--color-border); flex: none;
+  transition: transform .2s;
+}
+.focus-item__toggle::before, .focus-item__toggle::after {
+  content: ""; position: absolute; top: 50%; left: 50%; background: var(--gray-700);
+}
+.focus-item__toggle::before { width: 12px; height: 2px; transform: translate(-50%,-50%); }
+.focus-item__toggle::after  { width: 2px; height: 12px; transform: translate(-50%,-50%); }
+.focus-item.is-open .focus-item__toggle { transform: rotate(45deg); }
+.focus-item__body { padding: 0 var(--space-24) var(--space-28); }
+.focus-item__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-32); }
+.focus-item__sub {
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gray-600); margin: 0 0 var(--space-8);
+}
+.focus-item__desc { color: var(--color-text-muted); line-height: 1.65; margin-bottom: var(--space-16); }
+.focus-item__chips { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+.industries-focus__cta { text-align: center; margin-top: var(--space-32); }
+
+/* Different industries — split + numbered cards */
+.industries-diff {
+  background: transparent;
+  padding-block: var(--space-96);
+}
+.industries-diff__inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-56); align-items: start;
+}
+.industries-diff__aside { align-self: start; }
+.industries-diff__title { margin-top: var(--space-16); font-size: clamp(26px, 3vw, 38px); line-height: 1.15; }
+.industries-diff__text { margin-top: var(--space-16); color: var(--color-text-muted); font-size: var(--fs-body); line-height: 1.7; max-width: 460px; }
+.industries-diff__actions { display: flex; flex-wrap: wrap; gap: var(--space-12); margin-top: var(--space-28); }
+.industries-diff__list { display: flex; flex-direction: column; gap: var(--space-16); }
+.diff-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24) var(--space-28);
+  box-shadow: var(--shadow-extra-soft);
+}
+.diff-card__num {
+  display: inline-flex; width: 36px; height: 36px;
+  align-items: center; justify-content: center;
+  border-radius: 8px; background: var(--accent-100); color: var(--accent-600);
+  font-size: var(--fs-description); font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-16);
+}
+.diff-card__title { font-size: var(--fs-h5); font-weight: var(--fw-semibold); margin-bottom: var(--space-8); }
+.diff-card__text { color: var(--color-text-muted); font-size: var(--fs-body); line-height: 1.6; }
+
+/* How Kelarix Helps */
+.industries-helps {
+  background: linear-gradient(180deg, #f4f6fb 0%, #eef2fb 100%);
+  padding-block: var(--space-96);
+  position: relative;
+  overflow: hidden;
+}
+.industries-helps::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("../images/arch-light.svg") center bottom/cover no-repeat;
+  opacity: .55; pointer-events: none;
+}
+.industries-helps > .container { position: relative; z-index: 1; }
+.industries-helps__title { color: var(--color-text); margin-top: var(--space-16); }
+.industries-helps__grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-20);
+  margin-top: var(--space-48);
+}
+.helps-card {
+  background: #05278f;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius-lg);
+  padding: var(--space-28);
+  color: #fff;
+}
+.helps-card--hi { background: var(--accent-500); }
+.helps-card__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 9px;
+  background: rgba(200,202,255,.15); color: #c8caff;
+  font-size: var(--fs-description); font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-24);
+}
+.helps-card__title { font-size: var(--fs-h5); font-weight: var(--fw-semibold); margin-bottom: var(--space-8); }
+.helps-card__text { font-size: var(--fs-body); color: rgba(255,255,255,.72); line-height: 1.6; }
+
+/* Also relevant grid */
+.industries-also {
+  background: #ffffff;
+  padding-block: var(--space-96);
+}
+.industries-also__title {
+  font-size: clamp(24px, 3vw, 34px); font-weight: var(--fw-bold);
+  text-align: center; margin-bottom: var(--space-40);
+}
+.industries-also__grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-20);
+  max-width: 860px; margin: 0 auto var(--space-40);
+}
+.also-card {
+  position: relative; display: block;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24) var(--space-28);
+  color: var(--color-text);
+  transition: box-shadow .18s, transform .18s;
+}
+.also-card:hover { box-shadow: var(--shadow-soft); transform: translateY(-2px); }
+.also-card__icon {
+  display: inline-flex; width: 40px; height: 40px;
+  align-items: center; justify-content: center;
+  border-radius: 10px; background: var(--accent-100); color: var(--accent-600);
+  margin-bottom: var(--space-16);
+}
+.also-card__chevron { position: absolute; top: var(--space-24); right: var(--space-24); color: var(--gray-500); }
+.also-card__title { font-size: var(--fs-h5); font-weight: var(--fw-semibold); margin-bottom: var(--space-8); }
+.also-card__text { color: var(--color-text-muted); font-size: var(--fs-description); line-height: 1.55; }
+.industries-also__actions { display: flex; justify-content: center; gap: var(--space-16); flex-wrap: wrap; }
+
+/* Featured Proof (industries version) */
+.industries-proof {
+  background: transparent;
+  padding-block: var(--space-96);
+}
+.industries-proof__panel {
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: var(--radius-xl);
+  padding: var(--space-48);
+}
+.industries-proof__head {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-40);
+  align-items: end; margin-bottom: var(--space-40);
+}
+.industries-proof__head-left .section__title { margin-top: var(--space-16); max-width: 480px; }
+.industries-proof__head-text { color: rgba(255,255,255,.82); font-size: var(--fs-body); line-height: 1.7; padding-bottom: var(--space-8); }
+.industries-proof__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-20); }
+.ip-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-28) var(--space-32);
+}
+.ip-card__num {
+  display: inline-flex; width: 40px; height: 40px;
+  align-items: center; justify-content: center;
+  border-radius: 8px; background: var(--accent-100); color: var(--accent-600);
+  font-size: var(--fs-description); font-weight: var(--fw-semibold);
+  margin-bottom: var(--space-20);
+}
+.ip-card__tag { font-size: var(--fs-h5); font-weight: var(--fw-semibold); margin-bottom: var(--space-8); }
+.ip-card__title { color: var(--color-text-muted); font-size: var(--fs-body); line-height: 1.5; }
+.industries-proof__cta { text-align: center; margin-top: var(--space-32); }
+
+/* ---- Industries responsive ---- */
+@media (max-width: 1024px) {
+  .industries-diff__inner { grid-template-columns: 1fr; gap: var(--space-40); }
+  .industries-helps__grid { grid-template-columns: repeat(2, 1fr); }
+  .industries-proof__head { grid-template-columns: 1fr; gap: var(--space-20); align-items: start; }
+  .focus-item__grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .industries-radial,
+  .industries-better,
+  .industries-focus,
+  .industries-diff,
+  .industries-helps,
+  .industries-also,
+  .industries-proof {
+    padding-block: var(--space-64);
+  }
+  .industries-helps__grid,
+  .industries-also__grid,
+  .industries-proof__grid { grid-template-columns: 1fr; }
+  .industries-proof__panel { padding: var(--space-24); }
+  .radial__label { font-size: var(--fs-description); }
+  .radial__node-icon { width: 56px; height: 56px; border-radius: 14px; }
+  .radial__node-icon svg { width: 24px; height: 24px; }
+  .radial__node-label { font-size: var(--fs-description); max-width: 90px; }
+  .radial__center { width: 80px; height: 80px; border-radius: 16px; }
+  .radial__k { font-size: 38px; }
+}
+
+/* ==========================================================================
+   Industries page — background image wrappers
+   ========================================================================== */
+
+/* Backdrop 1: top-sections-bg — wraps hero + radial + better-systems head */
+.ind-top-block {
+  position: relative;
+  background-image: url("../images/industry/top-sections-bg.png");
+  background-size: 100% 100%;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+.ind-top-block .industries-hero,
+.ind-top-block .industries-radial,
+.ind-top-block .industries-better--head-only {
+  background: transparent;
+}
+.ind-top-block .industries-radial::before,
+.ind-top-block .industries-better--head-only::before {
+  display: none;
+}
+
+/* Radial diagram gets industries-img.svg as decorative bg image */
+.industries-radial {
+  background-image: url("../images/industry/industries-img.svg");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Backdrop 2: industry-focus-section-bg — wraps quote card + industry accordion */
+.ind-focus-block {
+  position: relative;
+  background-image: url("../images/industry/industry-focus-section-bg.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.ind-focus-block .industries-better--quote-only,
+.ind-focus-block .industries-focus {
+  background: transparent;
+}
+.industries-better--quote-only {
+  padding-block: var(--space-40) var(--space-40);
+}
+
+/* How Kelarix Helps section — its own bg image */
+.industries-helps {
+  background-image: url("../images/industry/how-kelarix-help-bg.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.industries-helps::before {
+  display: none;
+}
+
+/* Backdrop 3: featured-proof-footerend-bg — wraps proof + our-value + final-cta */
+.ind-footer-block {
+  position: relative;
+  background-image: url("../images/industry/featured-proof-footerend-bg.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.ind-footer-block .industries-proof,
+.ind-footer-block .industries-value,
+.ind-footer-block .industries-final-cta {
+  background: transparent;
+}
+.ind-footer-block .discipline {
+  background: transparent;
 }

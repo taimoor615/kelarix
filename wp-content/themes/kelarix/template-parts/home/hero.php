@@ -7,7 +7,7 @@
 $hero_image = k_image_url( 'hero_image', KELARIX_URI . '/assets/images/hero-building.png', 'full' );
 ?>
 <section class="hero">
-	<div class="hero__bg" style="background-image:url('<?php echo esc_url( $hero_image ); ?>');"></div>
+	<!-- <div class="hero__bg" style="background-image:url('<?php //echo esc_url( $hero_image ); ?>');"></div> -->
 	<div class="hero__overlay"></div>
 	<div class="container">
 	<div class="hero__inner">

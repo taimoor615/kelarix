@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kelarix CMS Setup Guide — Industries Page</title>
+<style>
+  :root{
+    --ink:#0e1220;--ink-2:#3b4463;--muted:#6b7290;--line:#e6e9f5;--line-2:#eef1f8;
+    --bg:#ffffff;--bg-soft:#f6f8ff;--accent:#1a48ff;--accent-2:#0032e6;
+    --accent-100:#e7eaff;--accent-50:#f0f2ff;--code:#0e1e5a;--shadow:0 10px 30px rgba(20,35,90,.08);
+  }
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:15px}
+  .page{max-width:960px;margin:0 auto;padding:56px 40px 80px}
+  .cover{background:linear-gradient(135deg,#0032e6 0%,#1a48ff 55%,#4e67ff 100%);color:#fff;border-radius:28px;padding:56px 48px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:48px}
+  .cover::after{content:"";position:absolute;right:-60px;bottom:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 60%);border-radius:50%}
+  .cover .kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .cover h1{font-size:42px;line-height:1.1;margin:18px 0 12px;letter-spacing:-.02em}
+  .cover p{margin:0;max-width:640px;color:rgba(255,255,255,.85);font-size:16px}
+  .cover .meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+  .cover .meta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600}
+  .toc{background:var(--bg-soft);border:1px solid var(--line);border-radius:20px;padding:24px 28px;margin-bottom:48px}
+  .toc h4{margin:0 0 12px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-2)}
+  .toc ol{margin:0;padding-left:20px;color:var(--ink-2)}
+  .toc li{margin:6px 0;font-weight:600}
+  .toc a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--line)}
+  h2{font-size:26px;letter-spacing:-.01em;margin:48px 0 8px;color:var(--ink)}
+  h2 .num{color:var(--accent);margin-right:10px;font-variant-numeric:tabular-nums}
+  h3{font-size:19px;margin:36px 0 12px;color:var(--ink)}
+  h4{font-size:15px;margin:22px 0 8px;color:var(--ink)}
+  p{margin:0 0 12px;color:var(--ink-2)}
+  a{color:var(--accent-2)}
+  .lead{color:var(--muted);font-size:16px}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--accent-100);color:var(--accent-2);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid rgba(26,72,255,.18)}
+  .callout{background:var(--bg-soft);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:14px 18px;margin:16px 0;color:var(--ink-2);font-size:14px}
+  .callout strong{color:var(--ink)}
+  table{width:100%;border-collapse:separate;border-spacing:0;margin:14px 0 22px;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(20,35,90,.02)}
+  th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
+  th{background:var(--bg-soft);font-weight:700;color:var(--ink);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:0}
+  td code, th code{background:var(--accent-50);color:var(--code);padding:2px 6px;border-radius:6px;font-size:12.5px;font-weight:600}
+  code, kbd{font-family:"JetBrains Mono","SFMono-Regular",Consolas,monospace;background:var(--accent-50);color:var(--code);padding:2px 6px;border-radius:6px;font-size:12.5px}
+  section.doc{border-top:1px dashed var(--line);padding-top:28px;margin-top:36px}
+  section.doc:first-of-type{border-top:0;margin-top:0;padding-top:0}
+  .type{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef1f8;color:#31406b;font-size:11.5px;font-weight:700}
+  .type--tab{background:#ffe9d8;color:#a45210}
+  .type--text{background:#e7eaff;color:#0032e6}
+  .type--textarea{background:#e0f2e9;color:#1a6b3d}
+  .type--image{background:#fde2ef;color:#8c1f57}
+  .type--link{background:#e6f4fb;color:#0f5c81}
+  .type--group{background:#eee5ff;color:#4a2a94}
+  .type--bool{background:#fff0e0;color:#8a5100}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0 8px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+  .stat .v{font-size:22px;color:var(--ink);font-weight:800;margin-top:4px}
+  .stat .d{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .steps{counter-reset:step;margin:16px 0}
+  .step{display:flex;gap:16px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:10px}
+  .step::before{counter-increment:step;content:counter(step);flex:none;width:32px;height:32px;border-radius:10px;background:var(--accent-100);color:var(--accent-2);display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+  @media print{.page{padding:24px}.cover{border-radius:14px;padding:36px 32px}section.doc{page-break-inside:avoid}table{page-break-inside:avoid}a{color:inherit}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <span class="kicker">Kelarix · CMS Setup Guide</span>
+  <h1>Industries Page — WordPress Setup</h1>
+  <p>Every ACF field required to make the Industries page fully editable from the WordPress dashboard.</p>
+  <div class="meta">
+    <span>ACF Free</span><span>10 Sections</span><span>1 Field Group</span><span>Radial diagram</span>
+  </div>
+</div>
+
+<div class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#p1">Page Setup — how to publish the Industries page</a></li>
+    <li><a href="#p2">ACF Field Group — "Industries Page Content"</a></li>
+    <li><a href="#p3">Quick Summary</a></li>
+  </ol>
+</div>
+
+<div class="grid">
+  <div class="stat"><div class="k">Field Groups</div><div class="v">1</div><div class="d">Industries Page Content</div></div>
+  <div class="stat"><div class="k">Sections</div><div class="v">10</div><div class="d">Hero · Radial · Better · Focus · Diff · Helps · Also · Proof · Value · Final</div></div>
+  <div class="stat"><div class="k">Total fields</div><div class="v">60+</div><div class="d">Grouped by tabs</div></div>
+  <div class="stat"><div class="k">CPTs reused</div><div class="v">0</div><div class="d">All content inline via ACF</div></div>
+</div>
+
+<section class="doc" id="p1">
+<h2><span class="num">1</span>Page Setup</h2>
+<p class="lead">Publish a WordPress Page that uses the <strong>Industries</strong> template.</p>
+
+<div class="steps">
+  <div class="step"><div><strong>Create the page.</strong><br>Dashboard → <em>Pages → Add New</em>. Title it <strong>Industries</strong>. Slug: <code>industries</code>.</div></div>
+  <div class="step"><div><strong>Assign the template.</strong><br>Right sidebar → <em>Page Attributes → Template</em> → choose <strong>Industries</strong>.</div></div>
+  <div class="step"><div><strong>Publish.</strong><br>Click Publish. Preview at <code>/industries</code>.</div></div>
+  <div class="step"><div><strong>Add to menu.</strong><br><em>Appearance → Menus → Primary Menu</em>, add the Industries page.</div></div>
+</div>
+
+<div class="callout">
+  Theme file: <code>page-industries.php</code>. Section parts live under <code>template-parts/industries/</code>. All defaults render even without ACF filled — page never blank.
+</div>
+</section>
+
+<section class="doc" id="p2">
+<h2><span class="num">2</span>ACF Field Group — “Industries Page Content”</h2>
+<div class="callout">
+  <strong>Title:</strong> Industries Page Content &nbsp;·&nbsp;
+  <strong>Location:</strong> Page <em>is equal to</em> Industries.<br>
+  Add a <strong>Tab</strong> field at the start of each section below.
+</div>
+
+<h3>Tab · Hero</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Default</th></tr></thead>
+<tbody>
+<tr><td>Hero Tab</td><td><code>ind_hero_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Eyebrow</td><td><code>ind_hero_eyebrow</code></td><td><span class="type type--text">Text</span></td><td>Built for complex operating environments.</td></tr>
+<tr><td>Heading</td><td><code>ind_hero_heading</code></td><td><span class="type type--textarea">Textarea</span></td><td>Industries where visibility, control, and execution matter.</td></tr>
+<tr><td>Subtext</td><td><code>ind_hero_subtext</code></td><td><span class="type type--textarea">Textarea</span></td><td>Kelarix works with businesses where data…</td></tr>
+<tr><td>Hero Image</td><td><code>ind_hero_image</code></td><td><span class="type type--image">Image</span></td><td>Background photo. Return: URL.</td></tr>
+<tr><td>Primary CTA</td><td><code>ind_hero_cta_primary</code></td><td><span class="type type--link">Link</span></td><td>"Request a Diagnostic Conversation" → <code>#contact</code></td></tr>
+<tr><td>Secondary CTA</td><td><code>ind_hero_cta_secondary</code></td><td><span class="type type--link">Link</span></td><td>"Explore What We Build" → <code>#systems</code></td></tr>
+<tr><td>Shield Note</td><td><code>ind_hero_note</code></td><td><span class="type type--text">Text</span></td><td>Focused on industries where better systems create measurable operating leverage.</td></tr>
+</tbody></table>
+
+<h3>Tab · Radial Diagram</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Radial Tab</td><td><code>radial_tab</code></td><td><span class="type type--tab">Tab</span></td><td>—</td></tr>
+<tr><td>Top Label</td><td><code>radial_label_top</code></td><td><span class="type type--text">Text</span></td><td>Default: Visibility</td></tr>
+<tr><td>Right Label</td><td><code>radial_label_right</code></td><td><span class="type type--text">Text</span></td><td>Default: Data Quality</td></tr>
+<tr><td>Bottom Label</td><td><code>radial_label_bottom</code></td><td><span class="type type--text">Text</span></td><td>Default: Execution Discipline</td></tr>
+<tr><td>Left Label</td><td><code>radial_label_left</code></td><td><span class="type type--text">Text</span></td><td>Default: Workflow Control</td></tr>
+<tr><td>Radial Card 1–4</td><td><code>radial_card_1</code> … <code>radial_card_4</code></td><td><span class="type type--group">Group</span></td><td>Sub: <code>title</code> (Text), <code>icon</code> (Text: <code>store</code>, <code>basket</code>, <code>coin</code>, <code>health</code>)</td></tr>
+</tbody></table>
+<table>
+<thead><tr><th>#</th><th>Default Title</th><th>Icon</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Retail</td><td><code>store</code></td></tr>
+<tr><td>2</td><td>FMCG &amp; Food Beverage</td><td><code>basket</code></td></tr>
+<tr><td>3</td><td>Financial Services</td><td><code>coin</code></td></tr>
+<tr><td>4</td><td>Healthcare</td><td><code>health</code></td></tr>
+</tbody></table>
+
+<h3>Tab · Better Systems (Intro)</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Better Tab</td><td><code>better_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge</td><td><code>better_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Heading</td><td><code>better_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Paragraph 1</td><td><code>better_text_1</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Paragraph 2</td><td><code>better_text_2</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Quote Card</td><td><code>better_quote</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+</tbody></table>
+
+<h3>Tab · Industry Focus (Accordion)</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Focus Tab</td><td><code>focus_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge</td><td><code>focus_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Heading</td><td><code>focus_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>focus_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+</tbody></table>
+<div class="callout">Currently the 4 accordion items (Retail, FMCG & F&B, Financial, Healthcare) render from PHP defaults. If you want them ACF-editable, add a Repeater field <code>focus_items</code> (ACF Pro required) or use the Homepage <code>kx_proof</code> CPT logic.</div>
+
+<h3>Tab · Different Industries</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Diff Tab</td><td><code>diff_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge</td><td><code>diff_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Heading</td><td><code>diff_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>diff_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Primary CTA</td><td><code>diff_cta_primary</code></td><td><span class="type type--link">Link</span></td></tr>
+<tr><td>Secondary CTA</td><td><code>diff_cta_secondary</code></td><td><span class="type type--link">Link</span></td></tr>
+<tr><td>Diff Item 1–6</td><td><code>diff_item_1</code> … <code>diff_item_6</code></td><td><span class="type type--group">Group</span> · <code>title</code>, <code>text</code></td></tr>
+</tbody></table>
+
+<h3>Tab · How Kelarix Helps</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Helps Tab</td><td><code>helps_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge</td><td><code>helps_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Heading</td><td><code>helps_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>helps_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Helps Card 1–6</td><td><code>helps_card_1</code> … <code>helps_card_6</code></td><td><span class="type type--group">Group</span> · <code>title</code>, <code>text</code></td></tr>
+</tbody></table>
+
+<h3>Tab · Also Relevant</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Also Tab</td><td><code>also_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Heading</td><td><code>also_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Also Item 1–4</td><td><code>also_item_1</code> … <code>also_item_4</code></td><td><span class="type type--group">Group</span> · <code>title</code>, <code>text</code>, <code>icon</code> (<code>truck</code>, <code>gear</code>, <code>home</code>, <code>bolt</code>)</td></tr>
+<tr><td>Primary CTA</td><td><code>also_cta_primary</code></td><td><span class="type type--link">Link</span></td></tr>
+<tr><td>Secondary CTA</td><td><code>also_cta_secondary</code></td><td><span class="type type--link">Link</span></td></tr>
+</tbody></table>
+
+<h3>Tab · Featured Proof</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Proof Tab</td><td><code>ip_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge</td><td><code>ip_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Heading</td><td><code>ip_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>ip_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Proof Card 1–4</td><td><code>ip_card_1</code> … <code>ip_card_4</code></td><td><span class="type type--group">Group</span> · <code>tag</code>, <code>title</code></td></tr>
+</tbody></table>
+
+<h3>Tab · Our Value (Discipline)</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Value Tab</td><td><code>value_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Badge</td><td><code>value_badge</code></td><td><span class="type type--text">Text</span></td></tr>
+<tr><td>Heading</td><td><code>value_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Section Text</td><td><code>value_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Value Item 1–7</td><td><code>value_item_1</code> … <code>value_item_7</code></td><td><span class="type type--group">Group</span> · <code>title</code>, <code>text</code></td></tr>
+</tbody></table>
+
+<h3>Tab · Final CTA</h3>
+<table>
+<thead><tr><th>Label</th><th>Name</th><th>Type</th></tr></thead>
+<tbody>
+<tr><td>Final Tab</td><td><code>ind_final_tab</code></td><td><span class="type type--tab">Tab</span></td></tr>
+<tr><td>Heading</td><td><code>ind_final_heading</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Subtext</td><td><code>ind_final_text</code></td><td><span class="type type--textarea">Textarea</span></td></tr>
+<tr><td>Primary CTA</td><td><code>ind_final_cta_primary</code></td><td><span class="type type--link">Link</span></td></tr>
+<tr><td>Secondary CTA</td><td><code>ind_final_cta_secondary</code></td><td><span class="type type--link">Link</span></td></tr>
+</tbody></table>
+</section>
+
+<section class="doc" id="p3">
+<h2><span class="num">3</span>Quick Summary</h2>
+<table>
+<thead><tr><th>Section</th><th>Fields</th></tr></thead>
+<tbody>
+<tr><td>Hero</td><td>7 fields</td></tr>
+<tr><td>Radial Diagram</td><td>4 labels + 4 groups</td></tr>
+<tr><td>Better Systems</td><td>5 fields</td></tr>
+<tr><td>Industry Focus</td><td>3 fields (accordion items PHP defaults)</td></tr>
+<tr><td>Different Industries</td><td>3 fields + 6 groups + 2 links</td></tr>
+<tr><td>How Kelarix Helps</td><td>3 fields + 6 groups</td></tr>
+<tr><td>Also Relevant</td><td>1 field + 4 groups + 2 links</td></tr>
+<tr><td>Featured Proof</td><td>3 fields + 4 groups</td></tr>
+<tr><td>Our Value</td><td>3 fields + 7 groups</td></tr>
+<tr><td>Final CTA</td><td>4 fields</td></tr>
+</tbody></table>
+
+<div class="callout">
+  <strong>Total ACF field groups: 1</strong> — Industries Page Content.<br>
+  No new CPTs required. Header CTA + footer settings come from the Customizer (same as Homepage).
+</div>
+</section>
+
+<div class="footer">
+  <span>© Kelarix — Industries CMS Guide</span>
+  <span>Roas Solutions</span>
+</div>
+
+</div>
+</body>
+</html>

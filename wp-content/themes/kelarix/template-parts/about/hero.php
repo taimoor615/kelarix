@@ -4,7 +4,7 @@
  *
  * @package Kelarix
  */
-$hero_image = k_image_url( 'about_hero_image', KELARIX_URI . '/assets/images/hero-building.png', 'full' );
+$hero_image = k_image_url( 'about_hero_image', KELARIX_URI . '/assets/images/about-us/about-hero-image.png', 'full' );
 ?>
 <section class="hero about-hero">
 	<div class="hero__bg" style="background-image:url('<?php echo esc_url( $hero_image ); ?>');"></div>

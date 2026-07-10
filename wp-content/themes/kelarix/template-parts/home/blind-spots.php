@@ -12,7 +12,7 @@ $defaults = array(
 	5 => array( 'AI readiness gap', 'AI cannot create real value without reliable data, workflow clarity, permissions, and governance.', 'ai' ),
 );
 ?>
-<section class="section section--dark blind">
+<section class="section blind sec-key-problems-wrapper">
 	<div class="container">
 		<div class="blind__panel">
 			<div class="blind__head">
