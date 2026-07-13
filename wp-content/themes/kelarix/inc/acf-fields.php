@@ -215,6 +215,7 @@ function kelarix_register_all_acf() {
 	kelarix_acf_homepage();
 	kelarix_acf_about();
 	kelarix_acf_industries();
+	kelarix_acf_proof();
 	kelarix_acf_cpt_system();
 	kelarix_acf_cpt_industry();
 	kelarix_acf_cpt_proof();
@@ -545,7 +546,126 @@ function kelarix_acf_industries() {
 }
 
 /* =======================================================================
- *  4. CPT: kx_system (System Details)
+ *  4. Proof Page Content
+ * ======================================================================= */
+function kelarix_acf_proof() {
+	$fields = array();
+
+	/* Hero */
+	$fields[] = kacf_tab( 'ph', 'Hero' );
+	$fields[] = kacf_text( 'proof_hero_eyebrow', 'Eyebrow', 'Confidential work. Visible thinking. Practical proof.' );
+	$fields[] = kacf_textarea( 'proof_hero_heading', 'Heading', 'Proof through frameworks, scenarios, and system concepts.' );
+	$fields[] = kacf_textarea( 'proof_hero_subtext', 'Subtext' );
+	$fields[] = kacf_image( 'proof_hero_image', 'Hero Visual (3D blocks)' );
+	$fields[] = kacf_link( 'proof_hero_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'proof_hero_cta_secondary', 'Secondary CTA' );
+	$fields[] = kacf_text( 'proof_hero_note', 'Shield Note' );
+
+	/* Different */
+	$fields[] = kacf_tab( 'pd', 'How we are different' );
+	$fields[] = kacf_text( 'diff_badge', 'Badge', 'How we are different' );
+	$fields[] = kacf_textarea( 'diff_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'diff_text_1', 'Paragraph 1' );
+	$fields[] = kacf_textarea( 'diff_text_2', 'Paragraph 2' );
+	$fields[] = kacf_textarea( 'diff_quote', 'Bottom Dark Quote Card' );
+
+	/* Demonstrate */
+	$fields[] = kacf_tab( 'pdemo', 'Demonstrate Credibility' );
+	$fields[] = kacf_text( 'demo_badge', 'Badge', 'How We Demonstrate Credibility' );
+	$fields[] = kacf_textarea( 'demo_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'demo_text', 'Body Text' );
+	for ( $i = 1; $i <= 6; $i++ ) {
+		$fields[] = kacf_card( 'demo_card_' . $i, 'Demonstrate Card ' . $i );
+	}
+	$fields[] = kacf_link( 'demo_cta', 'CTA' );
+
+	/* Case Studies */
+	$fields[] = kacf_tab( 'pcases', 'Case Studies' );
+	$fields[] = kacf_text( 'cases_badge', 'Badge', 'Case Studies' );
+	$fields[] = kacf_textarea( 'cases_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'cases_text', 'Body Text' );
+	$fields[] = kacf_link( 'cases_cta', 'CTA' );
+
+	/* Frameworks */
+	$fields[] = kacf_tab( 'pfw', 'Diagnostic Frameworks' );
+	$fields[] = kacf_text( 'fw_badge', 'Badge', 'Diagnostic Frameworks' );
+	$fields[] = kacf_textarea( 'fw_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'fw_text_1', 'Paragraph 1' );
+	$fields[] = kacf_textarea( 'fw_text_2', 'Paragraph 2' );
+	$fields[] = kacf_link( 'fw_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'fw_cta_secondary', 'Secondary CTA' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card( 'fw_card_' . $i, 'Framework Card ' . $i );
+	}
+
+	/* What Proves */
+	$fields[] = kacf_tab( 'pwhat', 'What This Proves' );
+	$fields[] = kacf_text( 'what_badge', 'Badge', 'What This Proves' );
+	$fields[] = kacf_textarea( 'what_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'what_text', 'Body Text' );
+	for ( $i = 1; $i <= 8; $i++ ) {
+		$fields[] = array(
+			'key'        => 'field_kx_what_card_' . $i,
+			'label'      => 'What Tile ' . $i,
+			'name'       => 'what_card_' . $i,
+			'type'       => 'group',
+			'layout'     => 'block',
+			'sub_fields' => array(
+				array( 'key' => 'field_kx_what_card_' . $i . '_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+				array( 'key' => 'field_kx_what_card_' . $i . '_icon',  'label' => 'Icon', 'name' => 'icon', 'type' => 'text', 'instructions' => 'gauge | shield | layers | plug | sketch | lock | msg | chart' ),
+			),
+		);
+	}
+	$fields[] = kacf_link( 'what_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'what_cta_secondary', 'Secondary CTA' );
+
+	/* Library */
+	$fields[] = kacf_tab( 'plib', 'Future Proof Library' );
+	$fields[] = kacf_text( 'lib_badge', 'Badge', 'Future Proof Library' );
+	$fields[] = kacf_textarea( 'lib_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'lib_text', 'Body Text' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = array(
+			'key'        => 'field_kx_lib_col_' . $i,
+			'label'      => 'Library Column ' . $i,
+			'name'       => 'lib_col_' . $i,
+			'type'       => 'group',
+			'layout'     => 'block',
+			'sub_fields' => array(
+				array( 'key' => 'field_kx_lib_col_' . $i . '_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
+				array( 'key' => 'field_kx_lib_col_' . $i . '_icon',  'label' => 'Icon',  'name' => 'icon',  'type' => 'text', 'instructions' => 'book | flask | coin | plus | grid' ),
+				array( 'key' => 'field_kx_lib_col_' . $i . '_items', 'label' => 'Checklist items (one per line)', 'name' => 'items', 'type' => 'textarea', 'rows' => 4 ),
+			),
+		);
+	}
+
+	/* Final */
+	$fields[] = kacf_tab( 'pfin', 'Final CTA' );
+	$fields[] = kacf_textarea( 'proof_final_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'proof_final_text', 'Subtext' );
+	$fields[] = kacf_link( 'proof_final_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'proof_final_cta_secondary', 'Secondary CTA' );
+
+	$fields = kelarix_prefix_field_keys( $fields, 'pr' );
+
+	acf_add_local_field_group( array(
+		'key'                   => 'group_kelarix_proof',
+		'title'                 => 'Proof Page Content',
+		'fields'                => $fields,
+		'location'              => array(
+			array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-proof.php' ) ),
+		),
+		'menu_order'            => 3,
+		'position'              => 'normal',
+		'style'                 => 'default',
+		'label_placement'       => 'top',
+		'instruction_placement' => 'label',
+		'active'                => true,
+	) );
+}
+
+/* =======================================================================
+ *  5. CPT: kx_system (System Details)
  * ======================================================================= */
 function kelarix_acf_cpt_system() {
 	acf_add_local_field_group( array(
