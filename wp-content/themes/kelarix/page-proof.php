@@ -7,6 +7,7 @@
 get_header();
 ?>
 <main id="primary" class="site-main proof-page">
+	<!-- Backdrop 1: hero-btoomt-overlya-img — from hero top to just above Demonstrate section -->
 	<div class="proof-top-block">
 		<?php
 		get_template_part( 'template-parts/proof/hero' );
@@ -14,6 +15,7 @@ get_header();
 		?>
 	</div>
 
+	<!-- Backdrop 2: how-wedemontrate_case-study-bg — Demonstrate + Case Studies -->
 	<div class="proof-mid-block">
 		<?php
 		get_template_part( 'template-parts/proof/demonstrate' );
@@ -24,11 +26,14 @@ get_header();
 	<?php
 	get_template_part( 'template-parts/proof/frameworks' );
 	get_template_part( 'template-parts/proof/what-proves' );
-	get_template_part( 'template-parts/proof/library' );
 	?>
 
-	<div class="proof-footer-block">
-		<?php get_template_part( 'template-parts/proof/final-cta' ); ?>
+	<!-- Backdrop 3: footer-bg-img-proof — from mid of Library to end of Final CTA -->
+	<div class="proof-library-block">
+		<?php
+		get_template_part( 'template-parts/proof/library' );
+		get_template_part( 'template-parts/proof/final-cta' );
+		?>
 	</div>
 </main>
 <?php
