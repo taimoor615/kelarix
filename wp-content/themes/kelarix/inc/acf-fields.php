@@ -256,19 +256,25 @@ function kelarix_acf_homepage() {
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$fields[] = kacf_card( 'layer_card_' . $i, 'Layer Card ' . $i );
 	}
+	$fields[] = kacf_link( 'layers_cta', 'Bottom CTA' );
 
 	/* --- Systems We Build --- */
 	$fields[] = kacf_tab( 'systems', 'Systems We Build' );
 	$fields[] = kacf_text( 'systems_heading_badge', 'Badge', 'Systems We Build' );
 	$fields[] = kacf_text( 'systems_heading', 'Heading', 'Systems We Build' );
 	$fields[] = kacf_textarea( 'systems_text', 'Body Text' );
+	$fields[] = kacf_link( 'systems_cta_primary', 'Primary CTA (aside)' );
+	$fields[] = kacf_link( 'systems_cta_secondary', 'Secondary CTA (aside)' );
 
 	/* --- Industries --- */
 	$fields[] = kacf_tab( 'ind', 'Industries' );
 	$fields[] = kacf_text( 'industries_badge', 'Badge', 'Industry Focus' );
 	$fields[] = kacf_textarea( 'industries_heading', 'Heading' );
 	$fields[] = kacf_textarea( 'industries_text', 'Body Text' );
+	$fields[] = kacf_text( 'industries_card_cta_text', 'Card CTA text (per industry)', 'Explore Now' );
 	$fields[] = kacf_text( 'also_heading', 'Also Heading', 'Also relevant for complex operating environments' );
+	$fields[] = kacf_link( 'industries_cta_primary', 'Also-relevant Primary CTA' );
+	$fields[] = kacf_link( 'industries_cta_secondary', 'Also-relevant Secondary CTA' );
 
 	/* --- Confidential --- */
 	$fields[] = kacf_tab( 'conf', 'Confidential' );
@@ -285,6 +291,7 @@ function kelarix_acf_homepage() {
 	$fields[] = kacf_text( 'proof_badge', 'Badge', 'Featured Proof' );
 	$fields[] = kacf_textarea( 'proof_heading', 'Heading' );
 	$fields[] = kacf_textarea( 'proof_text', 'Body Text' );
+	$fields[] = kacf_link( 'proof_cta', 'Bottom CTA (Explore Proof)' );
 
 	/* --- Process --- */
 	$fields[] = kacf_tab( 'process', 'Process' );
@@ -472,6 +479,7 @@ function kelarix_acf_industries() {
 	$fields[] = kacf_text( 'focus_badge', 'Badge', 'Industry Focus' );
 	$fields[] = kacf_textarea( 'focus_heading', 'Heading' );
 	$fields[] = kacf_textarea( 'focus_text', 'Body Text' );
+	$fields[] = kacf_link( 'focus_cta', 'Bottom CTA (Explore Proof)' );
 
 	/* Different */
 	$fields[] = kacf_tab( 'idiff', 'Common Operating Problems' );
@@ -510,6 +518,7 @@ function kelarix_acf_industries() {
 	for ( $i = 1; $i <= 4; $i++ ) {
 		$fields[] = kacf_card_tag_title( 'ip_card_' . $i, 'Proof Card ' . $i );
 	}
+	$fields[] = kacf_link( 'ip_cta', 'Panel CTA (Explore Proof)' );
 
 	/* Our Value */
 	$fields[] = kacf_tab( 'iv', 'Our Value' );

@@ -87,7 +87,12 @@ if ( empty( $also ) ) { $also = $also_defaults; }
 							<?php endforeach; ?>
 						</ul>
 						<div class="industry-card__decor" aria-hidden="true"><?php echo $ind['decor']; // phpcs:ignore ?></div>
-						<a href="#" class="btn btn--ghost btn--sm industry-card__cta"><span>Explore Now</span><?php echo k_arrow(); ?></a>
+						<?php
+						$ind_link = ( isset( $ind['post'] ) && $ind['post'] instanceof WP_Post ) ? k_field( 'link', array(), $ind['post']->ID ) : array();
+						$ind_url  = ! empty( $ind_link['url'] ) ? $ind_link['url'] : '#';
+						$ind_text = ! empty( $ind_link['title'] ) ? $ind_link['title'] : k_field( 'industries_card_cta_text', 'Explore Now' );
+						?>
+						<a href="<?php echo esc_url( $ind_url ); ?>" class="btn btn--ghost btn--sm industry-card__cta"><span><?php echo esc_html( $ind_text ); ?></span><?php echo k_arrow(); ?></a>
 					</article>
 				<?php endforeach; ?>
 			</div>
@@ -119,8 +124,10 @@ if ( empty( $also ) ) { $also = $also_defaults; }
 				<?php endforeach; ?>
 			</div>
 			<div class="also__actions">
-				<a href="#contact" class="btn btn--primary btn--sm"><span>Request a Diagnostic Conversation</span><?php echo k_arrow(); ?></a>
-				<a href="#" class="btn btn--white btn--sm"><span>Explore What We Build</span><?php echo k_arrow(); ?></a>
+				<?php
+				k_button( 'industries_cta_primary', 'Request a Diagnostic Conversation', '#contact', 'btn btn--primary btn--sm' );
+				k_button( 'industries_cta_secondary', 'Explore What We Build', '#', 'btn btn--white btn--sm' );
+				?>
 			</div>
 		</div>
 	</div>

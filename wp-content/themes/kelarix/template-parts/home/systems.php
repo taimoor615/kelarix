@@ -27,8 +27,10 @@ $items = k_cpt_items( 'kx_system', $defaults );
 			<h2 class="section__title"><?php k_text( 'systems_heading', 'Systems We Build' ); ?></h2>
 			<p class="section__lead"><?php k_text( 'systems_text', 'Our capabilities work together to create practical business systems, not isolated technology outputs.' ); ?></p>
 			<div class="systems__actions">
-				<a href="#contact" class="btn btn--primary btn--sm"><span>Request a Diagnostic Conversation</span><?php echo k_arrow(); ?></a>
-				<a href="#" class="btn btn--ghost btn--sm"><span>Explore What We Build</span><?php echo k_arrow(); ?></a>
+				<?php
+				k_button( 'systems_cta_primary', 'Request a Diagnostic Conversation', '#contact', 'btn btn--primary btn--sm' );
+				k_button( 'systems_cta_secondary', 'Explore What We Build', '#', 'btn btn--ghost btn--sm' );
+				?>
 			</div>
 		</div>
 

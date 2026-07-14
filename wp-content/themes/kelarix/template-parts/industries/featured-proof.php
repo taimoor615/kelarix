@@ -41,7 +41,7 @@ $defaults = array(
 			</div>
 
 			<div class="industries-proof__cta">
-				<a href="#" class="btn btn--white"><span>Explore Proof</span><?php echo k_arrow(); ?></a>
+				<?php k_button( 'ip_cta', 'Explore Proof', '#', 'btn btn--white' ); ?>
 			</div>
 		</div>
 	</div>

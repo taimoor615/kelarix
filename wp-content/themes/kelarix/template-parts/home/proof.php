@@ -127,7 +127,7 @@ $chart = '<svg class="proof-chart__svg" viewBox="0 0 320 150" preserveAspectRati
 		</div>
 
 		<div class="proof__cta">
-			<a href="#" class="btn btn--white btn--sm"><span>Explore Proof</span><?php echo k_arrow(); ?></a>
+			<?php k_button( 'proof_cta', 'Explore Proof', '#', 'btn btn--white btn--sm' ); ?>
 		</div>
 	</div>
 </section>

@@ -67,7 +67,7 @@ $defaults = array(
 		</div>
 
 		<div class="layers__cta">
-			<a href="#contact" class="btn btn--primary"><span>Request a Diagnostic Conversation</span><?php echo k_arrow(); ?></a>
+			<?php k_button( 'layers_cta', 'Request a Diagnostic Conversation', '#contact', 'btn btn--primary' ); ?>
 		</div>
 	</div>
 </section>

@@ -109,7 +109,7 @@ $defaults = array(
 		</div>
 
 		<div class="industries-focus__cta">
-			<a href="#proof" class="btn btn--ghost"><span>Explore Proof</span><?php echo k_arrow(); ?></a>
+			<?php k_button( 'focus_cta', 'Explore Proof', '#proof', 'btn btn--ghost' ); ?>
 		</div>
 	</div>
 </section>
