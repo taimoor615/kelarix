@@ -23,6 +23,10 @@
 			<div class="about-why__quote">
 				<p><?php k_text( 'why_quote', 'The goal is not more technology. The goal is better business control.' ); ?></p>
 			</div>
+
+			<div class="about-why__after" aria-hidden="true">
+				<img src="<?php echo esc_url( KELARIX_URI . '/assets/images/about-us/goal-after-section-img.svg' ); ?>" alt="">
+			</div>
 		</div>
 	</div>
 </section>

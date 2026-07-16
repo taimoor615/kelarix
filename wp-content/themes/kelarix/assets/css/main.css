@@ -227,7 +227,7 @@ svg {
 
 .btn--ghost {
   background: transparent;
-  border-color: var(--gray-300);
+  border-color: var(--gray-700);
   color: var(--gray-800);
 }
 .btn--ghost:hover {
@@ -399,11 +399,28 @@ svg {
   color: rgba(255, 255, 255, 0.86);
   max-width: 560px;
 }
-.hero__actions {
+.hero__actions,
+.about-path__actions,
+.about-discipline__actions,
+.industries-diff__actions,
+.industries-also__actions,
+.final-cta__actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-16);
   margin-top: var(--space-32);
+}
+/* Paired CTAs → equal width, content evenly spaced */
+.hero__actions .btn,
+.about-path__actions .btn,
+.about-discipline__actions .btn,
+.industries-diff__actions .btn,
+.industries-also__actions .btn,
+.final-cta__actions .btn {
+  flex: 1 1 240px;
+  min-width: 240px;
+  max-width: 320px;
+  justify-content: space-between;
 }
 .hero__note {
   margin-top: var(--space-40);
@@ -1829,7 +1846,7 @@ svg {
    so bottom of overlay-img overlays on top of business-problem image. */
 .about-strategy-block {
   position: relative;
-  margin-top: -120px;
+  margin-top: -160px;
   padding-top: 0;
   background-image: url("../images/about-us/business-problem__strategy-lead.png");
   background-size: cover;
@@ -1851,7 +1868,7 @@ svg {
 .about-marquee-block {
   position: relative;
   background-image: url("../images/about-us/marquee-bg-img.png");
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -2024,7 +2041,7 @@ svg {
 .pov-card {
   scroll-snap-align: start;
   scroll-snap-stop: normal;
-  background: #fff;
+  background: rgb(255, 255, 255, 90%);
   border-radius: var(--radius-lg);
   padding: var(--space-24);
   color: var(--color-text);
@@ -2165,6 +2182,32 @@ svg {
   overflow: hidden;
   color: #fff;
 }
+
+.strat-card:not(:last-child):after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  pointer-events: none;
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid #1e3c9a;
+  border-right: 2px solid #1e3c9a;
+  border-bottom-right-radius: var(--radius-lg);
+}
+
+.strat-card:nth-child(odd):after {
+  bottom: 0px;
+  right: 0px;
+  top: 10px;
+  left: 10px;
+  border-bottom: 0px solid #1e3c9a;
+  border-top: 2px solid #1e3c9a;
+  border-right: 0px solid #1e3c9a;
+  border-left: 2px solid #1e3c9a;
+  border-top-left-radius: var(--radius-lg);
+}
+
 .strat-card__badge {
   display: inline-flex;
   width: 32px;
@@ -2247,6 +2290,10 @@ svg {
   flex-wrap: wrap;
   gap: var(--space-12);
   margin-top: var(--space-28);
+}
+.about-path__actions a {
+  width: 100%;
+  max-width: 320px;
 }
 .about-path__list {
   display: flex;
@@ -2959,9 +3006,13 @@ svg {
 }
 .radial {
   position: relative;
-  width: min(720px, 90vw);
-  aspect-ratio: 1/1;
+  width: min(900px, 96%);
   margin: 0 auto;
+}
+.radial__img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 .radial__ring {
   position: absolute;
@@ -3202,6 +3253,13 @@ svg {
   transform: rotate(45deg);
 }
 .focus-item__body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 var(--space-24);
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.focus-item.is-open .focus-item__body {
+  max-height: 800px;
   padding: 0 var(--space-24) var(--space-28);
 }
 .focus-item__grid {
@@ -3244,6 +3302,8 @@ svg {
 }
 .industries-diff__aside {
   align-self: start;
+  position: sticky;
+  top: 120px;
 }
 .industries-diff__title {
   margin-top: var(--space-16);
@@ -3428,6 +3488,11 @@ svg {
   justify-content: center;
   gap: var(--space-16);
   flex-wrap: wrap;
+}
+
+.industries-also__actions .btn--ghost {
+  color: var(--white);
+  border-color: var(--white);
 }
 
 /* Featured Proof (industries version) */
@@ -4340,21 +4405,24 @@ svg {
 .hp-proof-block {
   position: relative;
   background-image: url("../images/home-featured-proof-bg.jpg");
-  background-size: 100% 100%;
-  background-position: center bottom;
+  background-size: 100% 77%;
+  background-position: center 450px;
   background-repeat: no-repeat;
 }
 .hp-proof-block .confidential,
 .hp-proof-block .proof {
   background: transparent;
 }
-.hp-proof-block .proof__bg { display: none; }
+.hp-proof-block .proof__bg {
+  display: none;
+}
 
 .hp-footer-block {
   position: relative;
   background-image: url("../images/home-footer-bg-img.png");
   background-size: 100% 100%;
-  background-position: center;
+  background-position: center 300px;
+  background-color: #1a48fc;
   background-repeat: no-repeat;
 }
 .hp-footer-block .process,
@@ -4370,39 +4438,40 @@ svg {
 /* ==========================================================================
    Mobile floating CTA (hidden on desktop, pill button on mobile)
    ========================================================================== */
+/* Floating icon-only CTA — circular pill with chat/quote icon */
 .mobile-floating-cta {
   display: none;
   position: fixed;
-  right: 16px;
-  bottom: 16px;
+  right: 18px;
+  bottom: 18px;
   z-index: 100;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 12px 12px 18px;
-  border-radius: 999px;
-  background: var(--accent-500);
-  color: #fff;
-  font-weight: var(--fw-semibold);
-  font-size: 14px;
-  line-height: 1;
-  box-shadow: 0 12px 32px rgba(20, 35, 90, 0.28);
-  text-decoration: none;
-  max-width: calc(100vw - 32px);
-}
-.mobile-floating-cta:hover { background: var(--accent-600); }
-.mobile-floating-cta__icon {
-  display: inline-flex;
+  width: 56px;
+  height: 56px;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
-  flex: none;
+  background: var(--accent-500);
+  color: #fff;
+  box-shadow:
+    0 14px 32px rgba(26, 72, 255, 0.42),
+    0 0 0 6px rgba(26, 72, 255, 0.14);
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
+.mobile-floating-cta:hover,
+.mobile-floating-cta:focus-visible {
+  background: var(--accent-600);
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 40px rgba(26, 72, 255, 0.52),
+    0 0 0 8px rgba(26, 72, 255, 0.14);
+}
+.mobile-floating-cta svg { width: 26px; height: 26px; }
 
 @media (max-width: 760px) {
-  .mobile-floating-cta { display: inline-flex; }
+  .mobile-floating-cta {
+    display: inline-flex;
+  }
 
   /* Featured Proof / Case-study accordion: tag on top, title + toggle in one row */
   .proof-item__head,
@@ -4418,13 +4487,21 @@ svg {
   }
   .proof-item__tag,
   .focus-item__tag,
-  .pcase__tag { grid-area: tag; justify-self: start; }
+  .pcase__tag {
+    grid-area: tag;
+    justify-self: start;
+  }
   .proof-item__title,
   .focus-item__title,
-  .pcase__title { grid-area: title; }
+  .pcase__title {
+    grid-area: title;
+  }
   .proof-item__toggle,
   .focus-item__toggle,
-  .pcase__toggle { grid-area: toggle; margin-left: 0; }
+  .pcase__toggle {
+    grid-area: toggle;
+    margin-left: 0;
+  }
 }
 
 /* ==========================================================================
@@ -4455,4 +4532,111 @@ svg {
 }
 .ind-footer-block .industries-also {
   background: transparent;
+}
+
+/* ==========================================================================
+   About / Proof — card transparency overrides
+   ========================================================================== */
+.ad-card { background: rgba(255, 255, 255, 0.4); }
+.proof-what__marquees .what-tile,
+.what-tile { background: rgba(255, 255, 255, 0.4); }
+
+/* ==========================================================================
+   Industries "Common Operating Problems" — diff-card polish + alt L-accents
+   ========================================================================== */
+.diff-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #C8CAFF;
+  box-shadow: none;
+}
+.diff-card::after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  pointer-events: none;
+}
+/* Odd cards (1, 3, 5) → bottom-right accent */
+.industries-diff__list .diff-card:nth-child(odd)::after {
+  bottom: 10px; right: 10px;
+  border-bottom: 2px solid #C8CAFF;
+  border-right: 2px solid #C8CAFF;
+  border-bottom-right-radius: var(--radius-lg);
+}
+/* Even cards (2, 4, 6) → top-left accent */
+.industries-diff__list .diff-card:nth-child(even)::after {
+  top: 10px; left: 10px;
+  border-top: 2px solid #C8CAFF;
+  border-left: 2px solid #C8CAFF;
+  border-top-left-radius: var(--radius-lg);
+}
+.diff-card > * { position: relative; z-index: 1; }
+
+/* ==========================================================================
+   Industries Featured Proof — alternating L-accents (skip last card)
+   ========================================================================== */
+.ip-card {
+  position: relative;
+  overflow: hidden;
+}
+.ip-card:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  pointer-events: none;
+}
+.industries-proof__grid .ip-card:nth-child(odd):not(:last-child)::after {
+  bottom: 10px; right: 10px;
+  border-bottom: 2px solid #C8CAFF;
+  border-right: 2px solid #C8CAFF;
+  border-bottom-right-radius: var(--radius-lg);
+}
+.industries-proof__grid .ip-card:nth-child(even):not(:last-child)::after {
+  top: 10px; left: 10px;
+  border-top: 2px solid #C8CAFF;
+  border-left: 2px solid #C8CAFF;
+  border-top-left-radius: var(--radius-lg);
+}
+.ip-card > * { position: relative; z-index: 1; }
+
+/* ==========================================================================
+   Proof — Future Proof Library card border + rounded top corners only
+   ========================================================================== */
+.lib-col {
+  border: 1px solid #C8CAFF;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* ==========================================================================
+   About — image after quote card
+   ========================================================================== */
+.about-why__after {
+  margin: var(--space-32) auto 0;
+  max-width: 620px;
+  text-align: center;
+  pointer-events: none;
+}
+.about-why__after img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   CTA after image — sits above the site footer on every page
+   ========================================================================== */
+.cta-after {
+  display: block;
+  width: 100%;
+  line-height: 0;
+  pointer-events: none;
+}
+.cta-after img {
+  width: 100%;
+  height: auto;
+  display: block;
 }

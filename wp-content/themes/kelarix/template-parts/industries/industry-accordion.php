@@ -65,45 +65,43 @@ $defaults = array(
 						<span class="focus-item__title"><?php echo esc_html( $item['title'] ); ?></span>
 						<span class="focus-item__toggle" aria-hidden="true"></span>
 					</button>
-					<?php if ( $is_open ) : ?>
-						<div class="focus-item__body">
-							<div class="focus-item__grid">
-								<div class="focus-item__col">
-									<h4 class="focus-item__sub">INDUSTRY PRESSURE</h4>
-									<p class="focus-item__desc"><?php echo esc_html( $item['pressure'] ); ?></p>
-									<h4 class="focus-item__sub">COMMON CHALLENGES</h4>
-									<div class="focus-item__chips">
-										<?php foreach ( array_filter( array_map( 'trim', explode( "\n", $item['challenges'] ) ) ) as $chip ) : ?>
-											<span class="chip"><?php echo esc_html( $chip ); ?></span>
-										<?php endforeach; ?>
-									</div>
+					<div class="focus-item__body">
+						<div class="focus-item__grid">
+							<div class="focus-item__col">
+								<h4 class="focus-item__sub">INDUSTRY PRESSURE</h4>
+								<p class="focus-item__desc"><?php echo esc_html( $item['pressure'] ?: 'Leaders in this industry need connected visibility across operating data, workflow control, and decision support.' ); ?></p>
+								<h4 class="focus-item__sub">COMMON CHALLENGES</h4>
+								<div class="focus-item__chips">
+									<?php foreach ( array_filter( array_map( 'trim', explode( "\n", (string) $item['challenges'] ) ) ) as $chip ) : ?>
+										<span class="chip"><?php echo esc_html( $chip ); ?></span>
+									<?php endforeach; ?>
 								</div>
-								<div class="focus-item__col">
-									<div class="proof-analytics">
-										<div class="proof-analytics__head">
-											<span class="proof-analytics__label"><?php echo esc_html( $item['stat_label'] ); ?></span>
-											<span class="proof-analytics__dots">···</span>
-										</div>
-										<div class="proof-analytics__value"><?php echo esc_html( $item['stat_value'] ); ?></div>
-										<div class="proof-chart">
-											<div class="proof-chart__axis"><span>100%</span><span>60%</span><span>40%</span></div>
-											<svg class="proof-chart__svg" viewBox="0 0 400 130" preserveAspectRatio="none">
-												<defs>
-													<linearGradient id="fp-grad" x1="0" x2="0" y1="0" y2="1">
-														<stop offset="0" stop-color="#1a48ff" stop-opacity=".22"/>
-														<stop offset="1" stop-color="#1a48ff" stop-opacity="0"/>
-													</linearGradient>
-												</defs>
-												<path d="M0 90 Q80 60 160 70 T320 40 T400 30 L400 130 L0 130 Z" fill="url(#fp-grad)"/>
-												<path d="M0 90 Q80 60 160 70 T320 40 T400 30" fill="none" stroke="#1a48ff" stroke-width="2"/>
-												<circle cx="330" cy="42" r="5" fill="#fff" stroke="#1a48ff" stroke-width="2"/>
-											</svg>
-										</div>
+							</div>
+							<div class="focus-item__col">
+								<div class="proof-analytics">
+									<div class="proof-analytics__head">
+										<span class="proof-analytics__label"><?php echo esc_html( $item['stat_label'] ); ?></span>
+										<span class="proof-analytics__dots">···</span>
+									</div>
+									<div class="proof-analytics__value"><?php echo esc_html( $item['stat_value'] ); ?></div>
+									<div class="proof-chart">
+										<div class="proof-chart__axis"><span>100%</span><span>60%</span><span>40%</span></div>
+										<svg class="proof-chart__svg" viewBox="0 0 400 130" preserveAspectRatio="none">
+											<defs>
+												<linearGradient id="fp-grad-<?php echo (int) $i; ?>" x1="0" x2="0" y1="0" y2="1">
+													<stop offset="0" stop-color="#1a48ff" stop-opacity=".22"/>
+													<stop offset="1" stop-color="#1a48ff" stop-opacity="0"/>
+												</linearGradient>
+											</defs>
+											<path d="M0 90 Q80 60 160 70 T320 40 T400 30 L400 130 L0 130 Z" fill="url(#fp-grad-<?php echo (int) $i; ?>)"/>
+											<path d="M0 90 Q80 60 160 70 T320 40 T400 30" fill="none" stroke="#1a48ff" stroke-width="2"/>
+											<circle cx="330" cy="42" r="5" fill="#fff" stroke="#1a48ff" stroke-width="2"/>
+										</svg>
 									</div>
 								</div>
 							</div>
 						</div>
-					<?php endif; ?>
+					</div>
 				</div>
 			<?php endforeach; ?>
 		</div>
