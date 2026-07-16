@@ -58,3 +58,10 @@
 		</div>
 	</div>
 </header>
+
+<a href="<?php echo esc_url( kelarix_opt( 'header_cta_url', '#contact' ) ); ?>" class="mobile-floating-cta" aria-label="<?php echo esc_attr( kelarix_opt( 'header_cta_text', 'Request a Diagnostic Conversation' ) ); ?>">
+	<span class="mobile-floating-cta__text"><?php echo esc_html( kelarix_opt( 'header_cta_text', 'Request a Diagnostic Conversation' ) ); ?></span>
+	<span class="mobile-floating-cta__icon" aria-hidden="true">
+		<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+	</span>
+</a>

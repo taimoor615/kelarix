@@ -11,8 +11,10 @@ $d_bag    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 $d_store  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 9l1-4h14l1 4M4 9v10h16V9M4 9h16M9 19v-5h6v5"/></svg>';
 $d_tools  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 6l4 4-9 9-4-4zM3 21l3-1M16 4l4 4"/></svg>';
 $d_basket = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 9h14l-1.5 10h-11zM9 9l3-5 3 5"/></svg>';
-$d_shield = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></svg>';
-$d_doc    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg>';
+$d_shield  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></svg>';
+$d_doc     = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg>';
+$d_monitor = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 10l2 2 3-4 3 3"/></svg>';
+$d_health  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-8-5-8-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6-8 11-8 11z"/><path d="M9 12h2v-2h2v2h2v2h-2v2h-2v-2H9z"/></svg>';
 
 $main_defaults = array(
 	array(
@@ -32,6 +34,12 @@ $main_defaults = array(
 		'desc'     => 'Build systems for compliance, reporting, document handling, and customer operations control.',
 		'features' => array( 'Customer onboarding workflows', 'Compliance tasks', 'Risk dashboards', 'Document approvals' ),
 		'decor'    => $d_shield . $d_doc,
+	),
+	array(
+		'title'    => 'Healthcare',
+		'desc'     => 'Improve visibility across inventory, procurement, patient operations, internal workflows, and capacity planning.',
+		'features' => array( 'Medical inventory', 'Procurement workflows', 'Usage dashboards', 'Capacity reporting' ),
+		'decor'    => $d_monitor . $d_health,
 	),
 );
 $also_defaults = array(

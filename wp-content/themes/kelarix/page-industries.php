@@ -28,12 +28,12 @@ get_header();
 	<?php
 	get_template_part( 'template-parts/industries/different-industries' );
 	get_template_part( 'template-parts/industries/how-kelarix-helps' );
-	get_template_part( 'template-parts/industries/also-relevant' );
 	?>
 
-	<!-- Backdrop 3: featured-proof-footerend-bg — wraps proof + our-value + final-cta -->
+	<!-- Backdrop 3: relevant-bg-footer-cta.png — wraps also-relevant + proof + our-value + final-cta -->
 	<div class="ind-footer-block">
 		<?php
+		get_template_part( 'template-parts/industries/also-relevant' );
 		get_template_part( 'template-parts/industries/featured-proof' );
 		get_template_part( 'template-parts/industries/our-value' );
 		get_template_part( 'template-parts/industries/final-cta' );

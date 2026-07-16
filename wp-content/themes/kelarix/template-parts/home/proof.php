@@ -72,7 +72,7 @@ $chart = '<svg class="proof-chart__svg" viewBox="0 0 320 150" preserveAspectRati
 	. '<line x1="230" y1="0" x2="230" y2="150" stroke="#1a48ff" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>'
 	. '<circle cx="230" cy="70" r="6" fill="#fff" stroke="#1a48ff" stroke-width="3"/></svg>';
 ?>
-<section class="section section--dark proof">
+<section class="section proof">
 	<div class="proof__bg" aria-hidden="true"></div>
 	<div class="container proof__inner">
 		<div class="section__head section__head--center">

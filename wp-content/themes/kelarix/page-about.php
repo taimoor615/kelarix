@@ -8,12 +8,14 @@ get_header();
 ?>
 <main id="primary" class="site-main about-page">
 
-	<!-- Overlay backdrop 1: hero + why + POV head -->
+	<!-- Backdrop 1: hero overlay only (about-overlay-img-2sections.png) -->
 	<div class="about-hero-block">
-		<?php
-		get_template_part( 'template-parts/about/hero' );
-		get_template_part( 'template-parts/about/why' );
-		?>
+		<?php get_template_part( 'template-parts/about/hero' ); ?>
+	</div>
+
+	<!-- Backdrop 2: about-bg-sectio-2.png — wraps why + POV head, closes above strategy-block -->
+	<div class="about-why-block">
+		<?php get_template_part( 'template-parts/about/why' ); ?>
 
 		<section class="section about-pov about-pov--head-only">
 			<div class="container">

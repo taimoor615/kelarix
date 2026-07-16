@@ -1,6 +1,6 @@
 <?php
 /**
- * Front page — assembles the homepage from section parts + connector strips.
+ * Front page — assembles the homepage from section parts + backdrop wrappers.
  *
  * @package Kelarix
  */
@@ -39,24 +39,25 @@ function kelarix_connector( $key ) {
 
 <?php
 get_template_part( 'template-parts/home/systems' );
-
 get_template_part( 'template-parts/home/industries' );
-
-get_template_part( 'template-parts/home/confidential' );
-
 ?>
 
-<div class="proof-block">
-	<?php get_template_part( 'template-parts/home/proof' ); ?>
+<!-- Backdrop: home-featured-proof-bg.jpg — starts above confidential cards, ends above process -->
+<div class="hp-proof-block">
+	<?php
+	get_template_part( 'template-parts/home/confidential' );
+	get_template_part( 'template-parts/home/proof' );
+	?>
+</div>
+
+<!-- Backdrop: home-footer-bg-img.png — starts above process, ends after Final CTA (before <footer>) -->
+<div class="hp-footer-block">
+	<?php
+	get_template_part( 'template-parts/home/process' );
+	get_template_part( 'template-parts/home/discipline' );
+	get_template_part( 'template-parts/home/final-cta' );
+	?>
 </div>
 
 <?php
-
-get_template_part( 'template-parts/home/process' );
-
-get_template_part( 'template-parts/home/discipline' );
-// kelarix_connector( 'process-footer' );
-
-get_template_part( 'template-parts/home/final-cta' );
-
 get_footer();

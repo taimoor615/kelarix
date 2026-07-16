@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KELARIX_VERSION', '1.8.2' );
+define( 'KELARIX_VERSION', '1.9.0' );
 define( 'KELARIX_DIR', get_template_directory() );
 define( 'KELARIX_URI', get_template_directory_uri() );
 
