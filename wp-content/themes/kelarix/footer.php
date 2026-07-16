@@ -5,9 +5,6 @@
  * @package Kelarix
  */
 ?>
-<div class="cta-after" aria-hidden="true">
-	<img src="<?php echo esc_url( KELARIX_URI . '/assets/images/cta-after-img.svg' ); ?>" alt="">
-</div>
 <footer class="site-footer" id="contact">
 	<div class="container site-footer__inner">
 		<div class="site-footer__brand">

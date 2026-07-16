@@ -19,6 +19,14 @@ function kelarix_assets() {
 		null
 	);
 
+	// Font Awesome (icons).
+	wp_enqueue_style(
+		'kelarix-fa',
+		'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+		array(),
+		'6.5.1'
+	);
+
 	wp_enqueue_style( 'kelarix-tokens', KELARIX_URI . '/assets/css/tokens.css', array(), KELARIX_VERSION );
 	wp_enqueue_style( 'kelarix-main', KELARIX_URI . '/assets/css/main.css', array( 'kelarix-tokens' ), KELARIX_VERSION );
 

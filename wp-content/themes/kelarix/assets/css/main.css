@@ -1582,9 +1582,9 @@ svg {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 220px;
+  width: 260px;
   height: 220px;
-  background: url("../images/checker.svg") right bottom / contain no-repeat;
+  background: url("../images/cta-after-img.svg") right bottom / contain no-repeat;
   pointer-events: none;
 }
 
@@ -4438,13 +4438,13 @@ svg {
 /* ==========================================================================
    Mobile floating CTA (hidden on desktop, pill button on mobile)
    ========================================================================== */
-/* Floating icon-only CTA — circular pill with chat/quote icon */
+/* Floating icon-only CTA — Font Awesome comments glyph, sits above everything */
 .mobile-floating-cta {
   display: none;
   position: fixed;
   right: 18px;
   bottom: 18px;
-  z-index: 100;
+  z-index: 2147483647; /* max — always on top */
   width: 56px;
   height: 56px;
   align-items: center;
@@ -4466,6 +4466,7 @@ svg {
     0 18px 40px rgba(26, 72, 255, 0.52),
     0 0 0 8px rgba(26, 72, 255, 0.14);
 }
+.mobile-floating-cta i { font-size: 22px; line-height: 1; }
 .mobile-floating-cta svg { width: 26px; height: 26px; }
 
 @media (max-width: 760px) {
@@ -4607,36 +4608,148 @@ svg {
    ========================================================================== */
 .lib-col {
   border: 1px solid #C8CAFF;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-radius: 0;
+}
+.proof-library__grid .lib-col:first-child {
+  border-top-left-radius: var(--radius-lg);
+}
+.proof-library__grid .lib-col:last-child {
+  border-top-right-radius: var(--radius-lg);
 }
 
 /* ==========================================================================
-   About — image after quote card
+   About — decorative image below quote card (pseudo, no extra DOM)
    ========================================================================== */
-.about-why__after {
+.about-why__quote {
+  position: relative;
+}
+.about-why__quote::after {
+  content: "";
+  display: block;
   margin: var(--space-32) auto 0;
-  max-width: 620px;
-  text-align: center;
+  width: min(620px, 100%);
+  height: 120px;
+  background: url("../images/about-us/goal-after-section-img.svg") center/contain no-repeat;
   pointer-events: none;
-}
-.about-why__after img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
 }
 
 /* ==========================================================================
-   CTA after image — sits above the site footer on every page
+   Nav breakpoint — hide desktop nav from 991px down, show hamburger
    ========================================================================== */
-.cta-after {
-  display: block;
-  width: 100%;
-  line-height: 0;
-  pointer-events: none;
+@media (max-width: 991px) {
+  .site-nav,
+  .site-header__cta {
+    display: none;
+  }
+  .site-header__toggle {
+    display: flex;
+    margin-left: auto;
+  }
+  .site-header.is-open .site-nav {
+    display: block;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-20);
+    box-shadow: var(--shadow-medium);
+  }
+  .site-header.is-open .site-nav__list {
+    flex-direction: column;
+    gap: var(--space-16);
+    align-items: flex-start;
+  }
+  .site-header.is-open .site-nav__list a {
+    color: var(--gray-800);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-semibold);
+  }
+  .site-header.is-open .site-nav__list a:hover { color: var(--accent-600); }
+  .mobile-floating-cta { display: inline-flex; }
 }
-.cta-after img {
-  width: 100%;
-  height: auto;
-  display: block;
+
+/* ==========================================================================
+   Sticky asides — disable on mobile so headings don't overlap cards
+   ========================================================================== */
+@media (max-width: 991px) {
+  .proof-frameworks__aside,
+  .industries-diff__aside,
+  .about-different__aside,
+  .discipline__aside,
+  .systems__aside,
+  .about-path__aside {
+    position: static;
+    top: auto;
+  }
+}
+
+/* ==========================================================================
+   Proof compare card — mobile: stack kelarix + traditional cleanly
+   ========================================================================== */
+@media (max-width: 760px) {
+  .proof-compare {
+    padding: var(--space-24);
+    min-height: 0;
+  }
+  .proof-compare__card--kelarix {
+    position: static;
+    width: 100%;
+    margin: 0 0 var(--space-20);
+    box-shadow: 0 12px 32px rgba(26, 72, 255, 0.28);
+  }
+}
+
+/* ==========================================================================
+   Paired CTAs on mobile — full-width, icon visible, no truncation
+   ========================================================================== */
+@media (max-width: 760px) {
+  .hero__actions,
+  .about-path__actions,
+  .about-discipline__actions,
+  .industries-diff__actions,
+  .industries-also__actions,
+  .final-cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-12);
+  }
+  .hero__actions .btn,
+  .about-path__actions .btn,
+  .about-discipline__actions .btn,
+  .industries-diff__actions .btn,
+  .industries-also__actions .btn,
+  .final-cta__actions .btn {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 13px 18px;
+    justify-content: space-between;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.2;
+  }
+  .hero__actions .btn span:first-child,
+  .about-path__actions .btn span:first-child,
+  .about-discipline__actions .btn span:first-child,
+  .industries-diff__actions .btn span:first-child,
+  .industries-also__actions .btn span:first-child,
+  .final-cta__actions .btn span:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .hero__actions .btn .btn__arrow,
+  .about-path__actions .btn .btn__arrow,
+  .about-discipline__actions .btn .btn__arrow,
+  .industries-diff__actions .btn .btn__arrow,
+  .industries-also__actions .btn .btn__arrow,
+  .final-cta__actions .btn .btn__arrow {
+    flex: none;
+    margin-left: 12px;
+  }
 }

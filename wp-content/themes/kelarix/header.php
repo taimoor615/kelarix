@@ -60,8 +60,5 @@
 </header>
 
 <a href="<?php echo esc_url( kelarix_opt( 'header_cta_url', '#contact' ) ); ?>" class="mobile-floating-cta" aria-label="<?php echo esc_attr( kelarix_opt( 'header_cta_text', 'Request a Diagnostic Conversation' ) ); ?>" title="<?php echo esc_attr( kelarix_opt( 'header_cta_text', 'Request a Diagnostic Conversation' ) ); ?>">
-	<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-		<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.8A8 8 0 1 1 21 12z"/>
-		<path d="M8 11h.01M12 11h.01M16 11h.01"/>
-	</svg>
+	<i class="fa-solid fa-comments" aria-hidden="true"></i>
 </a>
