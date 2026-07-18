@@ -174,7 +174,7 @@ function kelarix_sync_local_acf_to_db() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
-	if ( ! function_exists( 'acf_get_local_field_groups' ) ) {
+	if ( ! function_exists( 'acf_get_local_field_groups' ) || ! function_exists( 'acf_import_field_group' ) ) {
 		return;
 	}
 	// Only run once per theme version.
@@ -184,26 +184,38 @@ function kelarix_sync_local_acf_to_db() {
 
 	$groups = acf_get_local_field_groups();
 	foreach ( $groups as $group ) {
-		// Skip if a DB field group with this key already exists.
+		// If a partial DB copy already exists for this key, delete it first so
+		// acf_import_field_group() writes a fresh group WITH all child fields.
 		$existing = get_posts( array(
 			'post_type'      => 'acf-field-group',
-			'post_status'    => array( 'publish', 'acf-disabled' ),
+			'post_status'    => array( 'publish', 'acf-disabled', 'trash' ),
 			'name'           => $group['key'],
-			'posts_per_page' => 1,
+			'posts_per_page' => -1,
 			'fields'         => 'ids',
 		) );
-		if ( ! empty( $existing ) ) {
-			continue;
+		foreach ( $existing as $existing_id ) {
+			// Also delete child fields (posts with post_parent = group id).
+			$child_fields = get_posts( array(
+				'post_type'      => 'acf-field',
+				'post_parent'    => $existing_id,
+				'posts_per_page' => -1,
+				'post_status'    => 'any',
+				'fields'         => 'ids',
+			) );
+			foreach ( $child_fields as $cf_id ) {
+				wp_delete_post( $cf_id, true );
+			}
+			wp_delete_post( $existing_id, true );
 		}
 
+		// Rebuild fresh: acf_import_field_group() saves the group AND recursively
+		// saves every field / sub-field with proper parent linkage.
 		$fields = acf_get_local_fields( $group['key'] );
+		$group_to_import = $group;
+		$group_to_import['fields'] = $fields;
+		unset( $group_to_import['local'], $group_to_import['ID'] );
 
-		$group_to_save           = $group;
-		$group_to_save['ID']     = 0;
-		$group_to_save['fields'] = $fields;
-		unset( $group_to_save['local'] );
-
-		acf_update_field_group( $group_to_save );
+		acf_import_field_group( $group_to_import );
 	}
 
 	update_option( 'kelarix_acf_sync_version', KELARIX_VERSION );
