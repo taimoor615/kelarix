@@ -218,32 +218,20 @@ function kelarix_sync_local_acf_to_db() {
 
 	$groups = acf_get_local_field_groups();
 	foreach ( $groups as $group ) {
-		// If a partial DB copy already exists for this key, delete it first so
-		// acf_import_field_group() writes a fresh group WITH all child fields.
 		$existing = get_posts( array(
 			'post_type'      => 'acf-field-group',
-			'post_status'    => array( 'publish', 'acf-disabled', 'trash' ),
+			'post_status'    => array( 'publish', 'acf-disabled' ),
 			'name'           => $group['key'],
-			'posts_per_page' => -1,
+			'posts_per_page' => 1,
 			'fields'         => 'ids',
 		) );
-		foreach ( $existing as $existing_id ) {
-			// Also delete child fields (posts with post_parent = group id).
-			$child_fields = get_posts( array(
-				'post_type'      => 'acf-field',
-				'post_parent'    => $existing_id,
-				'posts_per_page' => -1,
-				'post_status'    => 'any',
-				'fields'         => 'ids',
-			) );
-			foreach ( $child_fields as $cf_id ) {
-				wp_delete_post( $cf_id, true );
-			}
-			wp_delete_post( $existing_id, true );
+		// Auto-sync: skip if a DB copy already exists (never destructive).
+		// Use ?kelarix_resync_acf=1 URL trigger for a clean rebuild.
+		if ( ! empty( $existing ) && ! $force ) {
+			continue;
 		}
 
-		// Rebuild fresh: acf_import_field_group() saves the group AND recursively
-		// saves every field / sub-field with proper parent linkage.
+		// Fresh import — writes group + all fields/sub-fields recursively.
 		$fields = acf_get_local_fields( $group['key'] );
 		$group_to_import = $group;
 		$group_to_import['fields'] = $fields;
