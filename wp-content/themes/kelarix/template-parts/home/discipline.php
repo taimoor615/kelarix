@@ -40,11 +40,12 @@ $defaults = array(
 				$item    = k_field( 'discipline_item_' . $i, array() );
 				$title   = ! empty( $item['title'] ) ? $item['title'] : $defaults[ $i ][0];
 				$text    = ! empty( $item['text'] ) ? $item['text'] : $defaults[ $i ][1];
+				$icon    = ! empty( $item['icon'] ) ? k_icon( $item['icon'] ) : $icons[ $i ];
 				$is_open = ( 1 === $i );
 				?>
 				<div class="disc-item <?php echo $is_open ? 'is-open' : ''; ?>" data-accordion-item>
 					<button class="disc-item__head" data-accordion-trigger aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>">
-						<span class="disc-item__icon"><?php echo $icons[ $i ]; // phpcs:ignore ?></span>
+						<span class="disc-item__icon"><?php echo $icon; // phpcs:ignore ?></span>
 						<span class="disc-item__main">
 							<span class="disc-item__title"><?php echo esc_html( $title ); ?></span>
 							<span class="disc-item__text"><?php echo esc_html( $text ); ?></span>

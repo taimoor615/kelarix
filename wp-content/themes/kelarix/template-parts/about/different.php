@@ -5,12 +5,12 @@
  * @package Kelarix
  */
 $defaults = array(
-	1 => array( 'We start with operating problems', 'We focus on the operational problem, not tool selection, so systems address the real cause of friction.' ),
-	2 => array( 'We connect capabilities into systems', 'Analytics, automation, AI, and software work together in one connected system, not in isolation.' ),
-	3 => array( 'We focus on executive outcomes', 'Every system supports specific leadership decisions, visibility needs, and business execution.' ),
-	4 => array( 'We design around real users and roles', 'Workflows, permissions, and interfaces reflect the people and roles that actually use them.' ),
-	5 => array( 'We respect sensitive work', 'Client processes, data, and business context stay confidential and protected.' ),
-	6 => array( 'We build for practical adoption', 'Systems are designed so teams can actually use, maintain, and rely on them long term.' ),
+	1 => array( 'We start with operating problems', 'We focus on the operational problem, not tool selection, so systems address the real cause of friction.', 'clipboard' ),
+	2 => array( 'We connect capabilities into systems', 'Analytics, automation, AI, and software work together in one connected system, not in isolation.', 'workflow' ),
+	3 => array( 'We focus on executive outcomes', 'Every system supports specific leadership decisions, visibility needs, and business execution.', 'clock' ),
+	4 => array( 'We design around real users and roles', 'Workflows, permissions, and interfaces reflect the people and roles that actually use them.', 'scatter' ),
+	5 => array( 'We respect sensitive work', 'Client processes, data, and business context stay confidential and protected.', 'x' ),
+	6 => array( 'We build for practical adoption', 'Systems are designed so teams can actually use, maintain, and rely on them long term.', 'ai' ),
 );
 ?>
 <section class="section about-different">
@@ -30,13 +30,12 @@ $defaults = array(
 				$item    = k_field( 'diff_item_' . $i, array() );
 				$title   = ! empty( $item['title'] ) ? $item['title'] : $defaults[ $i ][0];
 				$text    = ! empty( $item['text'] ) ? $item['text'] : $defaults[ $i ][1];
+				$icon    = ! empty( $item['icon'] ) ? $item['icon'] : $defaults[ $i ][2];
 				$is_open = ( 1 === $i );
 				?>
 				<div class="diff-item <?php echo $is_open ? 'is-open' : ''; ?>" data-accordion-item>
 					<button class="diff-item__head" data-accordion-trigger aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>">
-						<span class="diff-item__dot" aria-hidden="true">
-							<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-						</span>
+						<span class="diff-item__dot" aria-hidden="true"><?php echo k_icon( $icon ); ?></span>
 						<span class="diff-item__title"><?php echo esc_html( $title ); ?></span>
 						<span class="diff-item__toggle" aria-hidden="true"></span>
 					</button>

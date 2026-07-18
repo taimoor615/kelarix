@@ -138,3 +138,39 @@ function k_icon( $name = 'default' ) {
 	}
 	return '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/></svg>';
 }
+
+/**
+ * Site Settings page — a private Page created once, used to hold ACF-editable
+ * footer + global site settings. Auto-created if missing.
+ */
+function kelarix_settings_page_id() {
+	static $id = null;
+	if ( null !== $id ) {
+		return $id;
+	}
+	$page = get_page_by_path( 'site-settings' );
+	if ( ! $page ) {
+		$new_id = wp_insert_post( array(
+			'post_type'    => 'page',
+			'post_title'   => 'Site Settings',
+			'post_name'    => 'site-settings',
+			'post_status'  => 'private',
+			'post_content' => '',
+		) );
+		$id = $new_id && ! is_wp_error( $new_id ) ? $new_id : 0;
+	} else {
+		$id = $page->ID;
+	}
+	return $id;
+}
+
+/**
+ * Read an ACF field from the Site Settings page with a default fallback.
+ */
+function k_setting( $key, $default = '' ) {
+	$id = kelarix_settings_page_id();
+	if ( ! $id ) {
+		return $default;
+	}
+	return k_field( $key, $default, $id );
+}

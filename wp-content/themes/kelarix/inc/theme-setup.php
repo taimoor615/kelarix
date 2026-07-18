@@ -9,6 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Ensure the private "Site Settings" page exists on admin load (holds Footer ACF fields).
+add_action( 'admin_init', 'kelarix_settings_page_id' );
+
 add_action( 'after_setup_theme', 'kelarix_setup' );
 function kelarix_setup() {
 	add_theme_support( 'title-tag' );

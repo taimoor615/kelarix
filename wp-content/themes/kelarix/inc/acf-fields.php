@@ -220,6 +220,69 @@ function kelarix_register_all_acf() {
 	kelarix_acf_cpt_industry();
 	kelarix_acf_cpt_proof();
 	kelarix_acf_cpt_process();
+	kelarix_acf_footer_settings();
+}
+
+/**
+ * Footer / Site Settings — attaches to the auto-created "Site Settings" page.
+ */
+function kelarix_acf_footer_settings() {
+	if ( ! function_exists( 'kelarix_settings_page_id' ) ) {
+		return;
+	}
+	$page_id = kelarix_settings_page_id();
+	if ( ! $page_id ) {
+		return;
+	}
+
+	$fields = array();
+
+	$fields[] = kacf_tab( 'fbrand', 'Brand' );
+	$fields[] = kacf_text( 'footer_logo_text', 'Logo Text', 'KELARIX' );
+	$fields[] = kacf_textarea( 'footer_about', 'About Line', 'AI agents that automate work, scale operations and give your team time back.' );
+
+	$fields[] = kacf_tab( 'fsocial', 'Social' );
+	$fields[] = kacf_link( 'footer_linkedin', 'LinkedIn URL' );
+	$fields[] = kacf_link( 'footer_instagram', 'Instagram URL' );
+	$fields[] = kacf_text( 'footer_linkedin_icon', 'LinkedIn Icon slug', 'linkedin' );
+	$fields[] = kacf_text( 'footer_instagram_icon', 'Instagram Icon slug', 'instagram' );
+
+	$fields[] = kacf_tab( 'fcol1', 'Column 1 — Quick Links' );
+	$fields[] = kacf_text( 'footer_col1_title', 'Column Title', 'Quick links' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_link( 'footer_col1_link_' . $i, 'Link ' . $i );
+	}
+
+	$fields[] = kacf_tab( 'fcol2', 'Column 2 — Industry' );
+	$fields[] = kacf_text( 'footer_col2_title', 'Column Title', "Industry's" );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_link( 'footer_col2_link_' . $i, 'Link ' . $i );
+	}
+
+	$fields[] = kacf_tab( 'fbuild', 'Build Your Team' );
+	$fields[] = kacf_text( 'footer_build_title', 'Column Title', 'Build your team:' );
+	$fields[] = kacf_textarea( 'footer_build_text', 'Description', 'Get tips, product updates, and insights on working smarter with AI.' );
+	$fields[] = kacf_link( 'footer_build_cta', 'CTA Button' );
+
+	$fields[] = kacf_tab( 'fbottom', 'Bottom Bar' );
+	$fields[] = kacf_text( 'footer_copyright', 'Copyright', '© {year} Kelarix. All rights reserved.' );
+	$fields[] = kacf_text( 'footer_email_label', 'Email Label', 'Build your team:' );
+	$fields[] = kacf_text( 'footer_email', 'Email Address', 'info@kelarix.com' );
+
+	acf_add_local_field_group( array(
+		'key'                   => 'group_kelarix_footer',
+		'title'                 => 'Footer & Site Settings',
+		'fields'                => kelarix_prefix_field_keys( $fields, 'ft' ),
+		'location'              => array(
+			array( array( 'param' => 'post', 'operator' => '==', 'value' => $page_id ) ),
+		),
+		'menu_order'            => 3,
+		'position'              => 'normal',
+		'style'                 => 'default',
+		'label_placement'       => 'top',
+		'instruction_placement' => 'label',
+		'active'                => true,
+	) );
 }
 
 /* =======================================================================
@@ -305,7 +368,7 @@ function kelarix_acf_homepage() {
 	$fields[] = kacf_textarea( 'discipline_heading', 'Heading' );
 	$fields[] = kacf_textarea( 'discipline_text', 'Body Text' );
 	for ( $i = 1; $i <= 7; $i++ ) {
-		$fields[] = kacf_card( 'discipline_item_' . $i, 'Discipline Item ' . $i );
+		$fields[] = kacf_card_icon( 'discipline_item_' . $i, 'Discipline Item ' . $i, 'Icon: scatter, clipboard, clock, workflow, ai, x, linkedin, instagram' );
 	}
 
 	/* --- Final CTA --- */
@@ -391,7 +454,7 @@ function kelarix_acf_about() {
 	$fields[] = kacf_textarea( 'about_disc_heading', 'Heading' );
 	$fields[] = kacf_textarea( 'about_disc_text', 'Body Text' );
 	for ( $i = 1; $i <= 8; $i++ ) {
-		$fields[] = kacf_card( 'about_disc_item_' . $i, 'Discipline Item ' . $i );
+		$fields[] = kacf_card_icon( 'about_disc_item_' . $i, 'Discipline Item ' . $i, 'Icon: scatter, clipboard, clock, workflow, ai, x, linkedin, instagram' );
 	}
 	$fields[] = kacf_link( 'about_disc_cta_primary', 'Primary CTA' );
 	$fields[] = kacf_link( 'about_disc_cta_secondary', 'Secondary CTA' );
@@ -402,7 +465,7 @@ function kelarix_acf_about() {
 	$fields[] = kacf_textarea( 'diff_heading', 'Heading' );
 	$fields[] = kacf_textarea( 'diff_text', 'Body Text' );
 	for ( $i = 1; $i <= 6; $i++ ) {
-		$fields[] = kacf_card( 'diff_item_' . $i, 'Differentiator ' . $i );
+		$fields[] = kacf_card_icon( 'diff_item_' . $i, 'Differentiator ' . $i, 'Icon: scatter, clipboard, clock, workflow, ai, x' );
 	}
 
 	/* Final */
