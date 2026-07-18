@@ -4849,7 +4849,7 @@ svg {
   }
 
   /* Homepage proof block — solid brand bg on mobile (backdrop image can wash out) */
-  .hp-proof-block {
+  .section.proof {
     background-color: #1a48fd;
   }
 }
@@ -4862,13 +4862,24 @@ svg {
   font-weight: var(--fw-semibold);
   text-decoration: none;
 }
-.site-footer__email:hover { text-decoration: underline; }
+.site-footer__email:hover {
+  text-decoration: underline;
+}
 
 /* ==========================================================================
    404 page
    ========================================================================== */
-.error-404-page { background: linear-gradient(180deg, #f4f6fb 0%, #eef2fb 100%); }
-.error-404 { padding-block: var(--space-96); }
+.error-404-page {
+  background: linear-gradient(180deg, #f4f6fb 0%, #eef2fb 100%);
+}
+/* 404 page header — light bg, so nav + logo need dark ink */
+.error404 .site-header__logo,
+.error404 .site-nav__list a { color: var(--gray-800); }
+.error404 .site-nav__list a:hover { color: var(--accent-600); }
+.error404 .site-header__toggle span { background: var(--black); }
+.error-404 {
+  padding-block: var(--space-96);
+}
 .error-404 .container {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -4908,7 +4919,15 @@ svg {
   max-width: 460px;
 }
 @media (max-width: 991px) {
-  .error-404 .container { grid-template-columns: 1fr; gap: var(--space-40); text-align: center; }
-  .error-404__text { margin-inline: auto; }
-  .error-404__actions { justify-content: center; }
+  .error-404 .container {
+    grid-template-columns: 1fr;
+    gap: var(--space-40);
+    text-align: center;
+  }
+  .error-404__text {
+    margin-inline: auto;
+  }
+  .error-404__actions {
+    justify-content: center;
+  }
 }
