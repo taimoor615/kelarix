@@ -177,9 +177,43 @@ function kelarix_sync_local_acf_to_db() {
 	if ( ! function_exists( 'acf_get_local_field_groups' ) || ! function_exists( 'acf_import_field_group' ) ) {
 		return;
 	}
-	// Only run once per theme version.
-	if ( get_option( 'kelarix_acf_sync_version' ) === KELARIX_VERSION ) {
+	// Manual force trigger: visit /wp-admin/?kelarix_resync_acf=1 to purge + rebuild.
+	$force = isset( $_GET['kelarix_resync_acf'] ) && '1' === $_GET['kelarix_resync_acf']; // phpcs:ignore WordPress.Security.NonceVerification
+	// Only run once per theme version (unless forced).
+	if ( ! $force && get_option( 'kelarix_acf_sync_version' ) === KELARIX_VERSION ) {
 		return;
+	}
+	if ( $force ) {
+		// Nuke every existing DB field-group + child field post so re-import is clean.
+		$all_groups = get_posts( array(
+			'post_type'      => 'acf-field-group',
+			'post_status'    => array( 'publish', 'acf-disabled', 'trash' ),
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+		) );
+		foreach ( $all_groups as $gid ) {
+			$child_fields = get_posts( array(
+				'post_type'      => 'acf-field',
+				'post_parent'    => $gid,
+				'posts_per_page' => -1,
+				'post_status'    => 'any',
+				'fields'         => 'ids',
+			) );
+			foreach ( $child_fields as $cf ) {
+				wp_delete_post( $cf, true );
+			}
+			wp_delete_post( $gid, true );
+		}
+		// Also delete orphan acf-field posts.
+		$orphans = get_posts( array(
+			'post_type'      => 'acf-field',
+			'posts_per_page' => -1,
+			'post_status'    => 'any',
+			'fields'         => 'ids',
+		) );
+		foreach ( $orphans as $of ) {
+			wp_delete_post( $of, true );
+		}
 	}
 
 	$groups = acf_get_local_field_groups();
