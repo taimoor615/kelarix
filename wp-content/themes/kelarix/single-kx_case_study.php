@@ -1,12 +1,16 @@
 <?php
 /**
- * Template Name: Proof
+ * Single Case Study template (kx_case_study CPT).
+ *
+ * Uses the same section layout originally built as the standalone Proof page.
+ * Each case study post now owns this full-detail view. Template parts and CSS
+ * class names stay under the "proof-" prefix so existing styles keep working.
  *
  * @package Kelarix
  */
 get_header();
 ?>
-<main id="primary" class="site-main proof-page">
+<main id="primary" class="site-main proof-page single-case-study">
 	<!-- Backdrop 1: hero-btoomt-overlya-img — from hero top to just above Demonstrate section -->
 	<div class="proof-top-block">
 		<?php

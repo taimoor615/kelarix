@@ -1138,10 +1138,10 @@ function kelarix_acf_proof() {
 
 	acf_add_local_field_group( array(
 		'key'                   => 'group_kelarix_proof',
-		'title'                 => 'Proof Page Content',
+		'title'                 => 'Case Study — Full Page Content',
 		'fields'                => $fields,
 		'location'              => array(
-			array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-proof.php' ) ),
+			array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'kx_case_study' ) ),
 		),
 		'menu_order'            => 3,
 		'position'              => 'normal',
