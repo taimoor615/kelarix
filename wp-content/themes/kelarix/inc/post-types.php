@@ -12,6 +12,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'init', 'kelarix_register_post_types' );
+
+/**
+ * Flush rewrite rules once per theme version so /industry/<slug>/ URLs work
+ * after CPT visibility changes.
+ */
+add_action( 'admin_init', 'kelarix_maybe_flush_rewrites' );
+function kelarix_maybe_flush_rewrites() {
+	if ( get_option( 'kelarix_rewrite_version' ) === KELARIX_VERSION ) {
+		return;
+	}
+	flush_rewrite_rules( false );
+	update_option( 'kelarix_rewrite_version', KELARIX_VERSION );
+}
 function kelarix_register_post_types() {
 
 	$common = array(
@@ -33,11 +46,17 @@ function kelarix_register_post_types() {
 		'menu_position' => 21,
 	) ) );
 
-	// Industries.
+	// Industries — public so single posts have their own page + editor.
 	register_post_type( 'kx_industry', array_merge( $common, array(
-		'labels'        => kelarix_pt_labels( 'Industry', 'Industries' ),
-		'menu_icon'     => 'dashicons-building',
-		'menu_position' => 22,
+		'labels'              => kelarix_pt_labels( 'Industry', 'Industries' ),
+		'menu_icon'           => 'dashicons-building',
+		'menu_position'       => 22,
+		'public'              => true,
+		'publicly_queryable'  => true,
+		'exclude_from_search' => false,
+		'has_archive'         => false,
+		'rewrite'             => array( 'slug' => 'industry', 'with_front' => false ),
+		'supports'            => array( 'title', 'editor', 'thumbnail', 'page-attributes', 'excerpt' ),
 	) ) );
 
 	// Proof cases.
@@ -53,6 +72,63 @@ function kelarix_register_post_types() {
 		'menu_icon'     => 'dashicons-randomize',
 		'menu_position' => 24,
 	) ) );
+
+	// Case Studies — public listing under /case-studies/, single view per post.
+	register_post_type( 'kx_case_study', array_merge( $common, array(
+		'labels'              => kelarix_pt_labels( 'Case Study', 'Case Studies' ),
+		'menu_icon'           => 'dashicons-media-document',
+		'menu_position'       => 26,
+		'public'              => true,
+		'publicly_queryable'  => true,
+		'exclude_from_search' => false,
+		'has_archive'         => false,
+		'rewrite'             => array( 'slug' => 'case-study', 'with_front' => false ),
+		'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes' ),
+	) ) );
+
+	// Industry taxonomy — filter chips on the case-studies listing page.
+	register_taxonomy( 'kx_case_ind', 'kx_case_study', array(
+		'labels'            => array(
+			'name'          => 'Industries',
+			'singular_name' => 'Industry',
+			'menu_name'     => 'Industries',
+			'all_items'     => 'All Industries',
+			'edit_item'     => 'Edit Industry',
+			'add_new_item'  => 'Add Industry',
+			'new_item_name' => 'New Industry',
+		),
+		'public'            => true,
+		'hierarchical'      => true,
+		'show_admin_column' => true,
+		'show_in_rest'      => true,
+		'rewrite'           => array( 'slug' => 'case-study-industry', 'with_front' => false ),
+	) );
+}
+
+/**
+ * Seed the 4 default industry terms on first activation of the case-study
+ * taxonomy. Idempotent — safe to run on every version bump.
+ */
+add_action( 'init', 'kelarix_seed_case_industries', 20 );
+function kelarix_seed_case_industries() {
+	if ( ! taxonomy_exists( 'kx_case_ind' ) ) {
+		return;
+	}
+	if ( get_option( 'kelarix_case_ind_seeded' ) === '1' ) {
+		return;
+	}
+	$defaults = array(
+		'retail'            => 'Retail',
+		'fmcg-food-beverage' => 'FMCG & Food and Beverage',
+		'financial-services' => 'Financial Services',
+		'healthcare'        => 'Healthcare',
+	);
+	foreach ( $defaults as $slug => $name ) {
+		if ( ! term_exists( $slug, 'kx_case_ind' ) ) {
+			wp_insert_term( $name, 'kx_case_ind', array( 'slug' => $slug ) );
+		}
+	}
+	update_option( 'kelarix_case_ind_seeded', '1' );
 }
 
 /**

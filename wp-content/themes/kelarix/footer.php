@@ -76,6 +76,37 @@ $email = k_setting( 'footer_email', 'info@kelarix.com' );
 	</div>
 </footer>
 
+<!-- Request a Diagnostic Conversation modal — opens on click of any [data-modal-open="request"], a[href="#contact"], or the mobile floating CTA -->
+<div class="request-modal" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle" aria-hidden="true">
+	<div class="request-modal__backdrop" data-modal-close></div>
+	<div class="request-modal__panel" role="document">
+		<button type="button" class="request-modal__close" data-modal-close aria-label="<?php esc_attr_e( 'Close', 'kelarix' ); ?>">
+			<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+		</button>
+		<h2 class="request-modal__title" id="requestModalTitle">
+			<?php echo esc_html( k_setting( 'request_modal_title', 'Share enough context for a serious first review.' ) ); ?>
+		</h2>
+		<div class="request-modal__body">
+			<?php
+			$shortcode = k_setting( 'request_modal_shortcode', '' );
+			if ( $shortcode ) {
+				echo do_shortcode( $shortcode ); // phpcs:ignore
+			} else {
+				echo '<p class="request-modal__placeholder">Paste your Contact Form 7 shortcode in <strong>Pages → Site Settings → Request Modal → Shortcode</strong>. Example: <code>[contact-form-7 id="123" title="Diagnostic Request"]</code></p>';
+			}
+			?>
+			<div class="request-modal__thanks" hidden>
+				<div class="request-modal__thanks-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+				</div>
+				<h3><?php esc_html_e( 'Thank you — we have received your request.', 'kelarix' ); ?></h3>
+				<p><?php esc_html_e( 'A Kelarix team member will reach out within one business day.', 'kelarix' ); ?></p>
+				<button type="button" class="btn btn--white btn--sm" data-modal-close><span><?php esc_html_e( 'Close', 'kelarix' ); ?></span></button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?php wp_footer(); ?>
 </body>
 </html>

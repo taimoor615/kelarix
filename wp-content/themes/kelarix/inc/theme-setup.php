@@ -41,3 +41,10 @@ function kelarix_acf_notice() {
 	}
 	echo '<div class="notice notice-warning"><p><strong>Kelarix theme:</strong> Install &amp; activate the free <em>Advanced Custom Fields</em> plugin to edit homepage content from the dashboard. Until then, the design defaults are shown.</p></div>';
 }
+
+/*
+ * Disable CF7's automatic <p>/<br> wrapping. Our diagnostic-request modal
+ * uses <div class="rmf-grid"> for its two-column rows — wpautop would inject
+ * <p> tags around them and break the grid.
+ */
+add_filter( 'wpcf7_autop_or_not', '__return_false' );

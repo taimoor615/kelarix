@@ -74,5 +74,59 @@
 			track.addEventListener('touchstart', stop, { passive: true });
 			play();
 		});
+
+		/* ---- Request Diagnostic modal ---- */
+		var modal = document.getElementById('requestModal');
+		if (modal) {
+			var thanksEl = modal.querySelector('.request-modal__thanks');
+			var bodyEl = modal.querySelector('.request-modal__body');
+			var formHost = bodyEl ? bodyEl.querySelector('.wpcf7') : null;
+			var openerSelectors = [
+				'[data-modal-open="request"]',
+				'.mobile-floating-cta',
+				'a[href="#contact"]',
+				'a[href$="#contact"]'
+			].join(',');
+
+			var setOpen = function (isOpen) {
+				if (isOpen) {
+					modal.classList.add('is-open');
+					modal.setAttribute('aria-hidden', 'false');
+					document.documentElement.style.overflow = 'hidden';
+				} else {
+					modal.classList.remove('is-open');
+					modal.setAttribute('aria-hidden', 'true');
+					document.documentElement.style.overflow = '';
+				}
+			};
+
+			document.addEventListener('click', function (e) {
+				var opener = e.target.closest(openerSelectors);
+				if (opener && !opener.closest('#requestModal')) {
+					e.preventDefault();
+					if (thanksEl) { thanksEl.hidden = true; }
+					if (formHost) { formHost.hidden = false; }
+					setOpen(true);
+					return;
+				}
+				if (e.target.closest('[data-modal-close]')) {
+					e.preventDefault();
+					setOpen(false);
+				}
+			});
+
+			document.addEventListener('keydown', function (e) {
+				if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+					setOpen(false);
+				}
+			});
+
+			/* CF7 success — swap form for thank-you card */
+			document.addEventListener('wpcf7mailsent', function (event) {
+				var fh = modal.querySelector('.wpcf7');
+				if (fh) { fh.hidden = true; }
+				if (thanksEl) { thanksEl.hidden = false; }
+			}, false);
+		}
 	});
 })();

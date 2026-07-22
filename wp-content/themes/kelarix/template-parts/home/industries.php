@@ -49,6 +49,20 @@ $also_defaults = array(
 	'Energy and Utilities',
 );
 
+$icon_svgs = array(
+	'bag'    => $d_bag,
+	'store'  => $d_store,
+	'tools'  => $d_tools,
+	'basket' => $d_basket,
+	'shield' => $d_shield,
+	'doc'    => $d_doc,
+	'monitor' => $d_monitor,
+	'health'  => $d_health,
+);
+$svg_for = function( $slug, $fallback ) use ( $icon_svgs ) {
+	return isset( $icon_svgs[ $slug ] ) ? $icon_svgs[ $slug ] : $fallback;
+};
+
 $all  = k_cpt_items( 'kx_industry', array() );
 $main = array();
 $also = array();
@@ -58,11 +72,17 @@ if ( ! empty( $all ) ) {
 			$also[] = get_the_title( $post );
 		} else {
 			$feat = array_filter( array_map( 'trim', explode( "\n", (string) k_field( 'features', '', $post->ID ) ) ) );
+			$icon_1 = (string) k_field( 'icon_1', '', $post->ID );
+			$icon_2 = (string) k_field( 'icon_2', '', $post->ID );
+			$decor  = $icon_1 || $icon_2
+				? $svg_for( $icon_1, $d_bag ) . $svg_for( $icon_2, $d_store )
+				: $d_bag . $d_store;
 			$main[] = array(
 				'title'    => get_the_title( $post ),
 				'desc'     => k_field( 'description', '', $post->ID ),
 				'features' => $feat,
-				'decor'    => $d_bag . $d_store,
+				'decor'    => $decor,
+				'post'     => $post,
 			);
 		}
 	}
@@ -96,9 +116,10 @@ if ( empty( $also ) ) { $also = $also_defaults; }
 						</ul>
 						<div class="industry-card__decor" aria-hidden="true"><?php echo $ind['decor']; // phpcs:ignore ?></div>
 						<?php
-						$ind_link = ( isset( $ind['post'] ) && $ind['post'] instanceof WP_Post ) ? k_field( 'link', array(), $ind['post']->ID ) : array();
-						$ind_url  = ! empty( $ind_link['url'] ) ? $ind_link['url'] : '#';
-						$ind_text = ! empty( $ind_link['title'] ) ? $ind_link['title'] : k_field( 'industries_card_cta_text', 'Explore Now' );
+						$ind_link     = ( isset( $ind['post'] ) && $ind['post'] instanceof WP_Post ) ? k_field( 'link', array(), $ind['post']->ID ) : array();
+						$ind_post_url = ( isset( $ind['post'] ) && $ind['post'] instanceof WP_Post ) ? get_permalink( $ind['post'] ) : '';
+						$ind_url      = ! empty( $ind_link['url'] ) ? $ind_link['url'] : ( $ind_post_url ?: '#' );
+						$ind_text     = ! empty( $ind_link['title'] ) ? $ind_link['title'] : k_field( 'industries_card_cta_text', 'Explore Now' );
 						?>
 						<a href="<?php echo esc_url( $ind_url ); ?>" class="btn btn--ghost btn--sm industry-card__cta"><span><?php echo esc_html( $ind_text ); ?></span><?php echo k_arrow(); ?></a>
 					</article>

@@ -254,7 +254,384 @@ function kelarix_register_all_acf() {
 	kelarix_acf_cpt_industry();
 	kelarix_acf_cpt_proof();
 	kelarix_acf_cpt_process();
+	kelarix_acf_what_we_build();
+	kelarix_acf_single_industry();
+	kelarix_acf_case_studies_page();
+	kelarix_acf_cpt_case_study();
 	kelarix_acf_footer_settings();
+}
+
+/**
+ * Case Studies listing page — hero + trust line + bottom CTA panel.
+ */
+function kelarix_acf_case_studies_page() {
+	$fields = array();
+
+	/* Hero */
+	$fields[] = kacf_tab( 'csh', 'Hero' );
+	$fields[] = kacf_text( 'cs_hero_badge', 'Badge', 'Kelarix Proof Library' );
+	$fields[] = kacf_textarea( 'cs_hero_heading', 'Heading', 'Proof of how we think about complex operations.' );
+	$fields[] = kacf_textarea( 'cs_hero_text', 'Subtext', 'Explore scenario-based systems, workflow concepts, intelligence models, diagnostic frameworks, executive briefs, and maturity maps developed around common operating challenges in Retail, FMCG and Food & Beverage, Financial Services, and Healthcare.' );
+	$fields[] = kacf_link( 'cs_hero_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'cs_hero_cta_secondary', 'Secondary CTA' );
+	$fields[] = kacf_text( 'cs_hero_note', 'Shield Note', 'Built for growing retail operations.' );
+
+	/* Grid heading */
+	$fields[] = kacf_tab( 'csg', 'Grid' );
+	$fields[] = kacf_text( 'cs_grid_badge', 'Badge', 'Proof Library' );
+	$fields[] = kacf_textarea( 'cs_grid_heading', 'Heading', 'Explore proof by industry' );
+	$fields[] = kacf_text( 'cs_grid_all_label', '"All" filter label', 'All' );
+	$fields[] = kacf_text( 'cs_card_cta', 'Card CTA text', 'Explore' );
+	$fields[] = kacf_text( 'cs_grid_per_page', 'Cards per page', '9' );
+
+	/* Final CTA */
+	$fields[] = kacf_tab( 'csf', 'Final CTA' );
+	$fields[] = kacf_textarea( 'cs_final_heading', 'Heading', 'Let’s identify where better systems can improve visibility, decisions, and execution.' );
+	$fields[] = kacf_textarea( 'cs_final_text', 'Subtext', 'If your business is growing but reporting, workflows, data, or execution are becoming harder to manage, Kelarix can help you diagnose where better systems can create real leverage.' );
+	$fields[] = kacf_link( 'cs_final_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'cs_final_cta_secondary', 'Secondary CTA' );
+
+	$fields = kelarix_prefix_field_keys( $fields, 'cs' );
+
+	acf_add_local_field_group( array(
+		'key'                   => 'group_kelarix_case_studies',
+		'title'                 => 'Case Studies Page Content',
+		'fields'                => $fields,
+		'location'              => array(
+			array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-case-studies.php' ) ),
+		),
+		'menu_order'            => 6,
+		'position'              => 'normal',
+		'style'                 => 'default',
+		'label_placement'       => 'top',
+		'instruction_placement' => 'label',
+		'active'                => true,
+	) );
+}
+
+/**
+ * CPT: kx_case_study — per-case fields shown on the listing card + single view.
+ */
+function kelarix_acf_cpt_case_study() {
+	$icon_hint = 'Icon slug: basket, store, tools, shield, doc, monitor, health, coin, bag, ai, chart, workflow';
+	acf_add_local_field_group( array(
+		'key'      => 'group_kx_case_study',
+		'title'    => 'Case Study Details',
+		'fields'   => array(
+			array(
+				'key'          => 'field_kx_case_icon_image',
+				'label'        => 'Card Icon Image (upload)',
+				'name'         => 'icon_image',
+				'type'         => 'image',
+				'return_format' => 'array',
+				'preview_size' => 'thumbnail',
+				'instructions' => 'Upload a custom icon (SVG or PNG). Takes priority over the slug below.',
+			),
+			array(
+				'key'           => 'field_kx_case_icon',
+				'label'         => 'Card Icon (slug fallback)',
+				'name'          => 'icon',
+				'type'          => 'text',
+				'instructions'  => $icon_hint . ' — used only when no image uploaded above.',
+				'default_value' => 'basket',
+			),
+			kacf_text( 'eyebrow', 'Eyebrow (uppercase tag)', 'FLAGSHIP SCENARIO STUDY' ),
+			kacf_textarea( 'description', 'Card Description', '' ),
+			kacf_link( 'link', 'Explore link (leave blank → uses post permalink)' ),
+			kacf_bool( 'is_featured', 'Featured?', 'Show first in the grid regardless of publish date.' ),
+		),
+		'location' => array(
+			array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'kx_case_study' ) ),
+		),
+		'position' => 'normal',
+		'active'   => true,
+	) );
+}
+
+/**
+ * Single Industry post (kx_industry) — full page content ACF group.
+ * This is separate from the small "Industry Details" group used on Homepage.
+ */
+function kelarix_acf_single_industry() {
+	$fields = array();
+
+	/* Hero */
+	$fields[] = kacf_tab( 'sh', 'Hero' );
+	$fields[] = kacf_text( 'sind_hero_eyebrow', 'Eyebrow', 'Retail Operating Systems' );
+	$fields[] = kacf_textarea( 'sind_hero_heading', 'Heading', 'See clearly. Protect margins. Stay in control.' );
+	$fields[] = kacf_textarea( 'sind_hero_subtext', 'Subtext' );
+	$fields[] = kacf_image( 'sind_hero_bg', 'Hero Background Image' );
+	$fields[] = kacf_image( 'sind_hero_right_image', 'Hero Right-side Illustration' );
+	$fields[] = kacf_link( 'sind_hero_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'sind_hero_cta_secondary', 'Secondary CTA' );
+	$fields[] = kacf_text( 'sind_hero_note', 'Shield Note' );
+
+	/* Growth Complexity */
+	$fields[] = kacf_tab( 'sg', 'Growth Complexity' );
+	$fields[] = kacf_text( 'sind_grow_badge', 'Badge', 'Retail Operating Pressure' );
+	$fields[] = kacf_textarea( 'sind_grow_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_grow_text', 'Paragraph 1' );
+	$fields[] = kacf_textarea( 'sind_grow_text_2', 'Paragraph 2' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card_icon( 'sind_grow_card_' . $i, 'Pattern Card ' . $i, 'Icon: scatter, clipboard, clock, workflow, ai' );
+	}
+	$fields[] = kacf_link( 'sind_grow_cta', 'CTA Card Link' );
+
+	/* The Problem + gap-cards carousel */
+	$fields[] = kacf_tab( 'sp', 'The Problem' );
+	$fields[] = kacf_text( 'sind_problem_badge', 'Badge', 'Where Leadership Loses Visibility' );
+	$fields[] = kacf_textarea( 'sind_problem_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_problem_text', 'Body Text' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card_icon( 'sind_gap_' . $i, 'Visibility Gap Card ' . $i, 'Icon slug (store, basket, ai, workflow, scatter, clipboard, clock)' );
+	}
+
+	/* Systems Accordion */
+	$fields[] = kacf_tab( 'ss', 'Systems' );
+	$fields[] = kacf_text( 'sind_sys_badge', 'Badge', 'What Kelarix Can Build' );
+	$fields[] = kacf_textarea( 'sind_sys_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_sys_text', 'Body Text' );
+	$fields[] = kacf_text( 'sind_sys_supports_label', 'Supports Label', 'SUPPORTS' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = array(
+			'key'        => 'field_kx_sind_sys_' . $i,
+			'label'      => 'System ' . $i,
+			'name'       => 'sind_sys_' . $i,
+			'type'       => 'group',
+			'layout'     => 'block',
+			'sub_fields' => array(
+				array( 'key' => 'field_kx_sind_sys_' . $i . '_tag',      'label' => 'Tag',                    'name' => 'tag',      'type' => 'text' ),
+				array( 'key' => 'field_kx_sind_sys_' . $i . '_title',    'label' => 'Title',                  'name' => 'title',    'type' => 'text' ),
+				array( 'key' => 'field_kx_sind_sys_' . $i . '_text',     'label' => 'Description',            'name' => 'text',     'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_kx_sind_sys_' . $i . '_supports', 'label' => 'Supports (one per line)', 'name' => 'supports', 'type' => 'textarea', 'rows' => 5 ),
+			),
+		);
+	}
+	$fields[] = kacf_link( 'sind_sys_cta', 'Bottom CTA' );
+
+	/* Visibility Value */
+	$fields[] = kacf_tab( 'sv', 'Visibility Value' );
+	$fields[] = kacf_text( 'sind_vis_badge', 'Badge', 'How Retail Systems Come Together' );
+	$fields[] = kacf_textarea( 'sind_vis_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_vis_text', 'Body Text' );
+	$fields[] = kacf_link( 'sind_vis_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'sind_vis_cta_secondary', 'Secondary CTA' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card( 'sind_vis_layer_' . $i, 'Layer ' . $i );
+	}
+
+	/* Better Systems */
+	$fields[] = kacf_tab( 'sb', 'Better Systems' );
+	$fields[] = kacf_text( 'sind_bet_badge', 'Badge', 'Leadership Outcomes' );
+	$fields[] = kacf_textarea( 'sind_bet_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_bet_text', 'Body Text' );
+	for ( $i = 1; $i <= 8; $i++ ) {
+		$fields[] = kacf_card_icon( 'sind_out_' . $i, 'Outcome Marquee Card ' . $i, 'Icon slug (scatter, shield, ai, clipboard, workflow, store, clock, health)' );
+	}
+	$fields[] = kacf_link( 'sind_bet_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'sind_bet_cta_secondary', 'Secondary CTA' );
+
+	/* Use Cases */
+	$fields[] = kacf_tab( 'su', 'Use Cases' );
+	$fields[] = kacf_text( 'sind_uc_badge', 'Badge', 'Real Retail Use Cases' );
+	$fields[] = kacf_textarea( 'sind_uc_heading', 'Heading', 'Practical Retail Use Cases' );
+	$fields[] = kacf_text( 'sind_uc_col1_title', 'Left Column Title', 'Business Challenge' );
+	$fields[] = kacf_text( 'sind_uc_col2_title', 'Right Column Title', 'Possible System' );
+
+	/* Inventory System */
+	$fields[] = kacf_tab( 'si', 'Inventory System' );
+	$fields[] = kacf_text( 'sind_inv_badge', 'Badge', 'One Example Scenario' );
+	$fields[] = kacf_textarea( 'sind_inv_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_inv_text', 'Body Text' );
+	$fields[] = kacf_text( 'sind_inv_col1_title', 'Left Column Title', 'The Concept Explores' );
+	$fields[] = kacf_text( 'sind_inv_col2_title', 'Right Column Title', 'What It Demonstrates' );
+	$fields[] = kacf_textarea( 'sind_inv_col2_text', 'Right Column Body' );
+	$fields[] = kacf_link( 'sind_inv_cta', 'CTA Button' );
+	$fields[] = kacf_text( 'sind_inv_scenario_note', 'Scenario Note (below panel)' );
+
+	/* May Be Relevant */
+	$fields[] = kacf_tab( 'sr', 'May Be Relevant' );
+	$fields[] = kacf_text( 'sind_rel_badge', 'Badge', 'When Retailers Need Kelarix' );
+	$fields[] = kacf_textarea( 'sind_rel_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_rel_text', 'Body Text' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card( 'sind_rel_' . $i, 'Relevance Tile ' . $i );
+	}
+
+	/* Discipline */
+	$fields[] = kacf_tab( 'sd', 'Delivery Principles' );
+	$fields[] = kacf_text( 'sind_disc_badge', 'Badge', 'Delivery Principles' );
+	$fields[] = kacf_textarea( 'sind_disc_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_disc_text', 'Body Text' );
+	for ( $i = 1; $i <= 8; $i++ ) {
+		$fields[] = kacf_card_icon( 'sind_disc_item_' . $i, 'Principle ' . $i, 'Icon slug' );
+	}
+
+	/* Final CTA */
+	$fields[] = kacf_tab( 'sfin', 'Final CTA' );
+	$fields[] = kacf_textarea( 'sind_final_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'sind_final_text', 'Subtext' );
+	$fields[] = kacf_link( 'sind_final_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'sind_final_cta_secondary', 'Secondary CTA' );
+
+	$fields = kelarix_prefix_field_keys( $fields, 'sind' );
+
+	acf_add_local_field_group( array(
+		'key'                   => 'group_kelarix_single_industry',
+		'title'                 => 'Single Industry Post Content',
+		'fields'                => $fields,
+		'location'              => array(
+			array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'kx_industry' ) ),
+		),
+		'menu_order'            => 5,
+		'position'              => 'normal',
+		'style'                 => 'default',
+		'label_placement'       => 'top',
+		'instruction_placement' => 'label',
+		'active'                => true,
+	) );
+}
+
+/**
+ * What We Build page — Homepage-style content ACF group.
+ */
+function kelarix_acf_what_we_build() {
+	$fields = array();
+
+	/* Hero */
+	$fields[] = kacf_tab( 'wh', 'Hero' );
+	$fields[] = kacf_text( 'ww_hero_eyebrow', 'Eyebrow', 'Kelarix builds business systems for leaders' );
+	$fields[] = kacf_textarea( 'ww_hero_heading', 'Heading', 'We build the systems that help businesses see, decide, and execute better.' );
+	$fields[] = kacf_textarea( 'ww_hero_subtext', 'Subtext' );
+	$fields[] = kacf_image( 'ww_hero_image', 'Hero Image' );
+	$fields[] = kacf_link( 'ww_hero_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'ww_hero_cta_secondary', 'Secondary CTA' );
+	$fields[] = kacf_text( 'ww_hero_note', 'Shield Note' );
+
+	/* Diagram */
+	$fields[] = kacf_tab( 'wd', 'Diagram' );
+	$fields[] = kacf_image( 'ww_diagram_image', 'Diagram Image (SVG or PNG)' );
+	$fields[] = kacf_text( 'ww_diagram_alt', 'Alt Text', 'Kelarix unified data + capabilities diagram' );
+
+	/* Key Problems */
+	$fields[] = kacf_tab( 'wp', 'Key Problems' );
+	$fields[] = kacf_text( 'ww_probs_badge', 'Badge', 'The Problem With Disconnected Tools' );
+	$fields[] = kacf_textarea( 'ww_probs_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'ww_probs_text_1', 'Paragraph 1' );
+	$fields[] = kacf_textarea( 'ww_probs_text_2', 'Paragraph 2' );
+	$fields[] = kacf_textarea( 'ww_probs_text_3', 'Paragraph 3' );
+	$fields[] = kacf_text( 'ww_probs_grid_heading', 'Grid Sub-heading', 'What is Key Problems' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card_icon( 'ww_prob_card_' . $i, 'Problem Card ' . $i, 'Icon: scatter, clipboard, clock, workflow, ai' );
+	}
+	$fields[] = kacf_link( 'ww_probs_cta', 'CTA Card Link' );
+	$fields[] = kacf_textarea( 'ww_probs_quote', 'Bottom Quote Strip' );
+
+	/* Key Problem Cards (separate section on light gradient) */
+	$fields[] = kacf_tab( 'wk', 'Key Problem Cards' );
+	$fields[] = kacf_text( 'ww_keys_badge', 'Badge', 'Key Problems' );
+	$fields[] = kacf_textarea( 'ww_keys_heading', 'Heading', 'What is Key Problems' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card_icon( 'ww_key_card_' . $i, 'Key Problem Card ' . $i, 'Icon: scatter, clipboard, clock, workflow, ai' );
+	}
+	$fields[] = kacf_link( 'ww_keys_cta', 'CTA Card Link (6th slot)' );
+
+	/* Layers */
+	$fields[] = kacf_tab( 'wl', 'Layers' );
+	$fields[] = kacf_text( 'ww_layers_badge', 'Badge', 'Our System Model' );
+	$fields[] = kacf_textarea( 'ww_layers_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'ww_layers_text', 'Body Text' );
+	$fields[] = kacf_link( 'ww_layers_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'ww_layers_cta_secondary', 'Secondary CTA' );
+	for ( $i = 1; $i <= 6; $i++ ) {
+		$fields[] = kacf_card( 'ww_layer_' . $i, 'Layer ' . $i );
+	}
+
+	/* Systems (accordion with SUPPORTS chips) */
+	$fields[] = kacf_tab( 'ws', 'Systems We Build' );
+	$fields[] = kacf_text( 'ww_sys_badge', 'Badge', 'Systems We Build' );
+	$fields[] = kacf_textarea( 'ww_sys_heading', 'Heading', 'Systems We Build' );
+	$fields[] = kacf_textarea( 'ww_sys_text', 'Body Text' );
+	$fields[] = kacf_text( 'ww_sys_supports_label', 'Supports Label', 'WHAT THIS HELPS WITH' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = array(
+			'key'        => 'field_kx_ww_system_' . $i,
+			'label'      => 'System ' . $i,
+			'name'       => 'ww_system_' . $i,
+			'type'       => 'group',
+			'layout'     => 'block',
+			'sub_fields' => array(
+				array( 'key' => 'field_kx_ww_system_' . $i . '_tag',      'label' => 'Tag',                    'name' => 'tag',      'type' => 'text' ),
+				array( 'key' => 'field_kx_ww_system_' . $i . '_title',    'label' => 'Title',                  'name' => 'title',    'type' => 'text' ),
+				array( 'key' => 'field_kx_ww_system_' . $i . '_text',     'label' => 'Description',            'name' => 'text',     'type' => 'textarea', 'rows' => 3 ),
+				array( 'key' => 'field_kx_ww_system_' . $i . '_supports', 'label' => 'Supports (one per line)', 'name' => 'supports', 'type' => 'textarea', 'rows' => 5 ),
+			),
+		);
+	}
+	$fields[] = kacf_link( 'ww_sys_cta', 'Bottom CTA' );
+
+	/* Connected (carousel — no icons now, just numbered title/text) */
+	$fields[] = kacf_tab( 'wc', 'Connected Capabilities' );
+	$fields[] = kacf_text( 'ww_conn_badge', 'Badge', 'One System, Connected Capabilities' );
+	$fields[] = kacf_textarea( 'ww_conn_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'ww_conn_text', 'Body Text' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card( 'ww_conn_' . $i, 'Capability ' . $i );
+	}
+
+	/* Value */
+	$fields[] = kacf_tab( 'wv', 'Value Quote' );
+	$fields[] = kacf_textarea( 'ww_value_text', 'Quote Text' );
+
+	/* Practical */
+	$fields[] = kacf_tab( 'wpp', 'Practical Panel' );
+	$fields[] = kacf_text( 'ww_prac_badge', 'Badge', 'Get System' );
+	$fields[] = kacf_textarea( 'ww_prac_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'ww_prac_text', 'Body Text' );
+	$fields[] = kacf_text( 'ww_prac_col1_title', 'Left Column Title', 'What Kelarix Can Build' );
+	$fields[] = kacf_text( 'ww_prac_col2_title', 'Right Column Title', 'Business Challenge' );
+
+	/* Friction */
+	$fields[] = kacf_tab( 'wf', 'Operational Friction' );
+	$fields[] = kacf_text( 'ww_fric_badge', 'Badge', 'When You Need Kelarix' );
+	$fields[] = kacf_textarea( 'ww_fric_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'ww_fric_text', 'Body Text' );
+	for ( $i = 1; $i <= 8; $i++ ) {
+		$fields[] = kacf_card_icon( 'ww_fric_' . $i, 'Friction Card ' . $i, 'Icon: workflow, clipboard, scatter, clock, ai, store, shield, health, basket' );
+	}
+
+	/* Discipline */
+	$fields[] = kacf_tab( 'wdisc', 'Delivery Principles' );
+	$fields[] = kacf_text( 'ww_disc_badge', 'Badge', 'Delivery Principles' );
+	$fields[] = kacf_textarea( 'ww_disc_heading', 'Heading', 'Built for business reality.' );
+	$fields[] = kacf_textarea( 'ww_disc_text', 'Body Text' );
+	for ( $i = 1; $i <= 5; $i++ ) {
+		$fields[] = kacf_card( 'ww_disc_item_' . $i, 'Principle ' . $i );
+	}
+
+	/* Final CTA */
+	$fields[] = kacf_tab( 'wfin', 'Final CTA' );
+	$fields[] = kacf_textarea( 'ww_final_heading', 'Heading' );
+	$fields[] = kacf_textarea( 'ww_final_text', 'Subtext' );
+	$fields[] = kacf_link( 'ww_final_cta_primary', 'Primary CTA' );
+	$fields[] = kacf_link( 'ww_final_cta_secondary', 'Secondary CTA' );
+
+	$fields = kelarix_prefix_field_keys( $fields, 'ww' );
+
+	acf_add_local_field_group( array(
+		'key'                   => 'group_kelarix_what_we_build',
+		'title'                 => 'What We Build Page Content',
+		'fields'                => $fields,
+		'location'              => array(
+			array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-what-we-build.php' ) ),
+		),
+		'menu_order'            => 4,
+		'position'              => 'normal',
+		'style'                 => 'default',
+		'label_placement'       => 'top',
+		'instruction_placement' => 'label',
+		'active'                => true,
+	) );
 }
 
 /**
@@ -302,6 +679,11 @@ function kelarix_acf_footer_settings() {
 	$fields[] = kacf_text( 'footer_copyright', 'Copyright', '© {year} Kelarix. All rights reserved.' );
 	$fields[] = kacf_text( 'footer_email_label', 'Email Label', 'Build your team:' );
 	$fields[] = kacf_text( 'footer_email', 'Email Address', 'info@kelarix.com' );
+
+	/* Request Diagnostic Modal */
+	$fields[] = kacf_tab( 'fmodal', 'Request Modal' );
+	$fields[] = kacf_text( 'request_modal_title', 'Modal Heading', 'Share enough context for a serious first review.' );
+	$fields[] = kacf_textarea( 'request_modal_shortcode', 'CF7 Shortcode', '' );
 
 	acf_add_local_field_group( array(
 		'key'                   => 'group_kelarix_footer',
@@ -793,6 +1175,7 @@ function kelarix_acf_cpt_system() {
  *  5. CPT: kx_industry (Industry Details)
  * ======================================================================= */
 function kelarix_acf_cpt_industry() {
+	$icon_hint = 'Icon slug: bag, store, tools, basket, shield, doc, monitor, health';
 	acf_add_local_field_group( array(
 		'key'      => 'group_kx_industry',
 		'title'    => 'Industry Details',
@@ -800,7 +1183,23 @@ function kelarix_acf_cpt_industry() {
 			kacf_textarea( 'description', 'Description' ),
 			kacf_textarea( 'features', 'Features (one per line)' ),
 			kacf_image( 'image', 'Image' ),
-			kacf_link( 'link', 'Explore Now Link' ),
+			array(
+				'key'          => 'field_kx_ind_icon_1',
+				'label'        => 'Card Icon 1',
+				'name'         => 'icon_1',
+				'type'         => 'text',
+				'instructions' => $icon_hint,
+				'default_value' => 'bag',
+			),
+			array(
+				'key'          => 'field_kx_ind_icon_2',
+				'label'        => 'Card Icon 2',
+				'name'         => 'icon_2',
+				'type'         => 'text',
+				'instructions' => $icon_hint,
+				'default_value' => 'store',
+			),
+			kacf_link( 'link', 'Explore Now Link (leave empty → uses post permalink)' ),
 			kacf_bool( 'is_secondary', 'Is Secondary?', 'Show in "Also relevant" grid instead of main carousel.' ),
 		),
 		'location' => array(
