@@ -4,25 +4,20 @@
 #  Target: kelarix.com (LIVE / production)
 #  Log:    /home/kelarixc/deploy-log.txt (safe to delete anytime)
 #
-#  Workflow: local edit → git push origin main
-#           → cPanel Git repo → Update from Remote → Deploy HEAD Commit
+#  IMPORTANT: cPanel runs each task in a separate shell, so
+#  `export` variables do NOT persist between tasks. Use inline
+#  absolute paths only.
 # =============================================================
 deployment:
   tasks:
-    - export SRC="$PWD/wp-content/themes/kelarix"
-    - export LIVE="/home/kelarixc/public_html/wp-content/themes/kelarix"
     - /bin/echo "=== DEPLOY START $(date) ===" > /home/kelarixc/deploy-log.txt
-    - /bin/echo "Source: $SRC" >> /home/kelarixc/deploy-log.txt
-    - /bin/echo "Target: $LIVE" >> /home/kelarixc/deploy-log.txt
-
-    - /bin/mkdir -p "$LIVE"
-    - /bin/rm -rf "$LIVE"/*
-    - /bin/cp -Rf "$SRC"/. "$LIVE"/ >> /home/kelarixc/deploy-log.txt 2>&1
-    - /bin/chmod -R 755 "$LIVE"
-    - /usr/bin/find "$LIVE" -type f -exec /bin/chmod 644 {} \;
+    - /bin/mkdir -p /home/kelarixc/public_html/wp-content/themes/kelarix
+    - /bin/rm -rf /home/kelarixc/public_html/wp-content/themes/kelarix/*
+    - /bin/cp -Rf /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/. /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
     - /bin/echo "cp exit code: $?" >> /home/kelarixc/deploy-log.txt
-
+    - /bin/chmod -R 755 /home/kelarixc/public_html/wp-content/themes/kelarix
+    - /usr/bin/find /home/kelarixc/public_html/wp-content/themes/kelarix -type f -exec /bin/chmod 644 {} \;
     - /bin/echo "" >> /home/kelarixc/deploy-log.txt
     - /bin/echo "--- Live theme listing ---" >> /home/kelarixc/deploy-log.txt
-    - /bin/ls -la "$LIVE"/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/ls -la /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
     - /bin/echo "=== DEPLOY END $(date) ===" >> /home/kelarixc/deploy-log.txt
