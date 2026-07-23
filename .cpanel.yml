@@ -1,19 +1,42 @@
 ---
 # =============================================================
 #  cPanel Git Version Control — Deployment config
-#  Target: staging.kelarix.com subdomain
+#  Deploys the Kelarix theme to BOTH targets on every push:
+#    - staging.kelarix.com    (development/QA)
+#    - kelarix.com            (production/live)
+#  Source path is dynamic ($PWD) so this file works from either
+#  cPanel Git repo (kelarix or kelarix-live).
 #  Log: /home/kelarixc/deploy-log.txt (safe to delete anytime)
 # =============================================================
 deployment:
   tasks:
+    - export SRC="$PWD/wp-content/themes/kelarix"
+    - export STAGE="/home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix"
+    - export LIVE="/home/kelarixc/public_html/wp-content/themes/kelarix"
     - /bin/echo "=== DEPLOY START $(date) ===" > /home/kelarixc/deploy-log.txt
-    - /bin/mkdir -p /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix
-    - /bin/rm -rf /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix/*
-    - /bin/cp -Rf /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/. /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
-    - /bin/echo "cp exit code: $?" >> /home/kelarixc/deploy-log.txt
-    - /bin/chmod -R 755 /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix
-    - /usr/bin/find /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix -type f -exec /bin/chmod 644 {} \;
+    - /bin/echo "Source: $SRC" >> /home/kelarixc/deploy-log.txt
+
+    # --- Deploy to STAGING ---
+    - /bin/echo "--- Deploying to STAGING: $STAGE ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/mkdir -p "$STAGE"
+    - /bin/rm -rf "$STAGE"/*
+    - /bin/cp -Rf "$SRC"/. "$STAGE"/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/chmod -R 755 "$STAGE"
+    - /usr/bin/find "$STAGE" -type f -exec /bin/chmod 644 {} \;
+    - /bin/echo "Staging exit: $?" >> /home/kelarixc/deploy-log.txt
+
+    # --- Deploy to LIVE ---
+    - /bin/echo "--- Deploying to LIVE: $LIVE ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/mkdir -p "$LIVE"
+    - /bin/rm -rf "$LIVE"/*
+    - /bin/cp -Rf "$SRC"/. "$LIVE"/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/chmod -R 755 "$LIVE"
+    - /usr/bin/find "$LIVE" -type f -exec /bin/chmod 644 {} \;
+    - /bin/echo "Live exit: $?" >> /home/kelarixc/deploy-log.txt
+
     - /bin/echo "" >> /home/kelarixc/deploy-log.txt
-    - /bin/echo "--- Destination AFTER cp ---" >> /home/kelarixc/deploy-log.txt
-    - /bin/ls -la /home/kelarixc/staging.kelarix.com/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/echo "--- Staging listing ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/ls -la "$STAGE"/ >> /home/kelarixc/deploy-log.txt 2>&1
+    - /bin/echo "--- Live listing ---" >> /home/kelarixc/deploy-log.txt
+    - /bin/ls -la "$LIVE"/ >> /home/kelarixc/deploy-log.txt 2>&1
     - /bin/echo "=== DEPLOY END $(date) ===" >> /home/kelarixc/deploy-log.txt
