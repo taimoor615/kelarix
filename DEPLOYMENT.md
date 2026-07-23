@@ -182,9 +182,10 @@ Har CPT ke apne ACF field group registered (System Details, Industry Details, Pr
 
 Multiple iterations ke baad settled config:
 - Single-line `cp -R` copy (rsync host pe available nahi)
-- Absolute paths (variable expansion issues avoid)
-- Deploy log `/home/CPANEL_USER/deploy-log.txt` mein — debug ke liye
-- **Deploy target ab `staging.kelarix.com/wp-content/themes/kelarix/`** (production ke liye `.cpanel.yml` mein path change karna hoga)
+- Dynamic source path via `$PWD` (works from any cPanel Git repo path)
+- Deploy log `/home/kelarixc/deploy-log.txt` mein — debug ke liye
+- **Deploy target: `/home/kelarixc/public_html/wp-content/themes/kelarix/`** (LIVE / production)
+- Staging deployment removed — local → GitHub → live is the only workflow now
 
 ### ACF automation (`inc/acf-fields.php`)
 
@@ -220,24 +221,24 @@ Sab HTML brand-styled (gradient covers, table typography, field-type pills) aur 
 - Footer shared across all pages (`footer.php`)
 - WordPress version bumped: `1.0.0 → 1.7.2` (CSS/JS cache-bust granular)
 
-### Staging setup
+### Live site (production)
 
-- Subdomain `staging.kelarix.com` cPanel se create ho chuka
-- WordPress fresh install via Softaculous
-- PHP 8.0 via CloudLinux PHP Selector (initial 502 issue fix hua)
-- `.htaccess` default WordPress rules restore
+- Domain: `kelarix.com` (primary domain on cPanel, IP `74.50.90.187`)
+- PHP: 8.3 (`ea-php83` / `alt-php83`)
+- SSL: Let's Encrypt via cPanel AutoSSL
+- Theme path: `/home/kelarixc/public_html/wp-content/themes/kelarix/`
+- Full WordPress + DB + uploads all live-only; no staging environment.
 
 ### Repo access
 
-- **Currently public** on GitHub (private ke liye SSH deploy key setup complete karna baaki hai)
 - Local: `d:\xampp\htdocs\kelarix`
-- Live theme path: `/home/CPANEL_USER/staging.kelarix.com/wp-content/themes/kelarix/`
+- GitHub: `https://github.com/taimoor615/kelarix`
+- cPanel Git repo: `/home/kelarixc/repositories/kelarix` (deploys to `public_html`)
 
 ---
 
 ## Known follow-ups
 
-- SSH deploy key wapas setup karke repo private karna
-- Production domain point karne pe `.cpanel.yml` mein deploy path `staging.kelarix.com/` → `public_html/` update
-- Media library images live pe upload karna (`wp-content/uploads/`)
-- Client se content finalize hone pe ACF defaults update (currently defaults hardcoded PHP mein)
+- SSH deploy key setup so the GitHub repo can be flipped back to private
+- Media library uploads sync (only when local development needs latest client content)
+- Client content review — replace hardcoded PHP defaults with published ACF values
