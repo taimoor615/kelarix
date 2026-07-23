@@ -4,12 +4,21 @@
 #  Target: kelarix.com (LIVE)
 #  Log:    /home/kelarixc/deploy-log.txt
 #
-#  All tasks run inside ONE bash -c script so:
-#    - stdout + stderr both captured to the log
-#    - `set -x` traces every command as it runs
-#    - `$PWD` = actual cPanel Git repo path (independent of repo name)
-#    - a mid-task failure still lets subsequent commands log their errors
+#  Every task ends with "; true" so a failing command does NOT
+#  abort the remaining tasks (cPanel stops the whole deployment
+#  on the first task that returns non-zero). Each step logs its
+#  own exit code so we can see exactly where a real failure is.
 # =============================================================
 deployment:
   tasks:
-    - /bin/bash -c 'exec >/home/kelarixc/deploy-log.txt 2>&1; set -x; echo "=== DEPLOY START $(date) ==="; echo "PWD=$PWD"; ls -la "$PWD/wp-content/themes/kelarix" | head -5; mkdir -p /home/kelarixc/public_html/wp-content/themes/kelarix; rm -rf /home/kelarixc/public_html/wp-content/themes/kelarix/*; cp -Rf "$PWD/wp-content/themes/kelarix/." /home/kelarixc/public_html/wp-content/themes/kelarix/; echo "cp exit: $?"; chmod -R 755 /home/kelarixc/public_html/wp-content/themes/kelarix; find /home/kelarixc/public_html/wp-content/themes/kelarix -type f -exec chmod 644 {} \;; echo "--- Live theme listing ---"; ls -la /home/kelarixc/public_html/wp-content/themes/kelarix/ | head -20; echo "=== DEPLOY END $(date) ==="'
+    - /bin/echo "=== DEPLOY START $(date) ===" > /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/echo "whoami: $(whoami)" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/echo "PWD: $(pwd)" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/echo "--- Source repo listing ---" >> /home/kelarixc/deploy-log.txt 2>&1; /bin/ls -la /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix >> /home/kelarixc/deploy-log.txt 2>&1; /bin/echo "ls-source exit=$?" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/mkdir -p /home/kelarixc/public_html/wp-content/themes/kelarix >> /home/kelarixc/deploy-log.txt 2>&1; /bin/echo "mkdir exit=$?" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/rm -rf /home/kelarixc/public_html/wp-content/themes/kelarix/* >> /home/kelarixc/deploy-log.txt 2>&1; /bin/echo "rm exit=$?" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/cp -Rf /home/kelarixc/repositories/kelarix/wp-content/themes/kelarix/. /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1; /bin/echo "cp exit=$?" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/chmod -R 755 /home/kelarixc/public_html/wp-content/themes/kelarix >> /home/kelarixc/deploy-log.txt 2>&1; /bin/echo "chmod exit=$?" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /usr/bin/find /home/kelarixc/public_html/wp-content/themes/kelarix -type f -exec /bin/chmod 644 {} \; >> /home/kelarixc/deploy-log.txt 2>&1; /bin/echo "find exit=$?" >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/echo "--- Live theme listing AFTER deploy ---" >> /home/kelarixc/deploy-log.txt 2>&1; /bin/ls -la /home/kelarixc/public_html/wp-content/themes/kelarix/ >> /home/kelarixc/deploy-log.txt 2>&1; true
+    - /bin/echo "=== DEPLOY END $(date) ===" >> /home/kelarixc/deploy-log.txt 2>&1; true
