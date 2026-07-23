@@ -30,8 +30,13 @@ $row2 = array( 5, 6, 7, 8 );
 $render_tile = function( $i, $defaults, $icons ) {
 	$card  = k_field( 'what_card_' . $i, array() );
 	$title = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
-	$icon  = ! empty( $card['icon'] ) ? $card['icon'] : $defaults[ $i ][1];
-	$svg   = isset( $icons[ $icon ] ) ? $icons[ $icon ] : $icons['gauge'];
+	$icon  = $card['icon'] ?? $defaults[ $i ][1];
+	if ( is_array( $icon ) && ! empty( $icon['url'] ) ) {
+		$svg = sprintf( '<img src="%s" alt="" class="k-icon-img" loading="lazy" />', esc_url( $icon['url'] ) );
+	} else {
+		$slug = is_string( $icon ) && $icon ? $icon : $defaults[ $i ][1];
+		$svg  = isset( $icons[ $slug ] ) ? $icons[ $slug ] : $icons['gauge'];
+	}
 	?>
 	<article class="what-tile">
 		<span class="what-tile__icon"><?php echo $svg; // phpcs:ignore ?></span>

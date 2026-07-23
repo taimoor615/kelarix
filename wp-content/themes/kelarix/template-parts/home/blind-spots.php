@@ -32,12 +32,12 @@ $defaults = array(
 					$card  = k_field( 'blind_card_' . $i, array() );
 					$title = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
 					$text  = ! empty( $card['text'] ) ? $card['text'] : $defaults[ $i ][1];
-					$icon  = ! empty( $card['icon'] ) ? $card['icon'] : $defaults[ $i ][2];
+					$icon  = $card['icon'] ?? $defaults[ $i ][2];
 					// Corner accent alternates: odd cards bottom-right, even cards top-left.
 					$corner = ( 1 === $i % 2 ) ? 'problem-card--br' : 'problem-card--tl';
 					?>
 					<article class="problem-card <?php echo esc_attr( $corner ); ?>">
-						<span class="problem-card__icon"><?php echo k_icon( $icon ); ?></span>
+						<span class="problem-card__icon"><?php echo k_icon_render( $icon, $defaults[ $i ][2] ); ?></span>
 						<h3 class="problem-card__title"><?php echo esc_html( $title ); ?></h3>
 						<p class="problem-card__text"><?php echo esc_html( $text ); ?></p>
 					</article>

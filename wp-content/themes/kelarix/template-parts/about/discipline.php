@@ -31,7 +31,7 @@ $render_card = function( $i, $defaults, $icons ) {
 	$item  = k_field( 'about_disc_item_' . $i, array() );
 	$title = ! empty( $item['title'] ) ? $item['title'] : $defaults[ $i ][0];
 	$text  = ! empty( $item['text'] ) ? $item['text'] : $defaults[ $i ][1];
-	$icon  = ! empty( $item['icon'] ) ? k_icon( $item['icon'] ) : $icons[ $i ];
+	$icon  = ! empty( $item['icon'] ) ? k_icon_render( $item['icon'] ) : $icons[ $i ];
 	?>
 	<article class="ad-card">
 		<span class="ad-card__icon"><?php echo $icon; // phpcs:ignore ?></span>

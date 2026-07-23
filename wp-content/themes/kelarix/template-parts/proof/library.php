@@ -55,9 +55,14 @@ $defaults = array(
 			<?php foreach ( $defaults as $i => $col ) :
 				$data  = k_field( 'lib_col_' . $i, array() );
 				$title = ! empty( $data['title'] ) ? $data['title'] : $col['title'];
-				$icon  = ! empty( $data['icon'] ) ? $data['icon'] : $col['icon'];
+				$icon  = $data['icon'] ?? $col['icon'];
 				$items = ! empty( $data['items'] ) ? $data['items'] : $col['items'];
-				$svg   = isset( $icons[ $icon ] ) ? $icons[ $icon ] : $icons['book'];
+				if ( is_array( $icon ) && ! empty( $icon['url'] ) ) {
+					$svg = sprintf( '<img src="%s" alt="" class="k-icon-img" loading="lazy" />', esc_url( $icon['url'] ) );
+				} else {
+					$slug = is_string( $icon ) && $icon ? $icon : $col['icon'];
+					$svg  = isset( $icons[ $slug ] ) ? $icons[ $slug ] : $icons['book'];
+				}
 				?>
 				<div class="lib-col">
 					<span class="lib-col__icon"><?php echo $svg; // phpcs:ignore ?></span>

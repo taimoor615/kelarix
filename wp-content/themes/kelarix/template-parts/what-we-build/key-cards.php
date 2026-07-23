@@ -26,10 +26,10 @@ $defaults = array(
 				$card  = k_field( 'ww_key_card_' . $i, array() );
 				$title = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
 				$text  = ! empty( $card['text'] ) ? $card['text'] : $defaults[ $i ][1];
-				$icon  = ! empty( $card['icon'] ) ? $card['icon'] : $defaults[ $i ][2];
+				$icon  = $card['icon'] ?? $defaults[ $i ][2];
 				?>
 				<article class="ww-key-card">
-					<span class="ww-key-card__icon"><?php echo k_icon( $icon ); ?></span>
+					<span class="ww-key-card__icon"><?php echo k_icon_render( $icon, $defaults[ $i ][2] ); ?></span>
 					<h3 class="ww-key-card__title"><?php echo esc_html( $title ); ?></h3>
 					<p class="ww-key-card__text"><?php echo esc_html( $text ); ?></p>
 				</article>

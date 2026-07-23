@@ -20,10 +20,10 @@ $row2 = array( 5, 6, 7, 8 );
 $render_out = function( $i, $defaults ) {
 	$card  = k_field( 'sind_out_' . $i, array() );
 	$title = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
-	$icon  = ! empty( $card['icon'] ) ? $card['icon'] : $defaults[ $i ][1];
+	$icon  = $card['icon'] ?? $defaults[ $i ][1];
 	?>
 	<article class="sind-out-card">
-		<span class="sind-out-card__icon"><?php echo k_icon( $icon ); ?></span>
+		<span class="sind-out-card__icon"><?php echo k_icon_render( $icon, $defaults[ $i ][1] ); ?></span>
 		<h3 class="sind-out-card__title"><?php echo esc_html( $title ); ?></h3>
 	</article>
 	<?php

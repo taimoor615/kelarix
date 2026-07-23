@@ -105,7 +105,11 @@ function kacf_card( $name, $label ) {
 	);
 }
 
-/** Group with title + text + icon sub-fields */
+/**
+ * Group with title + text + icon sub-fields.
+ * `icon` is now an IMAGE upload (SVG/PNG). Old slug hint is retained as
+ * instruction text so clients know they can upload their own SVG here.
+ */
 function kacf_card_icon( $name, $label, $icon_hint = '' ) {
 	return array(
 		'key'        => 'field_kx_' . $name,
@@ -116,7 +120,16 @@ function kacf_card_icon( $name, $label, $icon_hint = '' ) {
 		'sub_fields' => array(
 			array( 'key' => 'field_kx_' . $name . '_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
 			array( 'key' => 'field_kx_' . $name . '_text',  'label' => 'Text',  'name' => 'text',  'type' => 'textarea', 'rows' => 3 ),
-			array( 'key' => 'field_kx_' . $name . '_icon',  'label' => 'Icon key', 'name' => 'icon', 'type' => 'text', 'instructions' => $icon_hint ?: 'Icon slug (see docs)' ),
+			array(
+				'key'           => 'field_kx_' . $name . '_icon',
+				'label'         => 'Icon (upload SVG/PNG)',
+				'name'          => 'icon',
+				'type'          => 'image',
+				'return_format' => 'array',
+				'preview_size'  => 'thumbnail',
+				'mime_types'    => 'svg,png,jpg,jpeg,webp',
+				'instructions'  => $icon_hint ? 'Upload a custom icon. Suggested styles: ' . $icon_hint : 'Upload a custom SVG or PNG icon.',
+			),
 		),
 	);
 }
@@ -313,27 +326,19 @@ function kelarix_acf_case_studies_page() {
  * CPT: kx_case_study — per-case fields shown on the listing card + single view.
  */
 function kelarix_acf_cpt_case_study() {
-	$icon_hint = 'Icon slug: basket, store, tools, shield, doc, monitor, health, coin, bag, ai, chart, workflow';
 	acf_add_local_field_group( array(
 		'key'      => 'group_kx_case_study',
 		'title'    => 'Case Study Details',
 		'fields'   => array(
 			array(
-				'key'          => 'field_kx_case_icon_image',
-				'label'        => 'Card Icon Image (upload)',
-				'name'         => 'icon_image',
-				'type'         => 'image',
-				'return_format' => 'array',
-				'preview_size' => 'thumbnail',
-				'instructions' => 'Upload a custom icon (SVG or PNG). Takes priority over the slug below.',
-			),
-			array(
 				'key'           => 'field_kx_case_icon',
-				'label'         => 'Card Icon (slug fallback)',
+				'label'         => 'Card Icon (upload SVG/PNG)',
 				'name'          => 'icon',
-				'type'          => 'text',
-				'instructions'  => $icon_hint . ' — used only when no image uploaded above.',
-				'default_value' => 'basket',
+				'type'          => 'image',
+				'return_format' => 'array',
+				'preview_size'  => 'thumbnail',
+				'mime_types'    => 'svg,png',
+				'instructions'  => 'Upload a custom SVG icon for this case study card.',
 			),
 			kacf_text( 'eyebrow', 'Eyebrow (uppercase tag)', 'FLAGSHIP SCENARIO STUDY' ),
 			kacf_textarea( 'description', 'Card Description', '' ),
@@ -655,8 +660,26 @@ function kelarix_acf_footer_settings() {
 	$fields[] = kacf_tab( 'fsocial', 'Social' );
 	$fields[] = kacf_link( 'footer_linkedin', 'LinkedIn URL' );
 	$fields[] = kacf_link( 'footer_instagram', 'Instagram URL' );
-	$fields[] = kacf_text( 'footer_linkedin_icon', 'LinkedIn Icon slug', 'linkedin' );
-	$fields[] = kacf_text( 'footer_instagram_icon', 'Instagram Icon slug', 'instagram' );
+	$fields[] = array(
+		'key'           => 'field_kx_footer_linkedin_icon',
+		'label'         => 'LinkedIn Icon (upload SVG)',
+		'name'          => 'footer_linkedin_icon',
+		'type'          => 'image',
+		'return_format' => 'array',
+		'preview_size'  => 'thumbnail',
+		'mime_types'    => 'svg,png',
+		'instructions'  => 'Upload SVG for the LinkedIn footer icon.',
+	);
+	$fields[] = array(
+		'key'           => 'field_kx_footer_instagram_icon',
+		'label'         => 'Instagram Icon (upload SVG)',
+		'name'          => 'footer_instagram_icon',
+		'type'          => 'image',
+		'return_format' => 'array',
+		'preview_size'  => 'thumbnail',
+		'mime_types'    => 'svg,png',
+		'instructions'  => 'Upload SVG for the Instagram footer icon.',
+	);
 
 	$fields[] = kacf_tab( 'fcol1', 'Column 1 — Quick Links' );
 	$fields[] = kacf_text( 'footer_col1_title', 'Column Title', 'Quick links' );
@@ -940,7 +963,7 @@ function kelarix_acf_industries() {
 			'layout'     => 'block',
 			'sub_fields' => array(
 				array( 'key' => 'field_kx_radial_card_' . $i . '_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
-				array( 'key' => 'field_kx_radial_card_' . $i . '_icon',  'label' => 'Icon', 'name' => 'icon', 'type' => 'text', 'instructions' => 'store | basket | coin | health' ),
+				array( 'key' => 'field_kx_radial_card_' . $i . '_icon',  'label' => 'Icon (upload SVG/PNG)', 'name' => 'icon', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail', 'mime_types' => 'svg,png', 'instructions' => 'Upload a custom SVG icon for this radial node.' ),
 			),
 		);
 	}
@@ -1100,7 +1123,7 @@ function kelarix_acf_proof() {
 			'layout'     => 'block',
 			'sub_fields' => array(
 				array( 'key' => 'field_kx_what_card_' . $i . '_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
-				array( 'key' => 'field_kx_what_card_' . $i . '_icon',  'label' => 'Icon', 'name' => 'icon', 'type' => 'text', 'instructions' => 'gauge | shield | layers | plug | sketch | lock | msg | chart' ),
+				array( 'key' => 'field_kx_what_card_' . $i . '_icon',  'label' => 'Icon (upload SVG/PNG)', 'name' => 'icon', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail', 'mime_types' => 'svg,png', 'instructions' => 'Upload a custom SVG icon for this tile.' ),
 			),
 		);
 	}
@@ -1121,7 +1144,7 @@ function kelarix_acf_proof() {
 			'layout'     => 'block',
 			'sub_fields' => array(
 				array( 'key' => 'field_kx_lib_col_' . $i . '_title', 'label' => 'Title', 'name' => 'title', 'type' => 'text' ),
-				array( 'key' => 'field_kx_lib_col_' . $i . '_icon',  'label' => 'Icon',  'name' => 'icon',  'type' => 'text', 'instructions' => 'book | flask | coin | plus | grid' ),
+				array( 'key' => 'field_kx_lib_col_' . $i . '_icon',  'label' => 'Icon (upload SVG/PNG)', 'name' => 'icon', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'thumbnail', 'mime_types' => 'svg,png', 'instructions' => 'Upload a custom SVG icon for this library column.' ),
 				array( 'key' => 'field_kx_lib_col_' . $i . '_items', 'label' => 'Checklist items (one per line)', 'name' => 'items', 'type' => 'textarea', 'rows' => 4 ),
 			),
 		);
@@ -1161,7 +1184,16 @@ function kelarix_acf_cpt_system() {
 		'title'    => 'System Details',
 		'fields'   => array(
 			kacf_textarea( 'description', 'Description' ),
-			kacf_text( 'icon', 'Icon Key', 'scatter' ),
+			array(
+				'key'           => 'field_kx_sys_icon',
+				'label'         => 'Icon (upload SVG/PNG)',
+				'name'          => 'icon',
+				'type'          => 'image',
+				'return_format' => 'array',
+				'preview_size'  => 'thumbnail',
+				'mime_types'    => 'svg,png',
+				'instructions'  => 'Upload a custom SVG icon for this system.',
+			),
 		),
 		'location' => array(
 			array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'kx_system' ) ),
@@ -1184,20 +1216,24 @@ function kelarix_acf_cpt_industry() {
 			kacf_textarea( 'features', 'Features (one per line)' ),
 			kacf_image( 'image', 'Image' ),
 			array(
-				'key'          => 'field_kx_ind_icon_1',
-				'label'        => 'Card Icon 1',
-				'name'         => 'icon_1',
-				'type'         => 'text',
-				'instructions' => $icon_hint,
-				'default_value' => 'bag',
+				'key'           => 'field_kx_ind_icon_1',
+				'label'         => 'Card Icon 1 (upload SVG/PNG)',
+				'name'          => 'icon_1',
+				'type'          => 'image',
+				'return_format' => 'array',
+				'preview_size'  => 'thumbnail',
+				'mime_types'    => 'svg,png',
+				'instructions'  => 'Upload a custom SVG icon for this industry card (primary).',
 			),
 			array(
-				'key'          => 'field_kx_ind_icon_2',
-				'label'        => 'Card Icon 2',
-				'name'         => 'icon_2',
-				'type'         => 'text',
-				'instructions' => $icon_hint,
-				'default_value' => 'store',
+				'key'           => 'field_kx_ind_icon_2',
+				'label'         => 'Card Icon 2 (upload SVG/PNG)',
+				'name'          => 'icon_2',
+				'type'          => 'image',
+				'return_format' => 'array',
+				'preview_size'  => 'thumbnail',
+				'mime_types'    => 'svg,png',
+				'instructions'  => 'Upload a custom SVG icon for this industry card (secondary).',
 			),
 			kacf_link( 'link', 'Explore Now Link (leave empty → uses post permalink)' ),
 			kacf_bool( 'is_secondary', 'Is Secondary?', 'Show in "Also relevant" grid instead of main carousel.' ),

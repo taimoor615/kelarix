@@ -25,8 +25,8 @@ $email = k_setting( 'footer_email', 'info@kelarix.com' );
 				<?php echo esc_html( k_setting( 'footer_about', 'AI agents that automate work, scale operations and give your team time back.' ) ); ?>
 			</p>
 			<div class="site-footer__social">
-				<a href="<?php echo esc_url( $linkedin_url ); ?>" aria-label="LinkedIn" target="_blank" rel="noopener"><?php echo k_icon( $linkedin_icon ); ?></a>
-				<a href="<?php echo esc_url( $instagram_url ); ?>" aria-label="Instagram" target="_blank" rel="noopener"><?php echo k_icon( $instagram_icon ); ?></a>
+				<a href="<?php echo esc_url( $linkedin_url ); ?>" aria-label="LinkedIn" target="_blank" rel="noopener"><?php echo k_icon_render( $linkedin_icon, 'linkedin', 'LinkedIn' ); ?></a>
+				<a href="<?php echo esc_url( $instagram_url ); ?>" aria-label="Instagram" target="_blank" rel="noopener"><?php echo k_icon_render( $instagram_icon, 'instagram', 'Instagram' ); ?></a>
 			</div>
 		</div>
 

@@ -140,6 +140,60 @@ function k_icon( $name = 'default' ) {
 }
 
 /**
+ * Render an icon that may come from a new ACF image upload OR a legacy string slug.
+ *
+ * @param mixed  $value    ACF field value — array (image), string (slug), or empty.
+ * @param string $fallback Legacy slug to render when $value is empty (backwards-compat).
+ * @param string $alt      Optional alt text for the <img>.
+ * @return string HTML — either <img> or inline SVG markup.
+ */
+function k_icon_render( $value, $fallback = 'default', $alt = '' ) {
+	if ( is_array( $value ) && ! empty( $value['url'] ) ) {
+		return sprintf(
+			'<img src="%s" alt="%s" class="k-icon-img" loading="lazy" />',
+			esc_url( $value['url'] ),
+			esc_attr( $alt )
+		);
+	}
+	if ( is_numeric( $value ) ) {
+		$url = wp_get_attachment_image_url( $value, 'thumbnail' );
+		if ( $url ) {
+			return sprintf( '<img src="%s" alt="%s" class="k-icon-img" loading="lazy" />', esc_url( $url ), esc_attr( $alt ) );
+		}
+	}
+	if ( is_string( $value ) && $value ) {
+		return k_icon( $value );
+	}
+	return k_icon( $fallback );
+}
+
+/*
+ * Allow SVG uploads through the WordPress media library — clients need to be
+ * able to upload their own icon SVGs for card icons across the site.
+ * Sanitised via wp_check_filetype_and_ext + user-role gate (only editors+).
+ */
+add_filter( 'upload_mimes', 'kelarix_allow_svg_uploads' );
+function kelarix_allow_svg_uploads( $mimes ) {
+	if ( current_user_can( 'edit_posts' ) ) {
+		$mimes['svg']  = 'image/svg+xml';
+		$mimes['svgz'] = 'image/svg+xml';
+	}
+	return $mimes;
+}
+add_filter( 'wp_check_filetype_and_ext', 'kelarix_fix_svg_mime', 10, 4 );
+function kelarix_fix_svg_mime( $data, $file, $filename, $mimes ) {
+	if ( ! empty( $data['ext'] ) && ! empty( $data['type'] ) ) {
+		return $data;
+	}
+	$ext = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+	if ( 'svg' === $ext || 'svgz' === $ext ) {
+		$data['ext']  = $ext;
+		$data['type'] = 'image/svg+xml';
+	}
+	return $data;
+}
+
+/**
  * Site Settings page — a private Page created once, used to hold ACF-editable
  * footer + global site settings. Auto-created if missing.
  */

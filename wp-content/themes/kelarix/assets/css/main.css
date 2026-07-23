@@ -7110,6 +7110,43 @@ svg {
 }
 
 /* ==========================================================================
+   Client-uploaded icons (rendered by k_icon_render / k_icon_img)
+   ========================================================================== */
+.k-icon-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 32px;
+  max-height: 32px;
+  object-fit: contain;
+  margin: auto;
+}
+/* When the icon lives inside a coloured badge, keep it inheriting sensible size. */
+.problem-card__icon .k-icon-img,
+.ww-fric-card__icon .k-icon-img,
+.ww-key-card__icon .k-icon-img,
+.sind-gap-card__icon .k-icon-img,
+.sind-out-card__icon .k-icon-img,
+.disc-item__icon .k-icon-img,
+.diff-item__dot .k-icon-img,
+.pov-card__icon .k-icon-img,
+.path-step__icon .k-icon-img,
+.what-tile__icon .k-icon-img,
+.lib-col__icon .k-icon-img,
+.also-card__icon .k-icon-img,
+.system-card__icon .k-icon-img,
+.also__icon .k-icon-img {
+  max-width: 60%;
+  max-height: 60%;
+}
+.site-footer__social a .k-icon-img {
+  width: 20px;
+  height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+}
+
+/* ==========================================================================
    Request Diagnostic Modal (opens on quote-request buttons + FAB)
    ========================================================================== */
 .request-modal {

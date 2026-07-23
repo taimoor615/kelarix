@@ -59,8 +59,19 @@ $icon_svgs = array(
 	'monitor' => $d_monitor,
 	'health'  => $d_health,
 );
-$svg_for = function( $slug, $fallback ) use ( $icon_svgs ) {
-	return isset( $icon_svgs[ $slug ] ) ? $icon_svgs[ $slug ] : $fallback;
+/**
+ * Resolve a per-industry decor icon.
+ * Accepts either the new ACF image array (uploaded SVG/PNG) OR a legacy slug
+ * string that maps to $icon_svgs. Falls back to $fallback SVG markup.
+ */
+$svg_for = function( $val, $fallback ) use ( $icon_svgs ) {
+	if ( is_array( $val ) && ! empty( $val['url'] ) ) {
+		return sprintf( '<img src="%s" alt="" class="ind-decor-img" loading="lazy" />', esc_url( $val['url'] ) );
+	}
+	if ( is_string( $val ) && $val && isset( $icon_svgs[ $val ] ) ) {
+		return $icon_svgs[ $val ];
+	}
+	return $fallback;
 };
 
 $all  = k_cpt_items( 'kx_industry', array() );
@@ -71,10 +82,10 @@ if ( ! empty( $all ) ) {
 		if ( k_field( 'is_secondary', false, $post->ID ) ) {
 			$also[] = get_the_title( $post );
 		} else {
-			$feat = array_filter( array_map( 'trim', explode( "\n", (string) k_field( 'features', '', $post->ID ) ) ) );
-			$icon_1 = (string) k_field( 'icon_1', '', $post->ID );
-			$icon_2 = (string) k_field( 'icon_2', '', $post->ID );
-			$decor  = $icon_1 || $icon_2
+			$feat   = array_filter( array_map( 'trim', explode( "\n", (string) k_field( 'features', '', $post->ID ) ) ) );
+			$icon_1 = k_field( 'icon_1', '', $post->ID );
+			$icon_2 = k_field( 'icon_2', '', $post->ID );
+			$decor  = ( $icon_1 || $icon_2 )
 				? $svg_for( $icon_1, $d_bag ) . $svg_for( $icon_2, $d_store )
 				: $d_bag . $d_store;
 			$main[] = array(

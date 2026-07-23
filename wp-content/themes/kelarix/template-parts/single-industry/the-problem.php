@@ -30,10 +30,10 @@ $defaults = array(
 					$card  = k_field( 'sind_gap_' . $i, array() );
 					$title = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
 					$text  = ! empty( $card['text'] ) ? $card['text'] : $defaults[ $i ][1];
-					$icon  = ! empty( $card['icon'] ) ? $card['icon'] : $defaults[ $i ][2];
+					$icon  = $card['icon'] ?? $defaults[ $i ][2];
 					?>
 					<article class="sind-gap-card">
-						<span class="sind-gap-card__icon"><?php echo k_icon( $icon ); ?></span>
+						<span class="sind-gap-card__icon"><?php echo k_icon_render( $icon, $defaults[ $i ][2] ); ?></span>
 						<h3 class="sind-gap-card__title"><?php echo esc_html( $title ); ?></h3>
 						<p class="sind-gap-card__text"><?php echo esc_html( $text ); ?></p>
 					</article>

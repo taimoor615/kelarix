@@ -41,13 +41,19 @@ $items = k_cpt_items( 'kx_system', $defaults );
 				if ( $item instanceof WP_Post ) {
 					$title = get_the_title( $item );
 					$desc  = k_field( 'description', '', $item->ID );
-					$ikey  = k_field( 'icon', 'scatter', $item->ID );
+					$ikey  = k_field( 'icon', '', $item->ID );
 				} else {
 					$title = $item[0];
 					$desc  = $item[1];
 					$ikey  = $item[2];
 				}
-				$icon   = isset( $icons[ $ikey ] ) ? $icons[ $ikey ] : $icons['scatter'];
+				// Uploaded SVG (array) → render as <img>; legacy slug → hardcoded SVG.
+				if ( is_array( $ikey ) && ! empty( $ikey['url'] ) ) {
+					$icon = sprintf( '<img src="%s" alt="" class="k-icon-img" loading="lazy" />', esc_url( $ikey['url'] ) );
+				} else {
+					$slug = is_string( $ikey ) && $ikey ? $ikey : 'scatter';
+					$icon = isset( $icons[ $slug ] ) ? $icons[ $slug ] : $icons['scatter'];
+				}
 				$corner = ( 0 === $i % 2 ) ? 'system-card--tr' : 'system-card--bl';
 				$i++;
 				?>

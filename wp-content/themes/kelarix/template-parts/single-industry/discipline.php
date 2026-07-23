@@ -32,12 +32,12 @@ $defaults = array(
 				$item    = k_field( 'sind_disc_item_' . $i, array() );
 				$title   = ! empty( $item['title'] ) ? $item['title'] : $defaults[ $i ][0];
 				$text    = ! empty( $item['text'] ) ? $item['text'] : $defaults[ $i ][1];
-				$icon    = ! empty( $item['icon'] ) ? $item['icon'] : 'workflow';
+				$icon    = $item['icon'] ?? 'workflow';
 				$is_open = ( 1 === $i );
 				?>
 				<div class="disc-item <?php echo $is_open ? 'is-open' : ''; ?>" data-accordion-item>
 					<button class="disc-item__head" data-accordion-trigger aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>">
-						<span class="disc-item__icon"><?php echo k_icon( $icon ); ?></span>
+						<span class="disc-item__icon"><?php echo k_icon_render( $icon, 'workflow' ); ?></span>
 						<span class="disc-item__main">
 							<span class="disc-item__title"><?php echo esc_html( $title ); ?></span>
 							<span class="disc-item__text"><?php echo esc_html( $text ); ?></span>

@@ -28,8 +28,13 @@ $defaults = array(
 				$card  = k_field( 'also_item_' . $i, array() );
 				$title = ! empty( $card['title'] ) ? $card['title'] : $item[0];
 				$text  = ! empty( $card['text'] ) ? $card['text'] : $item[1];
-				$icon  = ! empty( $card['icon'] ) ? $card['icon'] : $item[2];
-				$svg   = isset( $icons[ $icon ] ) ? $icons[ $icon ] : $icons['gear'];
+				$icon  = $card['icon'] ?? $item[2];
+				if ( is_array( $icon ) && ! empty( $icon['url'] ) ) {
+					$svg = sprintf( '<img src="%s" alt="" class="k-icon-img" loading="lazy" />', esc_url( $icon['url'] ) );
+				} else {
+					$slug = is_string( $icon ) && $icon ? $icon : $item[2];
+					$svg  = isset( $icons[ $slug ] ) ? $icons[ $slug ] : $icons['gear'];
+				}
 				?>
 				<a class="also-card" href="#">
 					<span class="also-card__icon"><?php echo $svg; // phpcs:ignore ?></span>

@@ -56,7 +56,7 @@ $items = k_cpt_items( 'kx_process', $defaults );
 				$corner = ( 1 === $n % 2 ) ? 'path-step--tr' : 'path-step--bl';
 				?>
 				<article class="path-step <?php echo esc_attr( $corner ); ?>">
-					<span class="path-step__icon"><?php echo k_icon( $icon_key ); ?></span>
+					<span class="path-step__icon"><?php echo k_icon_render( $icon_key, is_string( $icon_key ) ? $icon_key : 'scatter' ); ?></span>
 					<h3 class="path-step__title"><?php echo esc_html( $title ); ?></h3>
 					<p class="path-step__text"><?php echo esc_html( $desc ); ?></p>
 				</article>

@@ -58,22 +58,16 @@ $chip_url = function( $slug ) use ( $page_url ) {
 		<?php if ( $query && $query->have_posts() ) : ?>
 			<div class="cs-cards">
 				<?php while ( $query->have_posts() ) : $query->the_post();
-					$icon       = get_field( 'icon' ) ?: 'basket';
-					$icon_image = function_exists( 'get_field' ) ? get_field( 'icon_image' ) : '';
-					$icon_url   = is_array( $icon_image ) ? ( $icon_image['url'] ?? '' ) : ( is_string( $icon_image ) ? $icon_image : '' );
-					$eyebrow    = get_field( 'eyebrow' ) ?: 'FLAGSHIP SCENARIO STUDY';
-					$desc       = get_field( 'description' ) ?: get_the_excerpt();
-					$link       = get_field( 'link' );
-					$url        = ! empty( $link['url'] ) ? $link['url'] : get_permalink();
-					$target     = ! empty( $link['target'] ) ? $link['target'] : '';
+					$icon    = get_field( 'icon' );
+					$eyebrow = get_field( 'eyebrow' ) ?: 'FLAGSHIP SCENARIO STUDY';
+					$desc    = get_field( 'description' ) ?: get_the_excerpt();
+					$link    = get_field( 'link' );
+					$url     = ! empty( $link['url'] ) ? $link['url'] : get_permalink();
+					$target  = ! empty( $link['target'] ) ? $link['target'] : '';
 					?>
 					<article class="cs-card">
 						<div class="cs-card__icon" aria-hidden="true">
-							<?php if ( $icon_url ) : ?>
-								<img src="<?php echo esc_url( $icon_url ); ?>" alt="" loading="lazy" />
-							<?php else : ?>
-								<?php echo k_icon( $icon ); ?>
-							<?php endif; ?>
+							<?php echo k_icon_render( $icon, 'basket' ); ?>
 						</div>
 						<p class="cs-card__eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
 						<h3 class="cs-card__title"><?php the_title(); ?></h3>

@@ -30,12 +30,12 @@ $defaults = array(
 				$item    = k_field( 'diff_item_' . $i, array() );
 				$title   = ! empty( $item['title'] ) ? $item['title'] : $defaults[ $i ][0];
 				$text    = ! empty( $item['text'] ) ? $item['text'] : $defaults[ $i ][1];
-				$icon    = ! empty( $item['icon'] ) ? $item['icon'] : $defaults[ $i ][2];
+				$icon    = $item['icon'] ?? $defaults[ $i ][2];
 				$is_open = ( 1 === $i );
 				?>
 				<div class="diff-item <?php echo $is_open ? 'is-open' : ''; ?>" data-accordion-item>
 					<button class="diff-item__head" data-accordion-trigger aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>">
-						<span class="diff-item__dot" aria-hidden="true"><?php echo k_icon( $icon ); ?></span>
+						<span class="diff-item__dot" aria-hidden="true"><?php echo k_icon_render( $icon, $defaults[ $i ][2] ); ?></span>
 						<span class="diff-item__title"><?php echo esc_html( $title ); ?></span>
 						<span class="diff-item__toggle" aria-hidden="true"></span>
 					</button>

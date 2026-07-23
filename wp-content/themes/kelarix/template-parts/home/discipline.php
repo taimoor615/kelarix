@@ -40,7 +40,7 @@ $defaults = array(
 				$item    = k_field( 'discipline_item_' . $i, array() );
 				$title   = ! empty( $item['title'] ) ? $item['title'] : $defaults[ $i ][0];
 				$text    = ! empty( $item['text'] ) ? $item['text'] : $defaults[ $i ][1];
-				$icon    = ! empty( $item['icon'] ) ? k_icon( $item['icon'] ) : $icons[ $i ];
+				$icon    = ! empty( $item['icon'] ) ? k_icon_render( $item['icon'] ) : $icons[ $i ];
 				$is_open = ( 1 === $i );
 				?>
 				<div class="disc-item <?php echo $is_open ? 'is-open' : ''; ?>" data-accordion-item>
