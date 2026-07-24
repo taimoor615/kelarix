@@ -36,14 +36,21 @@ $defaults = array(
 
 		<div class="confidential__grid">
 			<?php for ( $i = 1; $i <= 5; $i++ ) :
-				$card  = k_field( 'conf_card_' . $i, array() );
-				$title = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
-				$text  = ! empty( $card['text'] ) ? $card['text'] : $defaults[ $i ][1];
-				$icon  = $icons[ $defaults[ $i ][2] ];
-				$corner = ( 1 === $i % 2 ) ? 'feature-card--br' : 'feature-card--tl';
+				$card      = k_field( 'conf_card_' . $i, array() );
+				$title     = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
+				$text      = ! empty( $card['text'] ) ? $card['text'] : $defaults[ $i ][1];
+				$icon_url  = ! empty( $card['icon']['url'] ) ? $card['icon']['url'] : '';
+				$icon      = $icon_url ? '' : $icons[ $defaults[ $i ][2] ];
+				$corner    = ( 1 === $i % 2 ) ? 'feature-card--br' : 'feature-card--tl';
 				?>
 				<article class="feature-card <?php echo esc_attr( $corner ); ?>">
-					<span class="feature-card__icon"><?php echo $icon; // phpcs:ignore ?></span>
+					<span class="feature-card__icon">
+						<?php if ( $icon_url ) : ?>
+							<img src="<?php echo esc_url( $icon_url ); ?>" alt="" class="feature-card__icon-img" loading="lazy" />
+						<?php else : ?>
+							<?php echo $icon; // phpcs:ignore ?>
+						<?php endif; ?>
+					</span>
 					<h3 class="feature-card__title"><?php echo esc_html( $title ); ?></h3>
 					<p class="feature-card__text"><?php echo esc_html( $text ); ?></p>
 				</article>

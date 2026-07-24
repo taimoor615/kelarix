@@ -43,10 +43,10 @@ $main_defaults = array(
 	),
 );
 $also_defaults = array(
-	'Operational Intelligence Systems',
-	'Real Estate and Construction',
-	'Manufacturing',
-	'Energy and Utilities',
+	array( 'title' => 'Operational Intelligence Systems', 'icon' => '', 'url' => '#' ),
+	array( 'title' => 'Real Estate and Construction', 'icon' => '', 'url' => '#' ),
+	array( 'title' => 'Manufacturing', 'icon' => '', 'url' => '#' ),
+	array( 'title' => 'Energy and Utilities', 'icon' => '', 'url' => '#' ),
 );
 
 $icon_svgs = array(
@@ -80,7 +80,12 @@ $also = array();
 if ( ! empty( $all ) ) {
 	foreach ( $all as $post ) {
 		if ( k_field( 'is_secondary', false, $post->ID ) ) {
-			$also[] = get_the_title( $post );
+			$also_link = k_field( 'link', array(), $post->ID );
+			$also[]    = array(
+				'title' => get_the_title( $post ),
+				'icon'  => k_field( 'icon_1', '', $post->ID ),
+				'url'   => ! empty( $also_link['url'] ) ? $also_link['url'] : get_permalink( $post ),
+			);
 		} else {
 			$feat   = array_filter( array_map( 'trim', explode( "\n", (string) k_field( 'features', '', $post->ID ) ) ) );
 			$icon_1 = k_field( 'icon_1', '', $post->ID );
@@ -153,20 +158,20 @@ if ( empty( $also ) ) { $also = $also_defaults; }
 		<div class="also">
 			<h3 class="also__title"><?php k_text( 'also_heading', 'Also relevant for complex operating environments' ); ?></h3>
 			<div class="also__grid">
-				<?php foreach ( $also as $name ) : ?>
-					<a href="#" class="also__item">
-						<span class="also__icon"><?php echo k_icon( 'default' ); ?></span>
+				<?php foreach ( $also as $item ) : ?>
+					<a href="<?php echo esc_url( $item['url'] ?? '#' ); ?>" class="also__item">
+						<span class="also__icon"><?php echo k_icon_render( $item['icon'] ?? '', 'default' ); ?></span>
 						<span class="also__chevron" aria-hidden="true">
 							<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
 						</span>
-						<span class="also__name"><?php echo esc_html( $name ); ?></span>
+						<span class="also__name"><?php echo esc_html( $item['title'] ?? '' ); ?></span>
 					</a>
 				<?php endforeach; ?>
 			</div>
 			<div class="also__actions">
 				<?php
-				k_button( 'industries_cta_primary', 'Request a Diagnostic Conversation', '#contact', 'btn btn--primary btn--sm' );
-				k_button( 'industries_cta_secondary', 'Explore What We Build', '#', 'btn btn--white btn--sm' );
+				k_button( 'industries_cta_primary', 'Request a Diagnostic Conversation', '#contact', 'btn btn--primary' );
+				k_button( 'industries_cta_secondary', 'Explore What We Build', '#', 'btn btn--white' );
 				?>
 			</div>
 		</div>

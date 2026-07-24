@@ -48,13 +48,14 @@ $items = array();
 if ( ! empty( $posts ) ) {
 	foreach ( $posts as $p ) {
 		$items[] = array(
-			'tag'      => k_field( 'tag', '', $p->ID ),
-			'title'    => get_the_title( $p ),
-			'desc'     => k_field( 'description', '', $p->ID ),
-			'tags'     => array_filter( array_map( 'trim', explode( "\n", (string) k_field( 'tags', '', $p->ID ) ) ) ),
-			'stat_l'   => k_field( 'stat_label', 'Analytics Data', $p->ID ),
-			'stat_v'   => k_field( 'stat_value', '', $p->ID ),
-			'featured' => (bool) k_field( 'is_featured', false, $p->ID ),
+			'tag'         => k_field( 'tag', '', $p->ID ),
+			'title'       => get_the_title( $p ),
+			'desc'        => k_field( 'description', '', $p->ID ),
+			'tags'        => array_filter( array_map( 'trim', explode( "\n", (string) k_field( 'tags', '', $p->ID ) ) ) ),
+			'stat_l'      => k_field( 'stat_label', 'Analytics Data', $p->ID ),
+			'stat_v'      => k_field( 'stat_value', '', $p->ID ),
+			'featured'    => (bool) k_field( 'is_featured', false, $p->ID ),
+			'chart_image' => get_the_post_thumbnail_url( $p->ID, 'medium' ),
 		);
 	}
 } else {
@@ -114,10 +115,16 @@ $chart = '<svg class="proof-chart__svg" viewBox="0 0 320 150" preserveAspectRati
 										<span class="proof-analytics__dots">&#8942;</span>
 									</div>
 									<div class="proof-analytics__value"><?php echo esc_html( $it['stat_v'] ); ?></div>
-									<div class="proof-chart">
-										<div class="proof-chart__axis"><span>100%</span><span>60%</span><span>40%</span></div>
-										<?php echo $chart; // phpcs:ignore ?>
-									</div>
+									<?php if ( ! empty( $it['chart_image'] ) ) : ?>
+										<div class="proof-chart proof-chart--image">
+											<img src="<?php echo esc_url( $it['chart_image'] ); ?>" alt="" loading="lazy" />
+										</div>
+									<?php else : ?>
+										<div class="proof-chart">
+											<div class="proof-chart__axis"><span>100%</span><span>60%</span><span>40%</span></div>
+											<?php echo $chart; // phpcs:ignore ?>
+										</div>
+									<?php endif; ?>
 								</div>
 							<?php endif; ?>
 						</div>

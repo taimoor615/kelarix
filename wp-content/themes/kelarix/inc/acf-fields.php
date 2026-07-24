@@ -655,6 +655,7 @@ function kelarix_acf_footer_settings() {
 
 	$fields[] = kacf_tab( 'fbrand', 'Brand' );
 	$fields[] = kacf_text( 'footer_logo_text', 'Logo Text', 'KELARIX' );
+	$fields[] = kacf_image( 'footer_logo_image', 'Logo Image (optional — overrides text above if uploaded)' );
 	$fields[] = kacf_textarea( 'footer_about', 'About Line', 'AI agents that automate work, scale operations and give your team time back.' );
 
 	$fields[] = kacf_tab( 'fsocial', 'Social' );
@@ -735,7 +736,8 @@ function kelarix_acf_homepage() {
 	$fields[] = kacf_text( 'hero_eyebrow', 'Eyebrow Text', 'Strategy led. Engineering backed. Built for operational clarity' );
 	$fields[] = kacf_textarea( 'hero_heading', 'Heading', 'Systems that help leaders see clearly, decide faster, and execute with control.' );
 	$fields[] = kacf_textarea( 'hero_subtext', 'Subtext', 'Kelarix designs and builds data driven systems that turn scattered data, manual workflows, and operational complexity into better business visibility and execution.' );
-	$fields[] = kacf_image( 'hero_image', 'Hero Image' );
+	$fields[] = kacf_image( 'hero_image', 'Hero Image (unused — reserved for a future layout)' );
+	$fields[] = kacf_image( 'hero_bg_image', 'Section Background Image (the large photo behind the hero text)' );
 	$fields[] = kacf_link( 'hero_cta_primary', 'Primary CTA' );
 	$fields[] = kacf_link( 'hero_cta_secondary', 'Secondary CTA' );
 	$fields[] = kacf_text( 'hero_note', 'Shield Note', 'For businesses operating in complex, high pressure industries.' );
@@ -756,7 +758,7 @@ function kelarix_acf_homepage() {
 	$fields[] = kacf_textarea( 'layers_heading', 'Heading' );
 	$fields[] = kacf_textarea( 'layers_text', 'Body Text' );
 	for ( $i = 1; $i <= 5; $i++ ) {
-		$fields[] = kacf_card( 'layer_card_' . $i, 'Layer Card ' . $i );
+		$fields[] = kacf_card_icon( 'layer_card_' . $i, 'Layer Card ' . $i, 'optional — leave empty to keep the default decorative icon set' );
 	}
 	$fields[] = kacf_link( 'layers_cta', 'Bottom CTA' );
 
@@ -785,7 +787,7 @@ function kelarix_acf_homepage() {
 	$fields[] = kacf_textarea( 'conf_text', 'Paragraph 1' );
 	$fields[] = kacf_textarea( 'conf_text2', 'Paragraph 2' );
 	for ( $i = 1; $i <= 5; $i++ ) {
-		$fields[] = kacf_card( 'conf_card_' . $i, 'Confidential Card ' . $i );
+		$fields[] = kacf_card_icon( 'conf_card_' . $i, 'Confidential Card ' . $i, 'optional — leave empty to keep the default icon' );
 	}
 
 	/* --- Proof --- */

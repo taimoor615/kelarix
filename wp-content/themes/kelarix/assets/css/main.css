@@ -169,7 +169,7 @@ svg {
   justify-content: center;
   gap: 10px;
   padding: 13px 14px 13px 22px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-lg);
   font-size: var(--fs-body);
   font-weight: var(--fw-semibold);
   border: 1px solid transparent;
@@ -204,9 +204,11 @@ svg {
 .btn--primary {
   background: var(--color-btn-primary);
   color: #fff;
+  border-color: var(--accent-500);
 }
 .btn--primary:hover {
   background: var(--color-btn-primary-hover);
+  border-color: var(--accent-400);
 }
 .btn--primary .btn__arrow {
   background: rgba(255, 255, 255, 0.22);
@@ -215,6 +217,7 @@ svg {
 .btn--white {
   background: #fff;
   color: var(--accent-600);
+  border-color: var(--accent-500);
 }
 .btn--white:hover {
   background: #fff;
@@ -251,12 +254,13 @@ svg {
    Header
    ========================================================================== */
 .site-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
+  z-index: 500;
   padding-top: var(--space-20);
+  transition: padding 0.3s ease;
 }
 .site-header__bar {
   display: flex;
@@ -268,13 +272,32 @@ svg {
   border-radius: 16px;
   backdrop-filter: blur(14px);
   box-shadow: 0 4px 24px rgba(20, 35, 90, 0.12);
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+/* Scrolled state: soft fade to a solid white bar + blue nav text for contrast
+   over light page content further down the page. */
+.site-header.is-scrolled {
+  padding-top: var(--space-12);
+}
+.site-header.is-scrolled .site-header__bar {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(20, 35, 90, 0.08);
+  box-shadow: 0 8px 28px rgba(20, 35, 90, 0.14);
+}
+.site-header.is-scrolled .site-nav__list a {
+  color: var(--accent-600);
+}
+.site-header.is-scrolled .site-header__logo {
+  color: var(--accent-600);
+}
+.site-header.is-scrolled .site-header__toggle span {
+  background: var(--accent-600);
 }
 /* Header CTA: white pill, blue text + outline, plain chevron */
 .site-header__cta .btn--white {
-  border: 1px solid var(--accent-300);
+  border: 1px solid var(--accent-500);
   padding-right: 18px;
   padding: 15px 20px;
-  /* border-radius: 16px; */
 }
 .site-header__cta .btn__arrow {
   background: transparent;
@@ -303,7 +326,7 @@ svg {
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);
   color: #fff;
-  transition: color 0.15s;
+  transition: color 0.3s ease;
 }
 .site-nav__list a:hover {
   color: var(--accent-600);
@@ -736,6 +759,11 @@ svg {
   height: 68px;
   padding: 16px;
 }
+.layer-card__decor-img {
+  max-width: 120px;
+  max-height: 68px;
+  object-fit: contain;
+}
 
 .layers__cta {
   display: flex;
@@ -916,6 +944,9 @@ svg {
   flex-direction: column;
   gap: var(--space-12);
   margin-bottom: var(--space-28);
+  /* Reserve space on the right so item text never runs under the
+     absolutely-positioned decor icons (see .industry-card__decor). */
+  padding-right: 132px;
 }
 .industry-card__list li {
   display: flex;
@@ -1125,6 +1156,11 @@ svg {
   width: 20px;
   height: 20px;
 }
+.feature-card__icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
 .feature-card__title {
   font-size: var(--fs-title);
   font-weight: var(--fw-semibold);
@@ -1310,6 +1346,16 @@ svg {
 .proof-chart__svg {
   width: 100%;
   height: 130px;
+  display: block;
+}
+.proof-chart--image {
+  padding-left: 0;
+}
+.proof-chart--image img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
   display: block;
 }
 .proof__cta {
@@ -1605,6 +1651,15 @@ svg {
 .site-footer__logo {
   color: var(--color-text);
   font-size: var(--fs-h5);
+  display: inline-flex;
+  align-items: center;
+}
+.site-footer__logo-img {
+  display: block;
+  height: 34px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
 }
 .site-footer__about {
   margin-top: var(--space-16);
@@ -2946,6 +3001,9 @@ svg {
   }
   .industry-card__decor {
     display: none;
+  }
+  .industry-card__list {
+    padding-right: 0;
   }
   .final-cta__title {
     font-size: 16px;
@@ -4488,6 +4546,19 @@ svg {
 .hp-footer-block .discipline::before,
 .hp-footer-block .final-cta::before {
   display: none;
+}
+
+/* Homepage backdrops use fixed-ratio background-size (100% 100%, 100% 85%,
+   100% 77%) tuned for wide desktop sections — on narrow mobile viewports
+   that stretches/distorts the artwork, so switch every one to cover. */
+@media (max-width: 760px) {
+  .layers,
+  .industries,
+  .proof,
+  .hp-proof-block,
+  .hp-footer-block {
+    background-size: cover;
+  }
 }
 
 /* ==========================================================================

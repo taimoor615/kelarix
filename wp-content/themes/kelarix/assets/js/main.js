@@ -14,6 +14,19 @@
 			});
 		}
 
+		/* ---- Header scroll state: soft fade to solid white bg + blue nav past 60px ---- */
+		if (header) {
+			var onHeaderScroll = function () {
+				if (window.scrollY > 60) {
+					header.classList.add('is-scrolled');
+				} else {
+					header.classList.remove('is-scrolled');
+				}
+			};
+			onHeaderScroll();
+			window.addEventListener('scroll', onHeaderScroll, { passive: true });
+		}
+
 		/* ---- Accordions (proof + discipline) ---- */
 		document.querySelectorAll('[data-accordion]').forEach(function (group) {
 			group.querySelectorAll('[data-accordion-trigger]').forEach(function (trigger) {

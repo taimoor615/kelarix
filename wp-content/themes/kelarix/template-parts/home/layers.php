@@ -54,6 +54,7 @@ $defaults = array(
 				$card  = k_field( 'layer_card_' . $i, array() );
 				$title = ! empty( $card['title'] ) ? $card['title'] : $defaults[ $i ][0];
 				$text  = ! empty( $card['text'] ) ? $card['text'] : $defaults[ $i ][1];
+				$icon  = ! empty( $card['icon']['url'] ) ? $card['icon']['url'] : '';
 				$wide  = ( $i <= 2 ) ? ' layer-card--wide' : '';
 				?>
 				<article class="layer-card<?php echo esc_attr( $wide ); ?>">
@@ -61,7 +62,13 @@ $defaults = array(
 						<h3 class="layer-card__title"><?php echo esc_html( $title ); ?></h3>
 						<p class="layer-card__text"><?php echo esc_html( $text ); ?></p>
 					</div>
-					<div class="layer-card__decor" aria-hidden="true"><?php echo $decor[ $i ]; // phpcs:ignore ?></div>
+					<div class="layer-card__decor" aria-hidden="true">
+						<?php if ( $icon ) : ?>
+							<img src="<?php echo esc_url( $icon ); ?>" alt="" class="layer-card__decor-img" loading="lazy" />
+						<?php else : ?>
+							<?php echo $decor[ $i ]; // phpcs:ignore ?>
+						<?php endif; ?>
+					</div>
 				</article>
 			<?php endfor; ?>
 		</div>

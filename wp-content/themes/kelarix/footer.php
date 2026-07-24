@@ -15,12 +15,19 @@ $build_cta      = k_setting( 'footer_build_cta', array() );
 $build_cta_url  = ! empty( $build_cta['url'] ) ? $build_cta['url'] : '#contact';
 $build_cta_text = ! empty( $build_cta['title'] ) ? $build_cta['title'] : 'Request a Diagnostic Conversation';
 
-$email = k_setting( 'footer_email', 'info@kelarix.com' );
+$email           = k_setting( 'footer_email', 'info@kelarix.com' );
+$footer_logo_img = k_setting( 'footer_logo_image', '' );
 ?>
 <footer class="site-footer" id="contact">
 	<div class="container site-footer__inner">
 		<div class="site-footer__brand">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-footer__logo"><?php echo esc_html( k_setting( 'footer_logo_text', get_bloginfo( 'name' ) ) ); ?></a>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-footer__logo">
+				<?php if ( $footer_logo_img ) : ?>
+					<img src="<?php echo esc_url( $footer_logo_img ); ?>" alt="<?php echo esc_attr( k_setting( 'footer_logo_text', get_bloginfo( 'name' ) ) ); ?>" class="site-footer__logo-img" />
+				<?php else : ?>
+					<?php echo esc_html( k_setting( 'footer_logo_text', get_bloginfo( 'name' ) ) ); ?>
+				<?php endif; ?>
+			</a>
 			<p class="site-footer__about">
 				<?php echo esc_html( k_setting( 'footer_about', 'AI agents that automate work, scale operations and give your team time back.' ) ); ?>
 			</p>
